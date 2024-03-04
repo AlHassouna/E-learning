@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from 'antd';
 import type { ConfigProviderProps } from 'antd';
-import {IButton} from '../types/'
+import {IButton} from '../../types'
 type SizeType = ConfigProviderProps['componentSize'];
 
 export const Btn: React.FC<IButton> = ({text,icon,type,disabled,onClick,className,danger,htmlType,loading}) => {
