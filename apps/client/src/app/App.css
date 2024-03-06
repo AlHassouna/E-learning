@@ -1,0 +1,10 @@
+body {
+  margin: 0
+}
+
+:root {
+  --primary-color: #03565B;
+  --secondary-color: #ECBB65;
+  --brand-color: #786283;
+  --bg-color: #EFDAC7;
+}

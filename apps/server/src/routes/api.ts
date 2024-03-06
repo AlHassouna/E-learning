@@ -1,9 +1,10 @@
 import express from 'express';
+import AuthRouter from './AuthRouter';
+import Auth from '../models/auth';
+
 const router = express.Router();
-// For each router, import the router and add it to the router
-// Base Router is a class that can be extended to create a new router
-// For example:
-// import UserRouter from './UserRouter';
-// router.use('/users', UserRouter);
+const authRouter = new AuthRouter(Auth);
+
+router.use('/auth', authRouter.router);
 
 export default router;
