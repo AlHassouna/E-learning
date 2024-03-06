@@ -1,4 +1,5 @@
 import React from 'react';
+
 export interface IButton {
   text?: string;
   icon?: React.ReactNode;
@@ -11,3 +12,13 @@ export interface IButton {
   loading?: boolean | { delay: number };
 }
 
+export interface Route {
+  key: string;
+  text: string;
+  linksTo: string;
+  exact?: boolean;
+  public?: boolean;
+  showOnMenu: boolean;
+  component: React.ReactNode;
+  subItems?: Route[];
+}
