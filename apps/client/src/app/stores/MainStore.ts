@@ -11,6 +11,7 @@ class MainStore extends StoreBase {
   public isLoading = false;
   private userDetailsResponse: GetUserDetailsResponse | null = null;
 
+
   constructor() {
     super();
     makeObservable(this, {
@@ -19,6 +20,7 @@ class MainStore extends StoreBase {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       userDetailsResponse: observable,
+      getUserDetails: action,
       // Actions
       start: action,
       setLoading: action
@@ -45,15 +47,15 @@ class MainStore extends StoreBase {
     }
   };
 
-  // public getUserDetails = async (_id: string): Promise<void> => {
-  //   try {
-  //     // @ts-ignore
-  //     const { data } = getUser(_id);
-  //     this.userDetailsResponse = data;
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
+  public getUserDetails = async (_id: string): Promise<void> => {
+    try {
+      // @ts-ignore
+      const { data } = getUser(_id);
+      this.userDetailsResponse = data;
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   public setLoading = (flag: boolean): void => {
     this.isLoading = flag;
