@@ -33,11 +33,16 @@ courseSchema.pre('save', async function (next) {
 });
 
 // Video Schema
-const videoSchema = new Schema({
-  videoTitle: { type: String, required: true },
-  url: { type: String, required: true },
-  duration: { type: Number },
-  uploadDate: { type: Date, default: Date.now },
+// const videoSchema = new Schema({
+//   videoTitle: { type: String, required: true },
+//   url: { type: String, required: true },
+//   duration: { type: Number },
+//   uploadDate: { type: Date, default: Date.now },
+//   course: { type: Schema.Types.ObjectId, ref: 'Course', required: true },
+// });
+const contentSchema = new Schema({
+  courseTitle: { type: String, required: true },
+  content: { type: String },
   course: { type: Schema.Types.ObjectId, ref: 'Course', required: true },
 });
 
@@ -62,33 +67,54 @@ const discussionPostSchema = new Schema({
 });
 
 // Quiz Schema
+// const quizSchema = new Schema({
+//   course: { type: Schema.Types.ObjectId, ref: 'Course', required: true },
+//   teacher: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+//   quizTitle: { type: String, required: true },
+//   description: { type: String },
+//   timestamp: { type: Date, default: Date.now },
+//   duration: { type: Number, default: 5 },
+//   questions: {
+//     type: [{ type: Schema.Types.ObjectId, ref: 'Question' }],
+//     validate: {
+//       validator: function (questions) {
+//         return questions.length <= 10;
+//       },
+//       message: 'A quiz can have at most 10 questions.',
+//     },
+//   },
+// });
+
 const quizSchema = new Schema({
   course: { type: Schema.Types.ObjectId, ref: 'Course', required: true },
   teacher: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   quizTitle: { type: String, required: true },
   description: { type: String },
   timestamp: { type: Date, default: Date.now },
-  duration: { type: Number, default: 5 },
-  questions: {
-    type: [{ type: Schema.Types.ObjectId, ref: 'Question' }],
-    validate: {
-      validator: function (questions) {
-        return questions.length <= 10;
-      },
-      message: 'A quiz can have at most 10 questions.',
-    },
-  },
+  duration: { type: Number, default: 10 },
+  category: { type: String, required: true },
+  level: { type: String, enum: ['easy', 'medium', 'hard'] },
+  questions: [{ type: Schema.Types.ObjectId, ref: 'Question' }],
 });
 
 // Question Schema
 const questionSchema = new Schema({
-  //level
-
   questionText: { type: String, required: true },
-  type: { type: String, enum: ['MCQ', 'Open Ended'], required: true },
+  type: { type: String, enum: ['multiple', 'boolean'], required: true },
   options: [{ type: String }],
   correctOption: { type: String },
+  level: { type: String, enum: ['easy', 'medium', 'hard'] },
 });
+
+// // Question Schema
+// const questionSchema = new Schema({
+//   //level
+
+//   questionText: { type: String, required: true },
+//   type: { type: String, enum: ['MCQ', 'Open Ended'], required: true },
+//   options: [{ type: String }],
+//   correctOption: { type: String },
+// });
 
 // Quiz Attempt Schema
 const quizAttemptSchema = new Schema({
@@ -126,7 +152,7 @@ const meetingSchema = new Schema({
 // Models
 export const User = model('User', userSchema);
 export const Course = model('Course', courseSchema);
-export const Video = model('Video', videoSchema);
+export const content = model('content', contentSchema);
 export const DiscussionForum = model('DiscussionForum', discussionForumSchema);
 export const DiscussionPost = model('DiscussionPost', discussionPostSchema);
 export const Quiz = model('Quiz', quizSchema);
