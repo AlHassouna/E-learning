@@ -1,5 +1,5 @@
 import { Route } from '../types';
-import { AuthPage, HomePage } from '../pages/';
+import { AuthPage, HomePage, QuizPage} from '../pages/';
 
 export const routes: Route[] = [
   {
@@ -17,5 +17,13 @@ export const routes: Route[] = [
     linksTo: '/',
     showOnMenu: true,
     component: <HomePage />
+  },
+  {
+    key: 'quiz',
+    text: 'QuizPage',
+    exact: true,
+    linksTo: '/quiz',
+    showOnMenu: true,
+    component: <QuizPage />
   }
 ];

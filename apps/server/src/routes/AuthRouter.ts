@@ -16,7 +16,7 @@ class AuthRouter implements IAuth {
 
   public register = async (req: Request, res: Response): Promise<void> => {
     const { email, password, role, username } = req.body;
-    const roleString = role ? 'teacher' : 'student';
+    const roleString = role ? 'Teacher' : 'Student';
     const bycryptPassword = await bcrypt.hash(password, 10);
     try {
       const user = await this.model.create({

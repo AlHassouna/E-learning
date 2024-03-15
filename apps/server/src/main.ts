@@ -16,7 +16,7 @@ mongoose
 const db = mongoose.connection;
 db.once('open', async function () {
   console.log('Connected to MongoDB');
-  await populateTransactions();
+  //await populateTransactions();
   // await dropDB();
 });
 
