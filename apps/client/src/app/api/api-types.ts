@@ -19,3 +19,10 @@ export interface ICourse{
   participants: IUser
   title : string
 }
+
+
+export interface IReward {
+  user: string;
+  type: string;
+  timestamp: Date;
+}
