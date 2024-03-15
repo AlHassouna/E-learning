@@ -69,7 +69,7 @@ const checkCoursesSchema = async () => {
 const checkContentsSchema = async () => {
   try {
     // Create instances of contents
-    const createdContents = await content.insertMany(contents);
+    const createdContents = await Content.insertMany(contents);
     console.log('Contents:', createdContents);
   } catch (error) {
     console.error('Error checking contents schema:', error.message);
@@ -102,7 +102,7 @@ const checkDiscussionPostsSchema = async () => {
 
 const populateContent = async () => {
   try{
-    await Content.insertMany(content)
+    await Content.insertMany(Content)
     console.log('Content Imported');
     process.exit();
   } catch (error) {
@@ -171,6 +171,7 @@ export {
   checkQuizAttemptsSchema,
   checkNotificationsSchema,
   checkRewardsSchema,
-  checkMeetingsSchema,populateTransactions
+  checkMeetingsSchema,
+  populateContent
 };
 // export { populateTransactions, dropDB };

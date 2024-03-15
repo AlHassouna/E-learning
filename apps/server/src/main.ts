@@ -3,7 +3,7 @@ import mongoose, { ConnectOptions } from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import eLearning from './routes/api';
-import { populateTransactions, dropDB, populateContent,
+import { populateContent,
   checkUsersSchema,
   checkCoursesSchema,
   checkContentsSchema,

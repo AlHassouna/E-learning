@@ -29,6 +29,7 @@ export class ContentStore extends StoreBase{
                 status: false
             }
             },
+            title : "",
         }
     }
     constructor() {

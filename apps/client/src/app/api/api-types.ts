@@ -17,4 +17,5 @@ export interface ICourse{
   description: string
   teacher: IUser
   participants: IUser
+  title : string
 }
