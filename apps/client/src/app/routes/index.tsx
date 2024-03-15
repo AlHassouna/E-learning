@@ -22,9 +22,9 @@ export const routes: Route[] = [
     key: 'content',
     text: 'ContentPage',
     exact: true,
-    linksTo: '/content',
+    linksTo: '/courses/:courseTitle',
     showOnMenu: true,
-    component: <ContentPage courseTitle="math"/>
+    component: <ContentPage courseTitle="math" />
   }
 
 ];

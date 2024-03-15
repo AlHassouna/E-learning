@@ -1,13 +1,15 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
-import { Content } from '../../components/ContentForm/Content'
+import { Content } from '../../components/ContentForm/Content';
 
-interface ContentProps{
-    courseTitle : string
+interface ContentProps {
+  courseTitle: string;
 }
 
-export const ContentPage : React.FC<ContentProps> = observer(({courseTitle}) => {
-    return (
-        <Content courseTitle={courseTitle}/>
-    )
-})
+export const ContentPage: React.FC<ContentProps> = observer(({ courseTitle }) => {
+  return (
+
+    <Content courseTitle={courseTitle} />
+
+  );
+});

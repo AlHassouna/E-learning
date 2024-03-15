@@ -23,7 +23,6 @@ export const Navbar: React.FC = observer(() => {
   const { search, courses: Courses } = navbar;
   const [visible, setVisible] = useState(false);
   const navigate = useNavigate();
-  console.log(Courses);
   const showDrawer = () => {
     setVisible(true);
   };

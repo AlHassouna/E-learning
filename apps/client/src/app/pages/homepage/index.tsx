@@ -4,6 +4,7 @@ import { Navigate } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { LoadingSpin } from '../../core';
 import { CenterContainer } from '../../styles';
+import { RewardModel } from '../../components/Reward/RewardModel';
 
 export const HomePage: React.FC = observer(() => {
   const { auth, main } = useStore();
@@ -20,6 +21,7 @@ export const HomePage: React.FC = observer(() => {
           {isAuthenticated ? (
             <div>
               <h1>Welcome to the home page</h1>
+              <RewardModel />
             </div>
           ) : (
             <Navigate to="/auth" />

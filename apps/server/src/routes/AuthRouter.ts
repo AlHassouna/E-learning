@@ -55,6 +55,7 @@ class AuthRouter implements IAuth {
     }
   };
 
+
   initializeRoutes(): void {
     this.router.post('/register', this.register);
     this.router.post('/login', this.login);
