@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { Card } from 'antd';
+
 
 export const FlexContainer = styled.div`
   display: flex;
@@ -104,4 +106,66 @@ export const StyledCardBody = styled.div`
     display: flex;
     align-items: center;
   }
+`;
+
+export const SearchContainer = styled.div`
+  position: relative;
+  width: 80%;
+  display: flex;
+  justify-content: center;
+`;
+
+export const SearchOptions = styled.div`
+  position: absolute;
+  background-color: white;
+  width: 100%;
+  top: 100%;
+  left: 0;
+  padding: 10px;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.75);
+  border-radius: 5px;
+`;
+
+export const CourseCard = styled.div`
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #e8e8e8;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: #e8e8e8;
+  }
+`;
+export const CoursesTitle = styled.h1`
+  color: black;
+`;
+
+export const CoursesDescription = styled.p`
+  color: black;
+`;
+
+export const NoCourses = styled.div`
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const CenterContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+`;
+
+export const SearchBar = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  width: 100%;
+  margin-right: 20px;
 `;

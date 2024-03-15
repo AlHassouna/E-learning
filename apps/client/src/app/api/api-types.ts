@@ -5,6 +5,7 @@ export interface IUser {
 }
 
 
+
 export interface IContent{
   courseTitle: string
   content: string
