@@ -28,3 +28,13 @@ export interface IAuth {
   initializeRoutes(): void;
 }
 
+export interface IContent{
+  router: Router;
+  model: any;
+  
+  content(req: Request, res: Response): Promise<void>;
+
+  initializeRoutes(): void;
+
+}
+
