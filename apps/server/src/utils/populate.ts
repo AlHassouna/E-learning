@@ -1,6 +1,7 @@
+
 import { User } from '../models/auth';
 import { Course } from '../models/auth';
-import { content } from '../models/auth';
+import { Content } from '../models/auth';
 import { DiscussionForum } from '../models/auth';
 import { DiscussionPost } from '../models/auth';
 import { Quiz } from '../models/auth';
@@ -99,6 +100,17 @@ const checkDiscussionPostsSchema = async () => {
   }
 };
 
+const populateContent = async () => {
+  try{
+    await Content.insertMany(content)
+    console.log('Content Imported');
+    process.exit();
+  } catch (error) {
+    console.error(`Error: ${error.message}`);
+    process.exit(1);
+  }
+};
+
 const checkQuizzesSchema = async () => {
   try {
     // Create instances of quizzes
@@ -159,6 +171,6 @@ export {
   checkQuizAttemptsSchema,
   checkNotificationsSchema,
   checkRewardsSchema,
-  checkMeetingsSchema,
+  checkMeetingsSchema,populateTransactions
 };
 // export { populateTransactions, dropDB };

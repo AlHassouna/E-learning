@@ -4,8 +4,17 @@ export interface IUser {
   data: GetUserDetailsResponse;
 }
 
-export interface ICourse {
-  id: string;
-  title: string;
-  description: string;
+
+
+export interface IContent{
+  courseTitle: string
+  content: string
+  course: ICourse
+}
+
+export interface ICourse{
+  courseName: string
+  description: string
+  teacher: IUser
+  participants: IUser
 }

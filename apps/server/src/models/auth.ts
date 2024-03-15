@@ -32,6 +32,8 @@ courseSchema.pre('save', async function (next) {
   }
 });
 
+// Content Schema
+
 // Video Schema
 // const videoSchema = new Schema({
 //   videoTitle: { type: String, required: true },
@@ -152,7 +154,7 @@ const meetingSchema = new Schema({
 // Models
 export const User = model('User', userSchema);
 export const Course = model('Course', courseSchema);
-export const content = model('content', contentSchema);
+export const Content = model('Content', contentSchema);
 export const DiscussionForum = model('DiscussionForum', discussionForumSchema);
 export const DiscussionPost = model('DiscussionPost', discussionPostSchema);
 export const Quiz = model('Quiz', quizSchema);
