@@ -12,6 +12,7 @@ const userSchema = new Schema({
 // Course Schema
 const courseSchema = new Schema({
   courseName: { type: String, required: true },
+  courseId: {type: String, required: true},
   description: { type: String, required: true },
   teacher: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   participants: [{ type: Schema.Types.ObjectId, ref: 'User' }]
@@ -60,24 +61,23 @@ const discussionPostSchema = new Schema({
 // Quiz Schema
 const quizSchema = new Schema({
   course: { type: Schema.Types.ObjectId, ref: 'Course', required: true },
-  teacher: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  teacher: { type: Schema.Types.ObjectId, ref: 'User', required: false },
   quizTitle: { type: String, required: true },
   description: { type: String },
   timestamp: { type: Date, default: Date.now },
   duration: { type: Number, default: 10 },
   category: { type: String, required: true },
   level: { type: String, enum: ['easy', 'medium', 'hard'] },
-  questions: [{ type: Schema.Types.ObjectId, ref: 'Question' }]
+  questions: [{ type: Schema.Types.ObjectId, ref: 'Question' }],
 });
 
 // Question Schema
 const questionSchema = new Schema({
-  //level
-
   questionText: { type: String, required: true },
-  type: { type: String, enum: ['MCQ', 'Open Ended'], required: true },
+  type: { type: String, enum: ['multiple', 'boolean'], required: true },
   options: [{ type: String }],
-  correctOption: { type: String }
+  correctOption: { type: String },
+  level: { type: String, enum: ['easy', 'medium', 'hard'] },
 });
 
 // Quiz Attempt Schema
@@ -86,13 +86,14 @@ const quizAttemptSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   timestamp: { type: Date, default: Date.now },
   score: { type: Number, default: 0 },
-  rewardEarned: { type: Schema.Types.ObjectId, ref: 'Reward' }, // Reference to reward earned
+  isPerfect: {type: Boolean, default: false},
+  rewardEarned: { type: Schema.Types.ObjectId, ref: 'Reward' },
   questionAttempts: [{
     question: { type: Schema.Types.ObjectId, ref: 'Question' },
     userAnswer: { type: String },
     isCorrect: { type: Boolean },
-    level: { type: String }
-  }]
+    level: { type: String },
+  }],
 });
 
 // Notification Schema

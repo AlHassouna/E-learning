@@ -17,12 +17,9 @@ class RewardRouter implements IReward {
   public create = async (req: Request, res: Response): Promise<void> => {
     try {
       const { ...bodyWithoutReward } = req.body;
-      if (req.body.rewardEarned) {
-        res.status(400).json({ message: 'Reward already earned' });
-      }
       const { user, type, timestamp } = bodyWithoutReward;
       await this.model.create({ user, type, timestamp });
-      res.status(201).json({ message: 'Reward created' });
+      res.status(201).json({ message: 'Reward created' ,reward :{type}});
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

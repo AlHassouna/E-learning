@@ -1,3 +1,4 @@
+import { Response } from 'express';
 import StoreBase from './StoreBase';
 
 import { action, makeObservable, observable } from 'mobx';
@@ -36,8 +37,15 @@ class RewardStore extends StoreBase {
   public postReward = async (payload: any): Promise<void> => {
     try {
       this.setIsLoadingResponse(true);
-      const { type } = await postReward(payload);
+      const response = await postReward(payload);
+      console.log('response: ', response)
+      console.log('reward: ', response.reward);
+      console.log('reward type: ', response.reward.type);
+
+      
+      const  type  = response.reward.type;
       this.type = type;
+      console.log('this type: ',this.type)
     } catch (e: any) {
       this.rewardMessage = e.message;
     } finally {

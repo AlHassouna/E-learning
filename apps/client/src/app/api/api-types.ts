@@ -22,6 +22,7 @@ export interface ICourse{
 
 
 export interface IReward {
+  reward: any;
   user: string;
   type: string;
   timestamp: Date;

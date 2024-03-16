@@ -13,19 +13,26 @@ import {
 import img1 from '../../../assets/elearning.png';
 import img2 from '../../../assets/elearning (1).png';
 import { DModel, LoadingSpin } from '../../core';
+import { Button } from 'antd';
+import {QuizButton} from '../../styles/index'
 
 
 interface ContentProps {
   courseTitle: string;
+  onDifficultySelect: (difficulty: string) => void;
 }
 
-export const Content: React.FC<ContentProps> = observer(({ courseTitle }) => {
+export const Content: React.FC<ContentProps> = observer(({ courseTitle, onDifficultySelect }) => {
   const { content, main } = useStore();
   const { isLoading } = main;
   const { getContent, content: courseContent } = content;
   useEffect(() => {
     getContent(courseTitle);
   }, []);
+
+  const handleDifficultySelection = (difficulty: string) => {
+    onDifficultySelect(difficulty);
+  };
 
   return (
     <>
@@ -43,11 +50,13 @@ export const Content: React.FC<ContentProps> = observer(({ courseTitle }) => {
             <DModel btnTitle={'Take A Quiz'} title={'Take A Quiz'} children={
               <div style={{
                 display: 'flex',
-                flexDirection: 'column'
+                flexDirection: 'column',
               }}>
-                <div>Easy</div>
-                <div>Meduiem</div>
-                <div>Hard</div>
+                <QuizButton onClick={() => handleDifficultySelection('easy')}>Easy</QuizButton>
+                <br></br>
+                <QuizButton onClick={() => handleDifficultySelection('medium')}>Medium</QuizButton>
+                <br></br>
+                <QuizButton onClick={() => handleDifficultySelection('hard')}>Hard</QuizButton>
               </div>
             }></DModel>
           </ContentDiv>

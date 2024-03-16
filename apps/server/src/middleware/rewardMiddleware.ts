@@ -1,24 +1,25 @@
+import { rewards } from './../data/dummyData-Test';
 import { Request, Response, NextFunction } from 'express';
 
 export const calculateReward = async function(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
-    const score = req.body.score;
+    const isPerfect = req.body.isPerfect;
 
     if (req.body.rewardEarned) {
       return next();
     }
 
     let rewardId = null;
-    if (score >= 80) {
-      rewardId = 'High_Score';
-    } else if (score >= 50) {
-      rewardId = 'Medium_Score';
-    } else {
-      rewardId = 'Low_Score';
+    let rewardEarned = true;
+    if (isPerfect === true) {
+      rewardId = 'received reward'; 
+    }
+    else{
+      rewardEarned = false;
     }
 
     const rewardData = {
-      user: '65e70dbd8f6d6c25bdb6ff58',
+      user: req.body.user,
       type: rewardId,
       timestamp: new Date()
     };
