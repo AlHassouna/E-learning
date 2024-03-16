@@ -1,3 +1,4 @@
+
 import express, { Request, Response } from 'express';
 import { Course } from '../models/auth';
 import { dummyData } from '../data/course';

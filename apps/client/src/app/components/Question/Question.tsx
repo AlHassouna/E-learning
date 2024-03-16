@@ -12,17 +12,34 @@ interface QuestionProps {
 
 const Question: React.FC<QuestionProps> = ({ selectedAnswers, selectedAnswer, question, onAnswerChange, setSelectedAnswer }) => {
 
+  const [shuffledOptions, setShuffledOptions] = useState<string[]>([]);
+
+  useEffect(() => {
+    const optionsCopy = [...question.options];
+    const shuffled = shuffleArray(optionsCopy);
+    setShuffledOptions(shuffled);
+  }, [question]);
+
   const handleOptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newSelectedAnswer = e.target.value;
     setSelectedAnswer(newSelectedAnswer);
     onAnswerChange(question._id, newSelectedAnswer);
   };
 
+  const shuffleArray = (array: string[]) => {
+    const shuffledArray = [...array];
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+    }
+    return shuffledArray;
+  };
+
   return (
     <div>
       <h3>{((question.questionText).replace(/&quot;/g,'"').replace(/&#039;/g, '`'))}</h3>
-      {question.options.map((option, index) => {
-        const isSelected = selectedAnswers[question._id] === option; // Check if an answer is selected
+      {shuffledOptions.map((option, index) => {
+        const isSelected = selectedAnswers[question._id] === option;
         return (
           <StyledQuestion key={index}>
             <StyledInput
@@ -30,9 +47,10 @@ const Question: React.FC<QuestionProps> = ({ selectedAnswers, selectedAnswer, qu
               name={`question-${question._id}`}
               value={option}
               onChange={handleOptionChange} 
-              checked={selectedAnswer === option || isSelected} // Set checked attribute based on selectedAnswer or isSelected
+              checked={selectedAnswer === option || isSelected}
             />
             <label>{option.replace(/&quot;/g,'"').replace(/&#039;/g, '`')}</label>
+
           </StyledQuestion>
         );
       })}

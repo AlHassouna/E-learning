@@ -1,16 +1,22 @@
 import express from 'express';
+import { User,Reward, Content, Course} from '../models/auth';
 import AuthRouter from './AuthRouter';
-import { User } from '../models/auth';
 import quizRouter from './QuizRouter';
 import CourseRouter from './CourseRouter';
-const mongoose = require('mongoose');
+import ContentRouter from './ContentRouter'
+import RewardRouter from './RewardRouter';
 const router = express.Router();
 
 const authRouter = new AuthRouter(User);
 const courseRouter = new CourseRouter();
+const contentRouter = new ContentRouter(Content);
+const rewardRouter = new RewardRouter(Reward);
+
 
 router.use('/courses', courseRouter.router);
 router.use('/auth', authRouter.router);
 router.use('/quizzes', quizRouter);
 
+router.use('/content', contentRouter.router)
+router.use('/reward', rewardRouter.router);
 export default router;

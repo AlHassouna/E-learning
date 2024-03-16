@@ -5,32 +5,47 @@ import { Button, Card, Row, Col, message } from 'antd';
 import Question from '../Question/Question';
 import avatarImage from '../../images/reading.png';
 import resultsImage from '../../images/checklist.png';
-import {StyledContainerQuiz, StyledCardContainer, StyledCardQuiz, StyledTitle, StyledDescription, ButtonContainer, QuizButton, AvatarImage, ResultsAvatarImage, BackButtonContainer} from '../../styles/index'
+import {StyledContainerQuiz, StyledCardContainer, StyledCardQuiz, StyledTitle, StyledDescription, 
+  ButtonContainer, QuizButton, AvatarImage, ResultsAvatarImage, BackButtonContainer, StyledParagraph, RewardStyled} from '../../styles/index'
 import QuizTimer from './QuizTimer';
 import {submitQuiz} from '../../api/quiz/postUserAnswers'
 import { useStore } from '../../stores/setupContext';
 import { ignore } from 'antd/es/theme/useToken';
 import { getItem } from '../../utils/localStorage';
+import { useNavigate } from 'react-router-dom';
+import rewardGif from '../../images/trophy.gif'
 
 const { Meta } = Card;
 
-const Quiz: React.FC<{ quiz: QuizType }> = observer(({ quiz }) => {
+const Quiz: React.FC<{ quiz: QuizType, course: string }> = observer(({ quiz, course }) => {
   const [selectedAnswer, setSelectedAnswer] = useState<string>('');
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [selectedAnswers, setSelectedAnswers] = useState<{ [questionId: string]: string }>({});
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [score, setScore] = useState<number>(0); 
   const [isTimerActive, setIsTimerActive] = useState<boolean>(true);
-  const { auth } = useStore();
+  const { auth,reward } = useStore();
+  const {postReward,type} = reward;
+  const navigate = useNavigate();
   const token = getItem('token')
   //@ts-ignore
-  //console.log(JSON.parse(token))
-
+  const id = JSON.parse(token)._id
   useEffect(() => {
     if (isSubmitted) {
       setIsTimerActive(false);
     }
   }, [isSubmitted]);
+
+  const [courseName, setCourseName] = useState<string | null>(null);
+  const [receivedReward, setReceivedReward] = useState<boolean>(true);
+
+  useEffect(() => {
+    const courseMap: { [key: string]: string } = {
+      19: 'math', 
+      25: 'art'
+    };
+    setCourseName(courseMap[course]);
+  }, [course]);
 
   const handleNext = () => {
     setCurrentQuestionIndex(prevIndex => prevIndex + 1);
@@ -48,6 +63,10 @@ const Quiz: React.FC<{ quiz: QuizType }> = observer(({ quiz }) => {
     }));
   };
 
+  const handleBack = () => {
+    navigate(`/courses/${courseName}`);
+  }
+
   const handleSubmit = async () => {
     const questionAttempts =  quiz.questions.map(question => ({
       question: question._id,
@@ -57,7 +76,23 @@ const Quiz: React.FC<{ quiz: QuizType }> = observer(({ quiz }) => {
     }));
 
     try {
-        const response = await submitQuiz(quiz._id, '65f248fc059717ad5903abd1', questionAttempts);
+        const response = await submitQuiz(quiz._id, id, questionAttempts);
+        console.log(id)
+        const rewardObject = {
+          score: response.quizAttempt.score,
+          isPerfect: response.quizAttempt.isPerfect,
+          user: id,   
+        }
+        await postReward(rewardObject)
+        console.log('the type is: ', reward.type)
+
+        if (reward.type === 'received reward'){
+          console.log('received reward')
+        }
+        else {
+          setReceivedReward(false);
+          console.log("didnt received reward")
+        }
         setIsSubmitted(true);
         setScore(response.quizAttempt.score);
         message.success('Quiz submitted successfully');
@@ -96,13 +131,21 @@ const Quiz: React.FC<{ quiz: QuizType }> = observer(({ quiz }) => {
                     
                     }
                   />
+                  {receivedReward ?
+                   ( <RewardStyled>
+                    <StyledParagraph>Congrats! You Received A Reward</StyledParagraph>
+                     <img src={rewardGif} alt="Reward GIF" style={{height: '100px', width: '100px', display: 'flex', alignItems: 'center'}} />
+                    </RewardStyled> )
+                    :
+                    (  <p></p> )}
                   <BackButtonContainer>
-                    <QuizButton type="primary">Back To The Course</QuizButton>
+                    <QuizButton type="primary" onClick={handleBack}>Back To Course Page</QuizButton>
                   </BackButtonContainer>
                 </StyledCardQuiz>
               ) : (
                 <StyledCardQuiz>
                   {isTimerActive && <QuizTimer duration={quiz.duration} onTimerEnd={handleAutoSubmit}/>}
+                  <p>level: {quiz.level}</p>
                   <Meta
                     avatar={<AvatarImage src={avatarImage} alt="avatar" />}
                     title={<StyledTitle>{quiz.quizTitle}</StyledTitle>}

@@ -90,9 +90,11 @@ class AuthStore extends StoreBase {
   };
 
   public logout = (): void => {
+    this.rootStore.main.setLoading(true);
     this.authResponse = null;
     setToken('');
     removeItem('token');
+    this.rootStore.main.setLoading(false);
   };
 }
 

@@ -1,31 +1,19 @@
 import express, { Request, Response } from 'express';
 import axios, { AxiosError } from 'axios';
-import { Quiz, Question, QuizAttempt } from '../models/auth';
+import he from 'he';
+import { Quiz, Question, QuizAttempt, Course } from '../models/auth';
 
 const router = express.Router();
 
 router.get('/:categoryId/:difficultyId', async (req: Request, res: Response) => {
     try {
-        const { categoryId } = req.params;
-        const categoryMapping: { [key: number]: string } = {
-            9: 'General Knowledge',
-            10: 'Entertainment: Books'
-        };
+        const { categoryId, difficultyId } = req.params;
 
-        const category = categoryMapping[categoryId];
-         if (!category) {
+         if (!categoryId) {
             return res.status(404).json({ error: 'Category not found' });
         }
 
-        const { difficultyId } = req.params;
-        const difficultyMapping: { [key: string]: string } = {
-            'easy': 'easy',
-            'medium': 'medium',
-            'hard': 'hard'
-        }; 
-        
-        const difficulty = difficultyMapping[difficultyId];
-         if (!difficulty) {
+         if (!difficultyId) {
             return res.status(404).json({ error: 'difficulty not found' });
         }
 
@@ -55,10 +43,12 @@ router.get('/:categoryId/:difficultyId', async (req: Request, res: Response) => 
         const { results } = response.data;
 
         const questionIds = [];
-
+        let category = '';
         for (const quizData of results) {
+            category = quizData.category;
+            const decodedQuestion = he.decode(quizData.question);
             const question = await Question.create({
-                questionText: quizData.question,
+                questionText: decodedQuestion,
                 type: quizData.type,
                 options: quizData.incorrect_answers.concat(quizData.correct_answer), 
                 correctOption: quizData.correct_answer,
@@ -71,7 +61,6 @@ router.get('/:categoryId/:difficultyId', async (req: Request, res: Response) => 
         const questions = await Question.find({ _id: { $in: questionIds } });
         const quiz = await Quiz.create({
             course: "65e8f7237e4c40e2ac2cc5a3",
-            teacher: "65e8e8d2066b04954f0f8e49",
             quizTitle: `Quiz for ${category}`,
             description: `Quiz for ${category}`,
             category: category,
@@ -89,14 +78,16 @@ router.get('/:categoryId/:difficultyId', async (req: Request, res: Response) => 
 router.post('/submit', async (req: Request, res: Response) => {
     try {
         const { quizId, userId, questionAttempts } = req.body;
-
-        const score = calculateScore(questionAttempts);
+        console.log(userId);
+        
+        const {totalScore, isPerfect} = calculateScore(questionAttempts);
 
         const quizAttempt = await QuizAttempt.create({
             quiz: quizId,
             user: userId,
             questionAttempts: questionAttempts,
-            score: score,
+            score: totalScore,
+            isPerfect: isPerfect
         });
 
         res.status(200).json({ quizAttempt });
@@ -108,6 +99,7 @@ router.post('/submit', async (req: Request, res: Response) => {
 
 function calculateScore(questionAttempts) {
     let totalScore = 0;
+    let isPerfect = true;
     for (const attempt of questionAttempts) {
         if (attempt.isCorrect) {
             switch (attempt.level) {
@@ -124,8 +116,11 @@ function calculateScore(questionAttempts) {
                     break;
             }
         }
+        else{
+            isPerfect = false;
+        }
     }
-    return totalScore;
+    return {totalScore, isPerfect};
 }
 
   

@@ -1,5 +1,5 @@
 import { Route } from '../types';
-import { AuthPage, HomePage, QuizPage} from '../pages/';
+import { AuthPage, HomePage, QuizPage, ContentPage} from '../pages/';
 
 export const routes: Route[] = [
   {
@@ -25,5 +25,15 @@ export const routes: Route[] = [
     linksTo: '/quiz',
     showOnMenu: true,
     component: <QuizPage />
+  },
+  {
+    
+    key: 'content',
+    text: 'ContentPage',
+    exact: true,
+    linksTo: '/courses/:courseTitle',
+    showOnMenu: true,
+    component: <ContentPage courseTitle="math" />
   }
+
 ];

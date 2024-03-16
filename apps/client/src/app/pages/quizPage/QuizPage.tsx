@@ -2,33 +2,28 @@ import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { useStore } from '../../stores/setupContext';
 import Quiz from '../../components/Quiz/Quiz';
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { stringify } from 'querystring';
 
 export const QuizPage: React.FC = observer(() => {
   const { quiz } = useStore();
-//   const { categoryId } = useParams<{ categoryId?: string }>();
-
-//   useEffect(() => {
-//     if (categoryId) {
-//       quiz.fetchQuizzes(parseInt(categoryId));
-//     }
-//   }, [quiz, categoryId]);
-
-  const id = 10;
-  const difficulty = 'medium'
+  
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const difficulty = params.get('difficulty') || '';
+  const categoryId = params.get('category') || '0'; 
 
   useEffect(() => {
-    console.log("In page",new Date().toLocaleDateString())
-    quiz.fetchQuizzes(id, difficulty);
-  }, []);
+    if (categoryId && categoryId !== '0') {
+      quiz.fetchQuizzes(parseInt(categoryId), difficulty);
+    }
+  }, [categoryId, difficulty]);
 
-  
   return (
     <div>
-      {quiz.quizzes.map(q => { 
-        console.log(q)
-       return <Quiz key={q._id} quiz={q} />
-      })}
+      {quiz.quizzes.map(q => (
+        <Quiz key={q._id} quiz={q} course={categoryId}/>
+      ))}
     </div>
   );
 });
