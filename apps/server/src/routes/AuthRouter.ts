@@ -25,11 +25,11 @@ class AuthRouter implements IAuth {
         role: roleString,
         username
       });
-     
+      const { _id } = user;
       const token = jwt.sign({ user },
         process.env.JWT_SECRET as string,
         { expiresIn: 60 * 60 });
-      res.status(201).json({ email, roleString, username, token});
+      res.status(201).json({ email, roleString, username, token, _id });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

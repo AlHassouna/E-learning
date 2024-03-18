@@ -14,7 +14,7 @@ import img1 from '../../../assets/elearning.png';
 import img2 from '../../../assets/elearning (1).png';
 import { DModel, LoadingSpin } from '../../core';
 import { Button } from 'antd';
-import {QuizButton} from '../../styles/index'
+import { QuizButton } from '../../styles/index';
 
 
 interface ContentProps {
@@ -27,9 +27,11 @@ export const Content: React.FC<ContentProps> = observer(({ courseTitle, onDiffic
   const { isLoading } = main;
   const { getContent, content: courseContent } = content;
   useEffect(() => {
-    getContent(courseTitle);
-  }, []);
-
+    const fetchContent = async () => {
+      await getContent(courseTitle);
+    };
+    fetchContent();
+  }, [courseTitle]);
   const handleDifficultySelection = (difficulty: string) => {
     onDifficultySelect(difficulty);
   };
@@ -50,7 +52,7 @@ export const Content: React.FC<ContentProps> = observer(({ courseTitle, onDiffic
             <DModel btnTitle={'Take A Quiz'} title={'Take A Quiz'} children={
               <div style={{
                 display: 'flex',
-                flexDirection: 'column',
+                flexDirection: 'column'
               }}>
                 <QuizButton onClick={() => handleDifficultySelection('easy')}>Easy</QuizButton>
                 <br></br>

@@ -1,9 +1,10 @@
 import React from 'react';
-import { AppstoreOutlined, MailOutlined, SettingOutlined, BookOutlined } from '@ant-design/icons';
+import { MailOutlined, BookOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
-import { courses, profile } from '../../constants';
+import { profile } from '../../constants';
 import { useNavigate } from 'react-router-dom';
+import { ICourse } from '../../api/api-types';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -23,23 +24,22 @@ function getItem(
   } as MenuItem;
 }
 
-const items: MenuProps['items'] = [
-  getItem('Courses', 'courses', <BookOutlined />,
-    courses.map((course, index) => (
-      getItem(course.title, course.key
-      ))
-    )
-  ),
-  getItem('Profile', 'profile', <MailOutlined />,
-    profile.map((profile, index) => (
-      getItem(profile.title, profile.key
-      ))
-    )
-  )
-];
 
-
-export const SideNav: React.FC = () => {
+export const SideNav: React.FC<{ courses: ICourse[] }> = ({ courses }) => {
+  const items: MenuProps['items'] = [
+    getItem('Courses', 'courses', <BookOutlined />,
+      courses.map((course, index) => (
+        getItem(course.courseName, course.courseName.toLowerCase()
+        ))
+      )
+    ),
+    getItem('Profile', 'profile', <MailOutlined />,
+      profile.map((profile, index) => (
+        getItem(profile.title, ''
+        ))
+      )
+    )
+  ];
   const navigate = useNavigate();
   return (
     <Menu

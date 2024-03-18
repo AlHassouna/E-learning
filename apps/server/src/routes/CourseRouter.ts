@@ -1,29 +1,53 @@
-
 import express, { Request, Response } from 'express';
 import { Course } from '../models/auth';
 import { dummyData } from '../data/course';
+import { ICourse } from '../types/types';
+import { Router } from 'express-serve-static-core';
 
-class CourseRouter {
-  router = express.Router();
+class CourseRouter implements ICourse {
+  router: Router;
+  model: any;
 
-  constructor() {
+  constructor(model: any) {
+    this.router = express.Router();
+    this.model = model;
     this.initializeRoutes();
   }
 
-  private initializeRoutes() {
-    this.router.post('/initialize', this.initializeCourses.bind(this));
+  public getAll = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const courses = await this.model.find();
+      res.status(200).json(courses);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
+
+  public getOne = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const course = await this.model.findById(req.params.id);
+      res.status(200).json(course);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
+
+
+  public search = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const courses = await this.model.find({ courseName: { $regex: req.params.search, $options: 'i' } });
+      res.status(200).json(courses);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
+
+  public initializeRoutes(): void {
+    this.router.get('/', this.getAll);
+    this.router.get('/:id', this.getOne);
+    this.router.post('/search/:search', this.search);
   }
 
-  private async initializeCourses(req: Request, res: Response) {
-    try {
-      await Course.deleteMany({});
-      await Course.insertMany(dummyData);
-      res.status(201).send('Dummy data saved successfully.');
-    } catch (error) {
-      console.error('Error saving dummy data:', error);
-      res.status(500).send('Internal Server Error');
-    }
-  }
 }
 
 export default CourseRouter;

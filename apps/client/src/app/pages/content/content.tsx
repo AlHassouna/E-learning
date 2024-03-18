@@ -1,33 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { Content } from '../../components/ContentForm/Content';
 import { useNavigate } from 'react-router-dom';
+import { useStore } from '../../stores/setupContext';
 
-interface ContentProps {
-  courseTitle: string;
-}
 
-export const ContentPage: React.FC<ContentProps> = observer(({ courseTitle }) => {
+export const ContentPage: React.FC = observer(() => {
+  const { navbar } = useStore();
+  const { courses, chosenCourse, setCourseId } = navbar;
   const navigate = useNavigate();
-  const [categoryId, setCategoryId] = useState<number | null>(null);
-
   useEffect(() => {
-    const categoryMap: { [key: string]: number } = {
-      math: 19, 
-      art: 25
-    };
-    setCategoryId(categoryMap[courseTitle.toLowerCase()]);
-  }, [courseTitle]);
+    const categoryMap = courses.reduce((acc, course) => {
+      // @ts-ignore
+      acc[course.courseName.toLowerCase()] = course._id;
+      return acc;
+    }, {});
+    // @ts-ignore
+    setCourseId(categoryMap[chosenCourse.toLowerCase()]);
+  }, [chosenCourse]);
 
   const handleDifficultySelect = (difficulty: string) => {
-    if (categoryId !== null) {
-      navigate(`/quiz?category=${categoryId}&difficulty=${difficulty}`);
+    if (chosenCourse.toLowerCase() !== null) {
+      navigate(`/quiz?category=${chosenCourse.toLowerCase()}&difficulty=${difficulty}`);
     } else {
-      console.error('Category ID not found for course title:', courseTitle);
+      console.error('Category ID not found for course title:', chosenCourse);
     }
   };
 
   return (
-    <Content courseTitle={courseTitle} onDifficultySelect={handleDifficultySelect} />
+    <Content courseTitle={chosenCourse} onDifficultySelect={handleDifficultySelect} />
   );
 });

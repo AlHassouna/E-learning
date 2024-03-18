@@ -20,7 +20,6 @@ export const RewardModel: React.FC = observer(() => {
   //   calculateReward();
   // }, [postReward]);
 
-  console.log('Reward Type:', type);
   return (
     <div>
       {/*<DModel title="Reward">*/}

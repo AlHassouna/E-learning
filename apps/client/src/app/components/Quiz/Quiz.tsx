@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { QuizType } from '../../types';
 import { observer } from 'mobx-react';
-import { Button, Card, Row, Col, message } from 'antd';
+import { Card, Row, Col, message } from 'antd';
 import Question from '../Question/Question';
 import avatarImage from '../../images/reading.png';
 import resultsImage from '../../images/checklist.png';
-import {StyledContainerQuiz, StyledCardContainer, StyledCardQuiz, StyledTitle, StyledDescription, 
-  ButtonContainer, QuizButton, AvatarImage, ResultsAvatarImage, BackButtonContainer, StyledParagraph, RewardStyled} from '../../styles/index'
+import {
+  StyledContainerQuiz, StyledCardContainer, StyledCardQuiz, StyledTitle, StyledDescription,
+  ButtonContainer, QuizButton, AvatarImage, ResultsAvatarImage, BackButtonContainer, StyledParagraph, RewardStyled
+} from '../../styles/index';
 import QuizTimer from './QuizTimer';
-import {submitQuiz} from '../../api/quiz/postUserAnswers'
+import { submitQuiz } from '../../api/quiz/postUserAnswers';
 import { useStore } from '../../stores/setupContext';
-import { ignore } from 'antd/es/theme/useToken';
 import { getItem } from '../../utils/localStorage';
 import { useNavigate } from 'react-router-dom';
-import rewardGif from '../../images/trophy.gif'
+import rewardGif from '../../images/trophy.gif';
 
 const { Meta } = Card;
 
@@ -22,28 +23,31 @@ const Quiz: React.FC<{ quiz: QuizType, course: string }> = observer(({ quiz, cou
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [selectedAnswers, setSelectedAnswers] = useState<{ [questionId: string]: string }>({});
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
-  const [score, setScore] = useState<number>(0); 
+  const [score, setScore] = useState<number>(0);
   const [isTimerActive, setIsTimerActive] = useState<boolean>(true);
-  const { auth,reward } = useStore();
-  const {postReward,type} = reward;
+  const { reward, navbar, quiz: Quiz } = useStore();
+  const { isLoading } = Quiz;
+  const { courses } = navbar;
+  const { postReward } = reward;
   const navigate = useNavigate();
-  const token = getItem('token')
+  const token = getItem('token');
   //@ts-ignore
-  const id = JSON.parse(token)._id
+  const id = JSON.parse(token)._id;
   useEffect(() => {
     if (isSubmitted) {
       setIsTimerActive(false);
     }
   }, [isSubmitted]);
-
   const [courseName, setCourseName] = useState<string | null>(null);
   const [receivedReward, setReceivedReward] = useState<boolean>(true);
 
   useEffect(() => {
-    const courseMap: { [key: string]: string } = {
-      19: 'math', 
-      25: 'art'
-    };
+    const courseMap = courses.reduce((acc, course) => {
+      // @ts-ignore
+      acc[course._id] = course.courseName;
+      return acc;
+    }, {});
+    // @ts-ignore
     setCourseName(courseMap[course]);
   }, [course]);
 
@@ -65,39 +69,37 @@ const Quiz: React.FC<{ quiz: QuizType, course: string }> = observer(({ quiz, cou
 
   const handleBack = () => {
     navigate(`/courses/${courseName}`);
-  }
+  };
 
   const handleSubmit = async () => {
-    const questionAttempts =  quiz.questions.map(question => ({
+    const questionAttempts = quiz.questions.map(question => ({
       question: question._id,
       userAnswer: selectedAnswers[question._id] || '',
       isCorrect: selectedAnswers[question._id] === question.correctOption,
-      level: question.level,
+      level: question.level
     }));
 
     try {
-        const response = await submitQuiz(quiz._id, id, questionAttempts);
-        console.log(id)
-        const rewardObject = {
-          score: response.quizAttempt.score,
-          isPerfect: response.quizAttempt.isPerfect,
-          user: id,   
-        }
-        await postReward(rewardObject)
-        console.log('the type is: ', reward.type)
+      const response = await submitQuiz(quiz._id, id, questionAttempts);
+      const rewardObject = {
+        score: response.quizAttempt.score,
+        isPerfect: response.quizAttempt.isPerfect,
+        user: id
+      };
+      await postReward(rewardObject);
+      console.log('the type is: ', reward.type);
 
-        if (reward.type === 'received reward'){
-          console.log('received reward')
-        }
-        else {
-          setReceivedReward(false);
-          console.log("didnt received reward")
-        }
-        setIsSubmitted(true);
-        setScore(response.quizAttempt.score);
-        message.success('Quiz submitted successfully');
+      if (reward.type === 'received reward') {
+        console.log('received reward');
+      } else {
+        setReceivedReward(false);
+        console.log('didnt received reward');
+      }
+      setIsSubmitted(true);
+      setScore(response.quizAttempt.score);
+      message.success('Quiz submitted successfully');
     } catch (error) {
-        console.error('Error submitting quiz:', error);
+      console.error('Error submitting quiz:', error);
     }
   };
 
@@ -108,11 +110,13 @@ const Quiz: React.FC<{ quiz: QuizType, course: string }> = observer(({ quiz, cou
   };
 
   const isLastQuestion: boolean = currentQuestionIndex === quiz.questions.length - 1;
-
   return (
+    isLoading ? (
+        <div>Loading...</div>
+      ) :
       <StyledContainerQuiz>
         {/* @ts-ignore */}
-        <style jsx>{`.ant-card-meta-avatar{
+        <style jsx>{`.ant-card-meta-avatar {
           display: flex;
           justify-content: center;
         }`}</style>
@@ -121,30 +125,31 @@ const Quiz: React.FC<{ quiz: QuizType, course: string }> = observer(({ quiz, cou
             <StyledCardContainer>
               {isSubmitted ? (
                 <StyledCardQuiz>
-                  <Meta style={{flexDirection: 'column'}}
-                    avatar={<ResultsAvatarImage src={resultsImage} alt="avatar" />}
-                    title={<StyledTitle>Your Score is:</StyledTitle>}
-                    description={
-                      <StyledDescription>
-                        <p style={{textAlign: 'center', fontSize: '2rem'}}>{score}</p>
-                      </StyledDescription>
-                    
-                    }
+                  <Meta style={{ flexDirection: 'column' }}
+                        avatar={<ResultsAvatarImage src={resultsImage} alt="avatar" />}
+                        title={<StyledTitle>Your Score is:</StyledTitle>}
+                        description={
+                          <StyledDescription>
+                            <p style={{ textAlign: 'center', fontSize: '2rem' }}>{score}</p>
+                          </StyledDescription>
+
+                        }
                   />
                   {receivedReward ?
-                   ( <RewardStyled>
-                    <StyledParagraph>Congrats! You Received A Reward</StyledParagraph>
-                     <img src={rewardGif} alt="Reward GIF" style={{height: '100px', width: '100px', display: 'flex', alignItems: 'center'}} />
-                    </RewardStyled> )
+                    (<RewardStyled>
+                      <StyledParagraph>Congrats! You Received A Reward</StyledParagraph>
+                      <img src={rewardGif} alt="Reward GIF"
+                           style={{ height: '100px', width: '100px', display: 'flex', alignItems: 'center' }} />
+                    </RewardStyled>)
                     :
-                    (  <p></p> )}
+                    (<p></p>)}
                   <BackButtonContainer>
                     <QuizButton type="primary" onClick={handleBack}>Back To Course Page</QuizButton>
                   </BackButtonContainer>
                 </StyledCardQuiz>
               ) : (
                 <StyledCardQuiz>
-                  {isTimerActive && <QuizTimer duration={quiz.duration} onTimerEnd={handleAutoSubmit}/>}
+                  {isTimerActive && <QuizTimer duration={quiz.duration} onTimerEnd={handleAutoSubmit} />}
                   <p>level: {quiz.level}</p>
                   <Meta
                     avatar={<AvatarImage src={avatarImage} alt="avatar" />}
@@ -153,9 +158,9 @@ const Quiz: React.FC<{ quiz: QuizType, course: string }> = observer(({ quiz, cou
                       <StyledDescription>
                         <p>Question {currentQuestionIndex + 1}:</p>
                         <Question
-                        selectedAnswers={selectedAnswers}
-                        selectedAnswer={selectedAnswer}
-                        setSelectedAnswer={setSelectedAnswer}
+                          selectedAnswers={selectedAnswers}
+                          selectedAnswer={selectedAnswer}
+                          setSelectedAnswer={setSelectedAnswer}
                           question={quiz.questions[currentQuestionIndex]}
                           onAnswerChange={handleAnswerChange}
                         />
@@ -175,7 +180,7 @@ const Quiz: React.FC<{ quiz: QuizType, course: string }> = observer(({ quiz, cou
           </Col>
         </Row>
       </StyledContainerQuiz>
-    );
+  );
 });
 
 export default Quiz;

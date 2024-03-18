@@ -5,34 +5,30 @@ import cors from 'cors';
 import eLearning from './routes/api';
 import {
   populateContent,
-  dropAllDb
+  dropAllDb,
+  populateCourses,
+  dropContent,
+  dropCourses
 } from './utils/populate.js';
 
 dotenv.config();
 const app = express();
 
 app.use(cors());
+
+
 mongoose
-  .connect('mongodb://127.0.0.1:27017/eLearning', {} as ConnectOptions)
+  .connect('mongodb+srv://hhasona:rtK3ZWCyNEZmifHG@cluster0.32yucli.mongodb.net/Elearning', {} as ConnectOptions)
   .catch((err) => console.log(err));
 
 const db = mongoose.connection;
 db.once('open', async function() {
   console.log('Connected to MongoDB');
-  //await dropAllDb();
-  // await populateTransactions();
-  // await dropDB();
+  // await dropAllDb();
   // await populateContent();
-  // await checkUsersSchema();
-  // await checkCoursesSchema();
-  // await checkContentsSchema();
-  // await checkDiscussionForumsSchema();
-  // await checkDiscussionPostsSchema();
-  // await checkQuizzesSchema();
-  // await checkQuizAttemptsSchema();
-  // await checkNotificationsSchema();
-  // await checkRewardsSchema();
-  // await checkMeetingsSchema();
+  // await populateCourses();
+  // await dropContent();
+  // await dropCourses();
 });
 
 app.use(express.urlencoded({ extended: false }));

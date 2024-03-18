@@ -22,7 +22,7 @@ export interface SearchProps {
 
 export const SearchInput: React.FC<SearchProps> = observer(({ search }) => {
   const { navbar } = useStore();
-  const { current, courses, setCurrent, isLoading } = navbar;
+  const { current, setCurrent, isLoading, coursesBySearch, setChosenCourse } = navbar;
   const navigate = useNavigate();
   const location = useLocation();
   const [inputValue, setInputValue] = useState('');
@@ -46,13 +46,16 @@ export const SearchInput: React.FC<SearchProps> = observer(({ search }) => {
       {current === '' ? null :
         <SearchOptions>
           {
-            isLoading ? <CenterContainer><LoadingSpin /></CenterContainer> : courses.length === 0 ?
+            isLoading ? <CenterContainer><LoadingSpin /></CenterContainer> : coursesBySearch.length === 0 ?
               <NoCourses>
                 <h1>No courses found</h1>
               </NoCourses>
-              : courses.map((course, index) => (
-                <CourseCard key={index} onClick={() => navigate(`/courses/${course.title.toLowerCase()}`)}>
-                  <CoursesTitle>{course.title}</CoursesTitle>
+              : coursesBySearch.map((course, index) => (
+                <CourseCard key={index} onClick={() => {
+                  setChosenCourse(course.courseName);
+                  navigate(`/courses/${course.courseName.toLowerCase()}`);
+                }}>
+                  <CoursesTitle>{course.courseName}:</CoursesTitle>
                   <CoursesDescription>{course.description}</CoursesDescription>
                 </CourseCard>
               ))

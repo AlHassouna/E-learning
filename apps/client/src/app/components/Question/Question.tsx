@@ -5,13 +5,18 @@ import { StyledQuestion, StyledInput } from '../../styles/index';
 interface QuestionProps {
   question: QuestionType;
   onAnswerChange: (questionId: string, selectedAnswer: string) => void;
-  setSelectedAnswer: (answer:string) => void;
+  setSelectedAnswer: (answer: string) => void;
   selectedAnswer: string;
   selectedAnswers: { [questionId: string]: string };
 }
 
-const Question: React.FC<QuestionProps> = ({ selectedAnswers, selectedAnswer, question, onAnswerChange, setSelectedAnswer }) => {
-
+const Question: React.FC<QuestionProps> = ({
+                                             selectedAnswers,
+                                             selectedAnswer,
+                                             question,
+                                             onAnswerChange,
+                                             setSelectedAnswer
+                                           }) => {
   const [shuffledOptions, setShuffledOptions] = useState<string[]>([]);
 
   useEffect(() => {
@@ -19,6 +24,11 @@ const Question: React.FC<QuestionProps> = ({ selectedAnswers, selectedAnswer, qu
     const shuffled = shuffleArray(optionsCopy);
     setShuffledOptions(shuffled);
   }, [question]);
+
+  useEffect(() => {
+    // Reset selected answer when question changes
+    setSelectedAnswer('');
+  }, [question, setSelectedAnswer]);
 
   const handleOptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newSelectedAnswer = e.target.value;
@@ -37,7 +47,7 @@ const Question: React.FC<QuestionProps> = ({ selectedAnswers, selectedAnswer, qu
 
   return (
     <div>
-      <h3>{((question.questionText).replace(/&quot;/g,'"').replace(/&#039;/g, '`'))}</h3>
+      <h3>{((question.questionText).replace(/&quot;/g, '"').replace(/&#039;/g, '`'))}</h3>
       {shuffledOptions.map((option, index) => {
         const isSelected = selectedAnswers[question._id] === option;
         return (
@@ -46,11 +56,10 @@ const Question: React.FC<QuestionProps> = ({ selectedAnswers, selectedAnswer, qu
               type="radio"
               name={`question-${question._id}`}
               value={option}
-              onChange={handleOptionChange} 
+              onChange={handleOptionChange}
               checked={selectedAnswer === option || isSelected}
             />
-            <label>{option.replace(/&quot;/g,'"').replace(/&#039;/g, '`')}</label>
-
+            <label>{option.replace(/&quot;/g, '"').replace(/&#039;/g, '`')}</label>
           </StyledQuestion>
         );
       })}

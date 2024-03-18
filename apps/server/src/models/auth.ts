@@ -12,7 +12,6 @@ const userSchema = new Schema({
 // Course Schema
 const courseSchema = new Schema({
   courseName: { type: String, required: true },
-  courseId: {type: String, required: true},
   description: { type: String, required: true },
   teacher: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   participants: [{ type: Schema.Types.ObjectId, ref: 'User' }]
@@ -35,8 +34,8 @@ courseSchema.pre('save', async function(next) {
 
 const contentSchema = new Schema({
   courseTitle: { type: String, required: true },
-  content: { type: String }
-  // course: { type: Schema.Types.ObjectId, ref: 'Course', required: true }
+  content: { type: String },
+  course: { type: Schema.Types.ObjectId, ref: 'Course', required: true }
 });
 // Discussion Forum Schema
 const discussionForumSchema = new Schema({
@@ -68,7 +67,7 @@ const quizSchema = new Schema({
   duration: { type: Number, default: 10 },
   category: { type: String, required: true },
   level: { type: String, enum: ['easy', 'medium', 'hard'] },
-  questions: [{ type: Schema.Types.ObjectId, ref: 'Question' }],
+  questions: [{ type: Schema.Types.ObjectId, ref: 'Question' }]
 });
 
 // Question Schema
@@ -77,7 +76,7 @@ const questionSchema = new Schema({
   type: { type: String, enum: ['multiple', 'boolean'], required: true },
   options: [{ type: String }],
   correctOption: { type: String },
-  level: { type: String, enum: ['easy', 'medium', 'hard'] },
+  level: { type: String, enum: ['easy', 'medium', 'hard'] }
 });
 
 // Quiz Attempt Schema
@@ -86,14 +85,14 @@ const quizAttemptSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   timestamp: { type: Date, default: Date.now },
   score: { type: Number, default: 0 },
-  isPerfect: {type: Boolean, default: false},
+  isPerfect: { type: Boolean, default: false },
   rewardEarned: { type: Schema.Types.ObjectId, ref: 'Reward' },
   questionAttempts: [{
     question: { type: Schema.Types.ObjectId, ref: 'Question' },
     userAnswer: { type: String },
     isCorrect: { type: Boolean },
-    level: { type: String },
-  }],
+    level: { type: String }
+  }]
 });
 
 // Notification Schema

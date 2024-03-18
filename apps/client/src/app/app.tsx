@@ -5,9 +5,11 @@ import { routes } from './routes';
 import { StoreProvider, useStore } from './stores/setupContext';
 import './App.css';
 import { Navbar } from './components/Navbar/Navbar';
+import { CenterContainer } from './styles';
+import { LoadingSpin } from './core';
 
 const App: React.FC = () => {
-  const { auth } = useStore();
+  const { auth, navbar } = useStore();
   const { isAuthenticated } = auth;
   return (
     <>
