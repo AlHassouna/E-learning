@@ -85,11 +85,19 @@ export const Navbar: React.FC = observer(() => {
                   </SubMenu>
                 </Menu>
               </Col>
-              <Col xs={2} sm={2} md={0}>
-                <Button type="primary" onClick={showDrawer}>
-                  <MenuOutlined />
-                </Button>
-              </Col>
+              <div style={{
+                display: 'flex',
+                width: '100%',
+                justifyContent: 'flex-end',
+                alignItems: 'center',
+                marginRight: '20px'
+              }}>
+                <Col xs={2} sm={2} md={0}>
+                  <Button type="primary" onClick={showDrawer}>
+                    <MenuOutlined />
+                  </Button>
+                </Col>
+              </div>
               <Drawer
                 title="Menu"
                 placement="right"

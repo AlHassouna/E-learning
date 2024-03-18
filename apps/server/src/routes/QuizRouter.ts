@@ -78,7 +78,6 @@ router.post('/:categoryId/:difficultyId', async (req: Request, res: Response) =>
 router.post('/submit', async (req: Request, res: Response) => {
   try {
     const { quizId, userId, questionAttempts } = req.body;
-    console.log(userId);
 
     const { totalScore, isPerfect } = calculateScore(questionAttempts);
 
