@@ -2,12 +2,21 @@ import { Schema, model } from 'mongoose';
 
 // User Schema
 const userSchema = new Schema({
-  username: { type: String, required: true },
+  username: { type: String, required: true,unique:true },
   password: { type: String, required: true },
-  email: { type: String, required: true },
+  email: { type: String, required: true,unique:true},
   role: { type: String, enum: ['Student', 'Teacher'], required: true },
   profileInformation: { type: String },
 });
+
+
+// online contacts
+const onlineSchema = new Schema({
+  username: { type: String, required: true,unique:true },
+  socketID: { type: String, required: true,unique:true},
+});
+
+
 
 // Course Schema
 const courseSchema = new Schema({
@@ -40,6 +49,17 @@ const videoSchema = new Schema({
   uploadDate: { type: Date, default: Date.now },
   course: { type: Schema.Types.ObjectId, ref: 'Course', required: true },
 });
+
+//message private Schema
+const msgSchema = new Schema({
+ sender: { type: String, required: true},
+  receiver: { type: String, required: true},
+   msg: { type: String, required: true},
+  date:{ type: String, required: true},
+});
+
+
+
 
 // Discussion Forum Schema
 const discussionForumSchema = new Schema({
@@ -124,7 +144,9 @@ const meetingSchema = new Schema({
 });
 
 // Models
+
 export const User = model('User', userSchema);
+export const MsgPrivate = model('Msg', msgSchema);
 export const Course = model('Course', courseSchema);
 export const Video = model('Video', videoSchema);
 export const DiscussionForum = model('DiscussionForum', discussionForumSchema);
@@ -135,3 +157,4 @@ export const QuizAttempt = model('QuizAttempt', quizAttemptSchema);
 export const Notifications = model('Notification', notificationSchema);
 export const Reward = model('Reward', rewardSchema);
 export const Meeting = model('Meeting', meetingSchema);
+export const Online = model('Online', onlineSchema);

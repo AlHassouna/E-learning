@@ -1,0 +1,134 @@
+// import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
+// import { socket } from '../socket';
+// import { getItem } from '../../../utils/localStorage';
+// import './MyForm.css';
+
+// interface AuthResponse {
+//   username: string;
+//   email: string;
+// }
+
+// interface DataSend {
+//   Email: string;
+//   Value: string;
+// }
+// interface MsgPrivate {
+//   userSend: string,
+//   userRecive: string,
+//   data: string,
+//   date: string,
+//   id:string
+// }
+
+// interface ChatItem {
+//   Email: string;
+//   Value: string;
+// }
+// interface ContactsOnline{
+//   UserName:string
+// }
+// // interface socketID {
+// //   id:string
+// // }
+// export function MyForm() {
+//   const [value, setValue] = useState<string>('');
+//   const [chatList, setChatList] = useState<ChatItem[]>([]);
+//   const [authResponse, setAuthResponse] = useState<AuthResponse | null>(null);
+//   const [contactsOnline, setcontactsOnline] = useState<ContactsOnline[]>([]);
+
+
+  
+//   useEffect(() => {
+//     const authResponseFromLocalStorage = getItem('token');
+//     const parsedAuthResponse = authResponseFromLocalStorage ? JSON.parse(authResponseFromLocalStorage) : null;
+//     setAuthResponse(parsedAuthResponse);
+//   }, []);
+
+//   function onSubmit(event: FormEvent<HTMLFormElement>) {
+//     event.preventDefault();
+
+//     if (authResponse) {
+//       const dataSend: DataSend = { Email: authResponse.username, Value: value };
+//       socket.emit('message', dataSend, (response: null) => {
+//         console.log('Server response:', value, response);
+//       });
+//     }
+
+//     setValue('');
+//   }
+  
+//   useEffect(() => {
+//     const messageListener = (data: { Email: string; Value: string }) => {
+//       setChatList((prevChatList) => [...prevChatList, data]);
+      
+     
+//     };
+//     socket.on("connect", () => {
+//       if (authResponse) {
+
+//       socket.emit('contactOnlineNow',authResponse.username, (response: null) => {
+//         console.log('Server response:', value, response);
+
+//       })
+//       // console.log(socket.id);
+    
+//   }
+// })
+// const contactsListener = (username: string) => {
+//   setcontactsOnline((prevContactsOnline) => [...prevContactsOnline, { UserName: username }]);
+// };
+
+
+// ////////get all contact in the chat//////////
+// socket.on('contacts', (e: any) => {
+//   console.log("socket", e);
+// });
+// ///////////////////////////////
+// socket.on('message', messageListener);
+  
+//       socket.on("private message", () => {
+//         console.log(socket);
+//       })
+//     return () => {
+//       socket.off('message', messageListener);
+//     };
+//   }, [chatList, authResponse]);
+  
+  
+
+//   function handleChange(event: ChangeEvent<HTMLInputElement>) {
+//     setValue(event.target.value);
+//   }
+  
+   
+   
+
+//   return (
+//     <div>
+//       <form onSubmit={onSubmit}>
+//         <input type="text" value={value} onChange={handleChange} />
+//         <button type="submit">Submit</button>
+//       </form>
+
+//       <ul>
+//       {chatList.map((chat, index) => (
+//   <div >
+// <p
+//   className={
+//     chat.Email === (authResponse?.username ?? '') ? 'box1' : 'box2'
+//   }
+//   key={index}
+// >
+//   {chat.Email} {chat.Value}
+// </p>
+//   </div>
+// ))}
+
+//       </ul>
+//     </div>
+//   );
+// }
+// function username(...args: any[]): void {
+//   throw new Error('Function not implemented.');
+// }
+

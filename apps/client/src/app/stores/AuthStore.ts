@@ -71,11 +71,11 @@ class AuthStore extends StoreBase {
   };
 
   public signup = async (payload: UserSign): Promise<void> => {
+
     try {
       this.setIsLoadingResponse(true);
       const { token, username, email, roleString: role, _id } = await signUp(payload);
       this.authResponse = { token, username, email, role, _id };
-
       setItem({
         key: 'token', value: JSON.stringify({
           token, username, email, role, _id

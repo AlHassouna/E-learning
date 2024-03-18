@@ -1,0 +1,503 @@
+.box1 {
+    width: 80%;
+    margin-top: 5px;
+    margin-left: 20%;
+    border-radius: 15px;
+    background: #87CEFA;
+    color: rgb(15, 15, 15);
+    padding: 10px;
+    text-align: center;
+    font-family: arial;
+    position: relative;
+}
+.box2 {
+    width: 80%;
+    margin-top: 5px;
+    margin-right: 10%;
+    border-radius: 15px;
+    background: DodgerBlue;
+    color: rgb(255, 255, 255);
+    padding: 10px;
+    text-align: center;
+    font-family: arial;
+    position: relative;
+}
+gradient-custom {
+    /* fallback for old browsers */
+    background: #fccb90;
+  
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(
+      to bottom right,
+      rgba(252, 203, 144, 1),
+      rgba(213, 126, 235, 1)
+    );
+  
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(
+      to bottom right,
+      rgba(252, 203, 144, 1),
+      rgba(213, 126, 235, 1)
+    );
+  }
+  
+  .mask-custom {
+    background: rgba(24, 24, 16, 0.2);
+    border-radius: 2em;
+    backdrop-filter: blur(15px);
+    border: 2px solid rgba(255, 255, 255, 0.05);
+    background-clip: padding-box;
+    box-shadow: 10px 10px 10px rgba(46, 54, 68, 0.03);
+  }
+  .red{
+    width: 200px;
+    background: rgba(24, 24, 16, 0.2);
+    border-radius: 2em;
+    backdrop-filter: blur(15px);
+    border: 2px solid rgba(255, 255, 255, 0.05);
+    background-clip: padding-box;
+    box-shadow: 10px 10px 10px rgba(46, 54, 68, 0.03);
+    color: red
+  }
+  .blue{
+    width: 200px;
+
+    background: rgba(24, 24, 16, 0.2);
+    border-radius: 2em;
+    backdrop-filter: blur(15px);
+    border: 2px solid rgba(255, 255, 255, 0.05);
+    background-clip: padding-box;
+    box-shadow: 10px 10px 10px rgba(46, 54, 68, 0.03);
+    color: blue
+  }
+  #chat3 .form-control {
+    border-color: transparent;
+  }
+  
+  #chat3 .form-control:focus {
+    border-color: transparent;
+    box-shadow: inset 0px 0px 0px 1px transparent;
+  }
+  
+  .badge-dot {
+    border-radius: 50%;
+    height: 10px;
+    width: 10px;
+    margin-left: 2.9rem;
+    margin-top: -0.75rem;
+  }
+  #chat3 {
+    /* Add styles for your card body here */
+    /* This div will have a scrollbar if its content exceeds its height */
+    overflow-y: auto;
+    max-height: 400px; /* Set maximum height to enable scrollbar when content overflows */
+  }
+
+
+
+
+
+
+
+
+
+
+  /* ////////////////////////// */
+  .mb-2 {
+    flex: auto;
+    padding: auto;
+}
+
+.b11 {
+    text-align: center;
+    padding: 5px;
+}
+
+.flex-box {
+    float: left;
+    display: flex;
+    justify-content: space-around;
+}
+
+body {
+    margin: 0 auto;
+    max-width: 800px;
+    padding: 0 20px;
+}
+
+.container {
+    float: left;
+    border: 2px solid #dedede;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.darker {
+    border-color: #ccc;
+    background-color: #ddd;
+}
+
+.container::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.container img {
+    float: left;
+    max-width: 60px;
+    width: 100%;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+
+.container img.right {
+    float: right;
+    margin-left: 20px;
+    margin-right: 0;
+}
+
+.time-right {
+    float: right;
+    color: #aaa;
+}
+
+.time-left {
+    float: left;
+    color: #999;
+}
+
+
+/* 
+
+
+///
+/
+/
+/
+
+*/
+
+.lable {
+    float: left;
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    background-color: rgb(157, 169, 221);
+    color: black;
+    border-radius: 10px;
+    margin: 1rem;
+    padding: 1rem;
+}
+
+.row {
+    float: left;
+    display: flex;
+    justify-content: space-around;
+}
+
+p {
+    background-color: rgb(184, 156, 156);
+}
+
+.col-xs-12 {
+    padding: 10px 20px;
+    margin-top: 0.5rem;
+    background-color: rgb(190, 155, 155);
+    border: 1px solid blue;
+    box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.16), 0 4px 6px rgba(0, 0, 0, 0.45);
+    border-radius: 10px;
+}
+
+.custom-select {
+    font-family: Arial;
+}
+
+.select-selected {
+    background-color: DodgerBlue;
+}
+
+label {
+    float: none;
+    background-color: white;
+    font-size: 1rem;
+    color: dodgerblue;
+}
+
+textarea {
+    float: left;
+    position: relative;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+    width: 70%;
+    background-color: white;
+}
+
+button1 {
+    float: left;
+    width: 5rem;
+    height: 2.5rem;
+    background-color: DodgerBlue;
+    color: #ffffff;
+    margin-left: 0.5rem;
+}
+
+.box1 {
+    width: 80%;
+    margin-top: 5px;
+    margin-left: 20%;
+    border-radius: 15px;
+    background: #87CEFA;
+    color: rgb(15, 15, 15);
+    padding: 10px;
+    text-align: center;
+    font-family: arial;
+    position: relative;
+}
+
+.sb13:before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 15px solid #87CEFA;
+    border-right: 15px solid transparent;
+    border-top: 15px solid #87CEFA;
+    border-bottom: 15px solid transparent;
+    right: -16px;
+    top: 0px;
+}
+
+.box2 {
+    width: 80%;
+    margin-top: 5px;
+    margin-right: 10%;
+    border-radius: 15px;
+    background: DodgerBlue;
+    color: rgb(255, 255, 255);
+    padding: 10px;
+    text-align: center;
+    font-family: arial;
+    position: relative;
+}
+
+.sb14:before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 15px solid transparent;
+    border-right: 15px solid DodgerBlue;
+    border-top: 15px solid DodgerBlue;
+    border-bottom: 15px solid transparent;
+    left: -16px;
+    top: 0px;
+}
+
+.info {
+    font-weight: 300;
+    font-size: 12px;
+    background: none
+}
+
+.text {
+    font-weight: 900;
+    background: none
+}
+
+@media only screen and (min-width: 768px) {
+    .col-md-3 {
+        padding: 10px 10px 45px;
+        margin-top: 20px;
+        margin-right: 1rem;
+        background-color: rgb(136, 101, 101);
+        border: 1px solid blue;
+        box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.16), 0 4px 6px rgba(0, 0, 0, 0.45);
+        border-radius: 10px;
+    }
+    .col-md-8 {
+        padding: 10px 20px 45px;
+        margin-top: 20px;
+        background-color: #fff;
+        border: 1px solid blue;
+        box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.16), 0 4px 6px rgba(0, 0, 0, 0.45);
+        border-radius: 10px;
+    }
+    textarea {
+        position: relative;
+        margin-bottom: 1rem;
+        border-radius: 5px;
+        width: 100%;
+        background-color: white;
+    }
+    button1 {
+        width: 100%;
+        height: 2.5rem;
+        background-color: DodgerBlue;
+        color: #ffffff;
+        margin: 0em;
+    }
+}
+
+
+
+
+
+/* mcklmn;mv; */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+.home__container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.home__container > * {
+  margin-bottom: 10px;
+}
+.home__header {
+  margin-bottom: 30px;
+}
+.username__input {
+  padding: 10px;
+  width: 50%;
+}
+.home__cta {
+  width: 200px;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #607eaa;
+  color: #f9f5eb;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+}
+.chat {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
+.chat__sidebar {
+  height: 100%;
+  background-color: #f9f5eb;
+  flex: 0.2;
+  padding: 20px;
+  border-right: 1px solid #fdfdfd;
+}
+.chat__main {
+  height: 100%;
+  flex: 0.8;
+}
+.chat__header {
+  margin: 30px 0 20px 0;
+}
+.chat__users > * {
+  margin-bottom: 10px;
+  color: #607eaa;
+  font-size: 14px;
+}
+.online__users > * {
+  margin-bottom: 10px;
+  color: rgb(238, 102, 102);
+  font-style: italic;
+}
+.chat__mainHeader {
+  width: 100%;
+  height: 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #f9f5eb;
+}
+.leaveChat__btn {
+  padding: 10px;
+  width: 150px;
+  border: none;
+  outline: none;
+  background-color: #d1512d;
+  cursor: pointer;
+  color: #eae3d2;
+}
+.message__container {
+  width: 100%;
+  height: 80vh;
+  background-color: #fff;
+  padding: 20px;
+  overflow-y: scroll;
+}
+
+.message__container > * {
+  margin-bottom: 10px;
+}
+.chat__footer {
+  padding: 10px;
+  background-color: #f9f5eb;
+  height: 10vh;
+}
+.form {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.message {
+  width: 80%;
+  height: 100%;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  outline: none;
+  padding: 15px;
+}
+.sendBtn {
+  width: 150px;
+  background-color: green;
+  padding: 10px;
+  border: none;
+  outline: none;
+  color: #eae3d2;
+  cursor: pointer;
+}
+.sendBtn:hover {
+  background-color: rgb(129, 201, 129);
+}
+.message__recipient {
+  background-color: #f5ccc2;
+  width: 300px;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 15px;
+}
+.message__sender {
+  background-color: rgb(194, 243, 194);
+  max-width: 300px;
+  padding: 10px;
+  border-radius: 10px;
+  margin-left: auto;
+  font-size: 15px;
+}
+.message__chats > p {
+  font-size: 13px;
+}
+.sender__name {
+  text-align: right;
+}
+.message__status {
+  position: fixed;
+  bottom: 50px;
+  font-size: 13px;
+  font-style: italic;
+}

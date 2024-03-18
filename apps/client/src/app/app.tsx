@@ -8,7 +8,7 @@ import './App.css';
 
 const App: React.FC = () => {
   return (
-    <>
+    <div>
       <StoreProvider>
         <Routes>
           {routes.map((route) => (
@@ -16,7 +16,7 @@ const App: React.FC = () => {
           ))}
         </Routes>
       </StoreProvider>
-    </>
+    </div>
   );
 };
 
