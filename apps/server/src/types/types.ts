@@ -46,7 +46,8 @@ export interface IReward {
   delete(req: Request, res: Response): Promise<void>;
 
 }
-export interface IContent{
+
+export interface IContent {
   router: Router;
   model: any;
 
@@ -56,3 +57,17 @@ export interface IContent{
 
 }
 
+
+export interface ICourse {
+  router: Router;
+  model: any;
+
+  initializeRoutes(): void;
+
+  getAll(req: Request, res: Response): Promise<void>;
+
+  getOne(req: Request, res: Response): Promise<void>;
+
+  search(req: Request, res: Response): Promise<void>;
+
+}

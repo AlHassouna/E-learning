@@ -14,8 +14,8 @@ export const FlexContainer = styled.div`
 export const CourseContent = styled.div`
   display: flex;
   justify-content: center;
-  width : fit-content;
-  margin : 0rem 10rem 0rem 10rem;
+  width: fit-content;
+  margin: 0rem 10rem 0rem 10rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   color: #9A616G;
 `;
@@ -25,18 +25,18 @@ export const CourseTitle = styled.h1`
   justify-content: center;
   align-items: center;
   color: #9A616D;
-  margin : 0 
+  margin: 0
 `;
 
 export const QuizzButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin : 0 auto ;
+  margin: 0 auto;
   background-color: #9A616D;
-  border-radius : 4rem;
-  padding : 1rem;
-  display:block;
+  border-radius: 4rem;
+  padding: 1rem;
+  display: block;
 `;
 
 export const FirstIcon = styled.img`
@@ -47,9 +47,9 @@ export const FirstIcon = styled.img`
 export const SecondIcon = styled.img`
   width: 8%;
   hight: 8%;
-  margin-right:0;
+  margin-right: 0;
   margin-left: auto;
-  display:block;
+  display: block;
 `;
 
 export const ContentDiv = styled.div`
@@ -113,12 +113,13 @@ export const StyledContainerQuiz = styled.div`
   background-color: #EFDAC7;
   min-height: 100vh;
   padding: 20px;
-  `
+`;
 export const SearchContainer = styled.div`
   position: relative;
   width: 80%;
   display: flex;
   justify-content: center;
+  z-index: 10;
 `;
 
 export const SearchOptions = styled.div`
@@ -133,10 +134,12 @@ export const SearchOptions = styled.div`
 `;
 
 export const CourseCard = styled.div`
+  display: flex;
+  align-content: center;
+  justify-content: center;
   width: 100%;
   padding: 10px;
   border: 1px solid #e8e8e8;
-  margin-bottom: 10px;
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -151,6 +154,7 @@ export const CoursesTitle = styled.h1`
 
 export const CoursesDescription = styled.p`
   color: black;
+  margin-top: 3px;
 `;
 
 export const NoCourses = styled.div`
@@ -165,7 +169,7 @@ export const StyledCardContainer = styled.div`
   justify-content: center;
 `;
 
-export const StyledCardQuiz= styled(Card)`
+export const StyledCardQuiz = styled(Card)`
   min-height: 500px;
   width: 600px;
 
@@ -221,7 +225,7 @@ export const ButtonContainer = styled.div`
   margin-top: 80px;
   display: flex;
   justify-content: space-between;
-  
+
 `;
 
 export const BackButtonContainer = styled.div`
@@ -231,27 +235,27 @@ export const BackButtonContainer = styled.div`
 `;
 
 export const QuizButton = styled(Button)`
-&&& {
-  margin-right: 10px;
-  border-color: #786283;
-
-  &:hover {
-    background-color: #9275a1;
-    border-color: #9275a1;
-    color: #fff
-  }
-
-  &.ant-btn-primary {
-    background-color: #03565B;
-    color: #fff;
+  &&& {
+    margin-right: 10px;
+    border-color: #786283;
 
     &:hover {
-      background-color: #0c939c;
-      border-color: #0c939c;
+      background-color: #9275a1;
+      border-color: #9275a1;
+      color: #fff
+    }
+
+    &.ant-btn-primary {
+      background-color: #03565B;
       color: #fff;
+
+      &:hover {
+        background-color: #0c939c;
+        border-color: #0c939c;
+        color: #fff;
+      }
     }
   }
-}
 `;
 
 
@@ -260,7 +264,7 @@ export const StyledQuestion = styled.div`
   color: #03565B
 `;
 
- export const StyledInput = styled.input`
+export const StyledInput = styled.input`
   margin-right: 10px;
 `;
 

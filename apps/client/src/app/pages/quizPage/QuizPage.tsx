@@ -3,28 +3,37 @@ import { observer } from 'mobx-react';
 import { useStore } from '../../stores/setupContext';
 import Quiz from '../../components/Quiz/Quiz';
 import { useLocation } from 'react-router-dom';
-import { stringify } from 'querystring';
+import { CenterContainer } from '../../styles';
+import { LoadingSpin } from '../../core';
+import { QuizType } from '../../types';
 
 export const QuizPage: React.FC = observer(() => {
-  const { quiz } = useStore();
-  
+  const { quiz, navbar, main } = useStore();
+  const { courseId, chosenCourse } = navbar;
+  const { currentQuiz, setCurrentQuiz, isLoading, setIsLoading } = quiz;
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const difficulty = params.get('difficulty') || '';
-  const categoryId = params.get('category') || '0'; 
-
   useEffect(() => {
-    if (categoryId && categoryId !== '0') {
-      quiz.fetchQuizzes(parseInt(categoryId), difficulty);
-    }
-  }, [categoryId, difficulty]);
-
+    const fetchQ = async () => {
+      if (chosenCourse && chosenCourse !== '0') {
+        setIsLoading(true);
+        setCurrentQuiz({} as QuizType);
+        await quiz.fetchQuizzes(chosenCourse, difficulty, courseId);
+      }
+    };
+    fetchQ();
+  }, [courseId, difficulty]);
   return (
-    <div>
-      {quiz.quizzes.map(q => (
-        <Quiz key={q._id} quiz={q} course={categoryId}/>
-      ))}
-    </div>
+    <>
+      {isLoading ? (
+          <CenterContainer>
+            <LoadingSpin />
+          </CenterContainer>
+        ) :
+        <Quiz quiz={currentQuiz} course={courseId} />
+      }
+    </>
   );
 });
 

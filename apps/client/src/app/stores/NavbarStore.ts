@@ -1,13 +1,16 @@
 import StoreBase from './StoreBase';
 
 import { action, makeObservable, observable } from 'mobx';
-import { getCoursesBySearch } from '../api/index';
+import { getCoursesBySearch, getAllCourses } from '../api/index';
 import { ICourse } from '../api/api-types';
 
 class NavbarStore extends StoreBase {
   public current = '';
   public courses: ICourse[] = [];
   public isLoading = false;
+  public coursesBySearch: ICourse[] = [];
+  public chosenCourse = '';
+  public courseId = '';
 
   constructor() {
     super();
@@ -17,8 +20,14 @@ class NavbarStore extends StoreBase {
       isLoading: observable,
       setCurrent: action,
       search: action,
+      getAll: action,
+      chosenCourse: observable,
+      setChosenCourse: action,
+      coursesBySearch: observable,
       setCourses: action,
-      setIsLoading: action
+      setIsLoading: action,
+      courseId: observable,
+      setCourseId: action
     });
   }
 
@@ -34,11 +43,31 @@ class NavbarStore extends StoreBase {
     this.isLoading = isLoading;
   };
 
+  public setChosenCourse = (course: string): void => {
+    this.chosenCourse = course;
+  };
+
+  public setCourseId = (id: string): void => {
+    this.courseId = id;
+  };
+
   public search = async (search: string): Promise<void> => {
     try {
       this.setIsLoading(true);
       this.setCurrent(search);
       const courses = await getCoursesBySearch(search);
+      this.coursesBySearch = courses;
+      this.setIsLoading(false);
+    } catch (error) {
+      console.error(error);
+      this.setIsLoading(false);
+    }
+  };
+
+  public getAll = async (): Promise<void> => {
+    try {
+      this.setIsLoading(true);
+      const courses = await getAllCourses();
       this.setCourses(courses);
       this.setIsLoading(false);
     } catch (error) {

@@ -38,14 +38,13 @@ class RewardStore extends StoreBase {
     try {
       this.setIsLoadingResponse(true);
       const response = await postReward(payload);
-      console.log('response: ', response)
+      console.log('response: ', response);
       console.log('reward: ', response.reward);
       console.log('reward type: ', response.reward.type);
 
-      
-      const  type  = response.reward.type;
+
+      const type = response.reward.type;
       this.type = type;
-      console.log('this type: ',this.type)
     } catch (e: any) {
       this.rewardMessage = e.message;
     } finally {

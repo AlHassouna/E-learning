@@ -5,19 +5,19 @@ export interface IUser {
 }
 
 
-
-export interface IContent{
-  courseTitle: string
-  content: string
-  course: ICourse
+export interface IContent {
+  courseTitle: string;
+  content: string;
+  course: ICourse;
 }
 
-export interface ICourse{
-  courseName: string
-  description: string
-  teacher: IUser
-  participants: IUser
-  title : string
+export interface ICourse {
+  _id: string;
+  courseName: string;
+  description: string;
+  teacher: IUser;
+  participants: IUser;
+  title: string;
 }
 
 
