@@ -14,7 +14,8 @@ const courseSchema = new Schema({
   courseName: { type: String, required: true },
   description: { type: String, required: true },
   teacher: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-  participants: [{ type: Schema.Types.ObjectId, ref: 'User' }]
+  participants: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  courseImage: { type: String } 
 });
 
 // Custom validation to limit participants per course

@@ -21,7 +21,7 @@ export class ContentStore extends StoreBase {
           status: false
         }
       },
-      participants: {
+      participants: [{
         data: {
           id: '',
           username: '',
@@ -29,8 +29,9 @@ export class ContentStore extends StoreBase {
           role: '',
           status: false
         }
-      },
-      title: ''
+      }],
+      title: '',
+      courseImage: ''
     }
   };
 

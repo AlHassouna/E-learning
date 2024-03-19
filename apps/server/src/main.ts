@@ -24,11 +24,11 @@ mongoose
 const db = mongoose.connection;
 db.once('open', async function() {
   console.log('Connected to MongoDB');
-  // await dropAllDb();
+  //await dropAllDb();
   // await populateContent();
-  // await populateCourses();
+  //await populateCourses();
   // await dropContent();
-  // await dropCourses();
+   //await dropCourses();
 });
 
 app.use(express.urlencoded({ extended: false }));
