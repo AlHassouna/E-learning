@@ -9,7 +9,7 @@ import {
 import { observer } from 'mobx-react';
 import { SearchInput } from '../../core';
 import { SideNav } from './SideNav';
-import { courses, profile } from '../../constants';
+import { profile } from '../../constants';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../stores/setupContext';
 import { SearchBar } from '../../styles';

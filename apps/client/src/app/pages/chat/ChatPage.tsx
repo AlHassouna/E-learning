@@ -1,12 +1,11 @@
+import { CenterContainer } from '../../styles';
+import { LoadingSpin } from '../../core';
+import { Navigate } from 'react-router-dom';
 import React from 'react';
 import { useStore } from '../../stores/setupContext';
-import { Navigate } from 'react-router-dom';
-import { observer } from 'mobx-react';
-import { LoadingSpin } from '../../core';
-import { CenterContainer } from '../../styles';
-import { RewardModel } from '../../components/Reward/RewardModel';
+import { Chat } from '../../components/Chat/Chat';
 
-export const HomePage: React.FC = observer(() => {
+export const ChatPage: React.FC = () => {
   const { auth, main } = useStore();
   const { isLoading } = main;
   const { isAuthenticated } = auth;
@@ -19,9 +18,7 @@ export const HomePage: React.FC = observer(() => {
       ) : (
         <>
           {isAuthenticated ? (
-            <div>
-              <h1>Welcome to the home page</h1>
-            </div>
+            <Chat />
           ) : (
             <Navigate to="/auth" />
           )}
@@ -29,4 +26,4 @@ export const HomePage: React.FC = observer(() => {
       )}
     </>
   );
-});
+};

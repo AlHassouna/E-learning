@@ -1,6 +1,5 @@
 import { Schema, model } from 'mongoose';
 
-// User Schema
 const userSchema = new Schema({
   username: { type: String, required: true },
   password: { type: String, required: true },
@@ -9,7 +8,7 @@ const userSchema = new Schema({
   profileInformation: { type: String }
 });
 
-// Course Schema
+
 const courseSchema = new Schema({
   courseName: { type: String, required: true },
   description: { type: String, required: true },
@@ -17,7 +16,7 @@ const courseSchema = new Schema({
   participants: [{ type: Schema.Types.ObjectId, ref: 'User' }]
 });
 
-// Custom validation to limit participants per course
+
 courseSchema.pre('save', async function(next) {
   try {
     const participantCount = this.participants.length;
@@ -37,7 +36,7 @@ const contentSchema = new Schema({
   content: { type: String },
   course: { type: Schema.Types.ObjectId, ref: 'Course', required: true }
 });
-// Discussion Forum Schema
+
 const discussionForumSchema = new Schema({
   course: { type: Schema.Types.ObjectId, ref: 'Course', required: true },
   topic: { type: String, required: true },
@@ -45,7 +44,6 @@ const discussionForumSchema = new Schema({
   timestamp: { type: Date, default: Date.now }
 });
 
-// Discussion Post Schema
 const discussionPostSchema = new Schema({
   forum: {
     type: Schema.Types.ObjectId,
@@ -110,13 +108,17 @@ const rewardSchema = new Schema({
   timestamp: { type: Date, default: Date.now }
 });
 
-// Meeting Schema
-const meetingSchema = new Schema({
-  course: { type: Schema.Types.ObjectId, ref: 'Course', required: true },
-  teacher: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-  dateTime: { type: Date, required: true },
-  meetingURL: { type: String },
-  description: { type: String }
+
+const msgSchema = new Schema({
+  sender: { type: String, required: true },
+  receiver: { type: String, required: true },
+  msg: { type: String, required: true },
+  date: { type: String, required: true }
+});
+
+const onlineSchema = new Schema({
+  username: { type: String, required: true, unique: true },
+  socketID: { type: String, required: true, unique: true }
 });
 
 // Models
@@ -130,4 +132,5 @@ export const Question = model('Question', questionSchema);
 export const QuizAttempt = model('QuizAttempt', quizAttemptSchema);
 export const Notifications = model('Notification', notificationSchema);
 export const Reward = model('Reward', rewardSchema);
-export const Meeting = model('Meeting', meetingSchema);
+export const MsgPrivate = model('Msg', msgSchema);
+export const Online = model('Online', onlineSchema);
