@@ -3,7 +3,7 @@ import { IAuth } from '../types/types';
 import { Router } from 'express-serve-static-core';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-
+const sendEmail = require('../Notfications/Notfications');
 class AuthRouter implements IAuth {
   router: Router;
   model: any;
@@ -23,11 +23,16 @@ class AuthRouter implements IAuth {
         email,
         password: bycryptPassword,
         role: roleString,
-        username
+        username,
       });
-      const token = jwt.sign({ user },
-        process.env.JWT_SECRET as string,
-        { expiresIn: 60 * 60 });
+      const token = jwt.sign({ user }, process.env.JWT_SECRET as string, {
+        expiresIn: 60 * 60,
+      });
+      sendEmail(
+        email,
+        'Registered to our Website',
+        'You have successfully registered on our website'
+      );
       res.status(201).json({ email, roleString, username, token });
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -36,8 +41,7 @@ class AuthRouter implements IAuth {
 
   public login = async (req: Request, res: Response): Promise<void> => {
     try {
-      const user = await this.model.findOne
-      ({ email: req.body.email });
+      const user = await this.model.findOne({ email: req.body.email });
       if (!user) {
         throw new Error('Invalid credentials, please try again');
       }
@@ -45,9 +49,9 @@ class AuthRouter implements IAuth {
       if (!isMatch) {
         throw new Error('Invalid credentials, please try again');
       }
-      const token = jwt.sign({ user },
-        process.env.JWT_SECRET as string,
-        { expiresIn: 60 * 60 });
+      const token = jwt.sign({ user }, process.env.JWT_SECRET as string, {
+        expiresIn: 60 * 60,
+      });
       const { email, role, username, _id } = user;
       res.status(200).json({ email, role, username, _id, token });
     } catch (error) {
@@ -59,8 +63,6 @@ class AuthRouter implements IAuth {
     this.router.post('/register', this.register);
     this.router.post('/login', this.login);
   }
-
-
 }
 
 export default AuthRouter;
