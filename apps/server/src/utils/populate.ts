@@ -1,9 +1,9 @@
-import Auth from '../models/auth';
+import {User} from '../models/auth';
 import { auth } from '../data/auth';
 
 const populateTransactions = async () => {
   try {
-    await Auth.insertMany(auth);
+    await User.insertMany(auth);
     console.log('Data Imported!');
     process.exit();
   } catch (error) {
@@ -15,7 +15,7 @@ const populateTransactions = async () => {
 
 const dropDB = async () => {
   try {
-    await Auth.deleteMany();
+    await User.deleteMany();
     console.log('Data Destroyed!');
     process.exit();
   } catch (error) {

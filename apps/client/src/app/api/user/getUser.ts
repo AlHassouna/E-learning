@@ -1,8 +1,9 @@
 import { backendInstance } from '../api';
-import { IUser } from '../api-types';
+import { IUser, IProfile } from '../api-types';
 
-export const getUser = async (id: string): Promise<IUser> => {
-  const response = await backendInstance.get(`/users/${id}`);
+export const getUser = async (username: string|undefined): Promise<IProfile> => {
+  const response = await backendInstance.get(`/profile/user/${username}`);
+  console.log(response.data)
   return response.data;
 };
 
