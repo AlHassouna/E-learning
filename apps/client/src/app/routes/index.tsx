@@ -1,5 +1,5 @@
 import { Route } from '../types';
-import { AuthPage, HomePage, QuizPage, ContentPage } from '../pages/';
+import { AuthPage, HomePage, QuizPage, ContentPage, ChatPage } from '../pages/';
 
 export const routes: Route[] = [
   {
@@ -35,5 +35,12 @@ export const routes: Route[] = [
     showOnMenu: true,
     component: <ContentPage />
   }
-
+  , {
+    key: 'chat',
+    text: 'ChatPage',
+    exact: true,
+    linksTo: '/chat',
+    showOnMenu: true,
+    component: <ChatPage />
+  }
 ];

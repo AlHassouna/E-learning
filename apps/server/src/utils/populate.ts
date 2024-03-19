@@ -8,7 +8,6 @@ import { Question } from '../models/auth';
 import { QuizAttempt } from '../models/auth';
 import { Notifications } from '../models/auth';
 import { Reward } from '../models/auth';
-import { Meeting } from '../models/auth';
 import { content } from '../data/content';
 import { dummyData as courses } from '../data/course';
 
@@ -24,7 +23,6 @@ const dropAllDb = async () => {
     await QuizAttempt.deleteMany();
     await Notifications.deleteMany();
     await Reward.deleteMany();
-    await Meeting.deleteMany();
     console.log('Data Destroyed!');
     process.exit();
   } catch (error) {
