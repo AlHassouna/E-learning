@@ -1,5 +1,5 @@
 import React from 'react';
-import { MailOutlined, BookOutlined } from '@ant-design/icons';
+import { MailOutlined, BookOutlined, HomeOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 import { profile } from '../../constants';
@@ -27,6 +27,7 @@ function getItem(
 
 export const SideNav: React.FC<{ courses: ICourse[] }> = ({ courses }) => {
   const items: MenuProps['items'] = [
+    getItem('Home', 'home', <HomeOutlined />),
     getItem('Courses', 'courses', <BookOutlined />,
       courses.map((course, index) => (
         getItem(course.courseName, course.courseName.toLowerCase()
@@ -39,16 +40,19 @@ export const SideNav: React.FC<{ courses: ICourse[] }> = ({ courses }) => {
         ))
       )
     )
+
   ];
   const navigate = useNavigate();
   return (
     <Menu
       onClick={(e) => {
         if (e.keyPath[1] === 'courses') {
-          console.log(e);
           navigate(`/courses/${e.key}`);
         } else if (e.keyPath[1] === 'profile') {
           navigate(`/profile/${e.key}`);
+        } else {
+          navigate('/');
+
         }
       }}
       mode="inline"
