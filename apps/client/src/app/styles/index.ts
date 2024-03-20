@@ -1,4 +1,5 @@
-import { Button, Card, Avatar } from 'antd';
+import { Button, Card, Avatar, Carousel } from 'antd';
+import { Footer } from 'antd/es/layout/layout';
 import styled from 'styled-components';
 
 
@@ -301,6 +302,202 @@ export const RewardStyled = styled.div`
   flex-direction: column;
   align-items: center;
 `;
+
+export const FlexHomePageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;;
+  height: 100%;
+  width: 100%;
+  background-color: #EFDAC7;
+
+  @media (max-width: 768px) {
+    width: 100%
+    height: 50vh;
+  }
+`;
+
+export const CustomCarousel = styled(Carousel)`
+  width: 100%;
+  max-width: 1200px;
+
+  @media (max-width: 768px) {
+    max-width: 450px;
+  }
+`;
+
+export const CustomUserCoursesCarousel = styled(Carousel)`
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 20px;
+  height: 350px;
+  @media (max-width: 768px) {
+    max-width: 450px;
+  }
+`;
+
+export const CustomCoursesCarousel = styled(Carousel)`
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 20px;
+  height: 420px;
+  @media (max-width: 768px) {
+    max-width: 450px;
+    height: 330px;
+  }
+`;
+
+export const SlideContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  background: rgb(71,157,114);
+  background: radial-gradient(circle, rgba(71,157,114,1) 0%, rgba(3,86,91,1) 100%);
+  margin-top: 20px;
+
+  @media (max-width: 768px) {
+    height: 300px;
+    margin-top: 0;
+  }
+`;
+
+export const SlideContent = styled.div`
+  color: #EFDAC7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const SlideText = styled.div`
+    text-align: left;
+    margin: 100px;
+    font-family: initial;
+
+    @media (max-width: 768px) {
+      margin: 50px;
+      font-size: 0.55rem;
+      width: 100%;
+    }
+  `;
+
+export const SlideParagraph = styled.p`
+  font-size: 1.1rem;
+  font-family: initial;
+  color: #ECBB65;
+  margin-left: 10px;
+
+  @media (max-width: 768px) {
+    font-size: 0.7rem;
+    width: 100%;
+  }
+`;
+
+export const SlideSecondHeader = styled.h1`
+  margin-left: 10px;
+`;
+
+export const SlideImg = styled.img`
+  width: 200px;
+  height: 200px;
+  margin: 100px;
+
+  @media (max-width: 768px) {
+    width: 150px;
+    height: 150px;
+    margin: 50px;
+  }
+`;
+
+export const HeaderLine = styled.hr`
+  border: 1px solid #54b886;
+  width: 100%;
+`;
+
+export const LeftContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  margin-top: 50px;
+  color: #03565B;
+
+`;
+
+
+export const CardsContainer = styled.div`
+  @media (max-width: 768px) {
+    width: 90%;
+  }
+`;
+
+export const CustomUserCoursesCards = styled(Card)`
+  width: 220px;
+  height: 350px;
+  @media (max-width: 768px) {
+    width: 180px;
+    height: 240px;
+  }
+`;
+
+export const CustomCoursesCards = styled(Card)`
+display:flex;
+flex-direction: column;
+justify-content:space-between;
+  width: 220px;
+  height: 400px;
+  @media (max-width: 768px) {
+    width: 180px;
+    height: 270px;
+  }
+`;
+
+export const CourseImage = styled.img`
+  height: 150px;
+  @media (max-width: 768px) {
+    height: 120px;
+  }
+`;
+
+export const JoinButton = styled(Button)`
+    &&& {
+      margin-right: 10px;
+      border-color: #786283;
+      
+      &:hover {
+        background-color: #9275a1;
+        border-color: #9275a1;
+        color: #fff
+      }
+
+      &.ant-btn-primary {
+        background-color: #03565B;
+        color: #fff;
+        width: 40%;
+        margin-top: 20px;
+        text-align: center;
+
+
+        &:hover {
+          background-color: #0c939c;
+          border-color: #0c939c;
+          color: #fff;
+        }
+      }
+    }
+  `;
+
+  export const CustomFooter = styled(Footer)`
+    background-color: #03565B;
+    color: #EFDAC7;
+    text-align: center;
+  `;
+
+  export const CustomDiv = styled.div`
+    border-top: 1px solid #fff;
+    padding-top: 16px;
+  `;
 
 export const Container = styled.div`
   height: 100vh;
