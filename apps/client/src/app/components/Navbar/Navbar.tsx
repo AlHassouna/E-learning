@@ -46,20 +46,30 @@ export const Navbar: React.FC = observer(() => {
            <style jsx>{`.css-dev-only-do-not-override-1uweeqc.ant-btn-primary {
             background-color: #ECBB65;
           }`}</style>
-          
+          {/* @ts-ignore */}
+          <style jsx>{`.css-dev-only-do-not-override-1uweeqc.ant-menu-dark .ant-menu-item-selected, :where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark>.ant-menu .ant-menu-item-selected
+          {
+            background-color: #03565B;
+          }`}</style>
+
+          {/* @ts-ignore */}
+          <style jsx>{`:where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark.ant-menu-horizontal >.ant-menu-item-selected, :where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark>.ant-menu.ant-menu-horizontal >.ant-menu-item-selected, :where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark.ant-menu-horizontal >.ant-menu-submenu-selected, :where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark>.ant-menu.ant-menu-horizontal >.ant-menu-submenu-selected
+          {
+            background-color: #04787e !important
+          }`}</style>
           <Header style={{ padding: 0, backgroundColor: '#03565B' }}>
             <Row justify="space-between" align="middle">
               <Col xs={0} sm={0} md={24}>
                 <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['home']} style={{backgroundColor: '#03565B'}}>
                   <Menu.Item onClick={() => {
                     navigate('/');
-                  }} key="home" style={{backgroundColor: '#ECBB65'}}>Home</Menu.Item>
+                  }} key="home">Home</Menu.Item>
 
                   <SearchBar>
                     <SubMenu key="courses" icon={<BookOutlined />} title="Courses">
                       {
                         Courses.map((course, index) => (
-                          <Menu.Item style={{backgroundColor: '#ECBB65'}} onClick={() => {
+                          <Menu.Item style={{color: '#ECBB65'}} onClick={() => {
                             setChosenCourse(course.courseName);
                             navigate(`/courses/${course.courseName.toLowerCase()}`);
                           }} key={course._id}>{course.courseName}</Menu.Item>
@@ -72,12 +82,12 @@ export const Navbar: React.FC = observer(() => {
                     {
                       profile.map((profile, index) => (
                         profile.title === 'Sign Out' ?
-                          <Menu.Item style={{backgroundColor: '#ECBB65'}} danger onClick={() => {
+                          <Menu.Item danger onClick={() => {
                             logout();
                             navigate('/auth');
                           }} key={profile.key}>{profile.title}</Menu.Item>
                           :
-                          <Menu.Item style={{backgroundColor: '#ECBB65'}} onClick={() => {
+                          <Menu.Item style={{color: '#ECBB65'}} onClick={() => {
                             navigate(`/${profile.linkTo}`);
                           }} key={profile.key}>{profile.title}</Menu.Item>
                       ))

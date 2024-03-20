@@ -26,6 +26,13 @@ export const DModel: React.FC<ModelProps> = ({
 
   return (
     <>
+     {/* @ts-ignore */}
+     <style jsx>{`.css-dev-only-do-not-override-1uweeqc.ant-btn-primary
+          {
+            &:hover{
+              background-color: #03565B !important
+            }
+          }`}</style>
       <Button type="primary" onClick={showModal}>
         {btnTitle}
       </Button>

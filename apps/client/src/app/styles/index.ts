@@ -15,10 +15,18 @@ export const FlexContainer = styled.div`
 export const CourseContent = styled.div`
   display: flex;
   justify-content: center;
-  width: fit-content;
+  width: 70%;
+  height: fit-content;
   margin: 0rem 10rem 0rem 10rem;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   color: #9A616G;
+  font-family: initial;
+  font-size: 1.3rem;
+  white-space: pre-wrap;
+
+  @media (max-width: 768px) {
+    width: 80%;
+    margin: 0
+  }
 `;
 
 export const CourseTitle = styled.h1`
