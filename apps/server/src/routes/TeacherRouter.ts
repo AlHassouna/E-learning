@@ -96,7 +96,8 @@ class TeacherRouter implements Teacher {
 
         // Query quizzes by course ID and populate the 'questions' field
         const quizzes = await this.quiz.find({ course: course._id }).populate('questions');
-        res.status(500).json(quizzes);
+        console.log(quizzes)
+        res.status(500).send(quizzes);
     } catch (error) {
 
         res.status(500).json({ message: error.message });

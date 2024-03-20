@@ -1,4 +1,4 @@
-import { generateUsers, generateCourses, generateVideos } from '../data/dummyData'; 
+import { generateUsers, generateCourses } from '../data/dummyData'; 
 
 import express, { Request, Response } from 'express';
 import { IGenerator } from '../types/types';
@@ -16,9 +16,8 @@ class Generator implements IGenerator {
     try {
         const users = await generateUsers();
         const courses = await generateCourses(users.filter(user => user.role === 'Teacher'), users.filter(user => user.role === 'Student'));
-        const videos = await generateVideos(courses);
     
-        res.status(200).json({ users, courses, videos });
+        res.status(200).json({ users, courses });
       } catch (error) {
         console.error('Error generating dummy data:', error);
         res.status(500).json({ error: 'Internal server error' });

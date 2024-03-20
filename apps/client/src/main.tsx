@@ -17,7 +17,6 @@ const theme = {
 
 
 root.render(
-  <StrictMode>
     <BrowserRouter>
     <ConfigProvider
     theme={theme}
@@ -25,5 +24,4 @@ root.render(
       <App/>
       </ConfigProvider>
     </BrowserRouter>
-  </StrictMode>
 );

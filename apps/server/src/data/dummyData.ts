@@ -1,4 +1,4 @@
-import { User, Course, Video, DiscussionForum, DiscussionPost, Quiz, Question, QuizAttempt, Notifications, Reward, Meeting } from '../models/auth'; // Adjust the path to your models file as needed
+import { User, Course, DiscussionForum, DiscussionPost, Quiz, Question, QuizAttempt, Notifications, Reward } from '../models/auth'; // Adjust the path to your models file as needed
 
 // Function to generate dummy users
 export const generateUsers = async () => {
@@ -47,19 +47,5 @@ export const generateCourses = async (teachers, participants) => {
   return courses;
 };
 
-// Function to generate dummy videos
-export const generateVideos = async (courses) => {
-  const videos = [];
-
-  const video1 = new Video({
-    videoTitle: 'Introduction to Algebra',
-    url: 'https://www.example.com/video1',
-    duration: 120, // in seconds
-    course: courses[0]._id,
-  });
-  await video1.save();
-  videos.push(video1);
-  return videos;
-};
 
 

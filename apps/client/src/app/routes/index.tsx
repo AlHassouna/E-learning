@@ -1,5 +1,6 @@
 import { Route } from '../types';
-import { ErrorPage, AuthPage, HomePage, ProfilePage, Admin,QuizAdd, DeleteQuiz, AllDQuizzes } from '../pages/';
+import { ErrorPage, ProfilePage, Admin,QuizAdd, DeleteQuiz, AllDQuizzes } from '../pages/';
+import { AuthPage, HomePage, QuizPage, ContentPage, ChatPage } from '../pages/';
 
 export const routes: Route[] = [
   {
@@ -64,5 +65,30 @@ export const routes: Route[] = [
     linksTo: 'quizzes/:courseId',
     showOnMenu: true,
     component: <Admin />
+  },
+  {
+    key: 'quiz',
+    text: 'QuizPage',
+    exact: true,
+    linksTo: '/quiz',
+    showOnMenu: true,
+    component: <QuizPage />
+  },
+  {
+
+    key: 'content',
+    text: 'ContentPage',
+    exact: true,
+    linksTo: '/courses/:courseTitle',
+    showOnMenu: true,
+    component: <ContentPage />
+  }
+  , {
+    key: 'chat',
+    text: 'ChatPage',
+    exact: true,
+    linksTo: '/chat',
+    showOnMenu: true,
+    component: <ChatPage />
   }
 ];
