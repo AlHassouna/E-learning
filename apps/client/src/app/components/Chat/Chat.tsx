@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import React, { useState, useEffect, ChangeEvent, FormEvent, useRef } from 'react';
 import { getItem } from '../../utils/localStorage';
 import { useSocket } from '../../hooks/useSocket';
 import {
@@ -46,7 +46,7 @@ export const Chat: React.FC<AppProps> = () => {
   const [activeContact, setActiveContact] = useState<string | null>('public');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { emit, listen } = useSocket();
-
+  const chatContainerRef = useRef<any>(null);
 
   useEffect(() => {
     if (sender && receiver && receiver !== 'public') {
@@ -96,7 +96,9 @@ export const Chat: React.FC<AppProps> = () => {
         setChatListPrivate(prevChatList => [...prevChatList, data]);
       }
     });
-
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
     return () => {
       subscription.unsubscribe();
     };
@@ -146,9 +148,9 @@ export const Chat: React.FC<AppProps> = () => {
     groupedPrivateMessages[date].push(chat);
   });
 
-  const sortedPrivateDates = Object.keys(groupedPrivateMessages).sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
-
-  console.log(isLoading);
+  const sortedPrivateDates = Object.keys(groupedPrivateMessages).sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
+  console.log('groupedPrivateMessages', groupedPrivateMessages);
+  console.log('sortedPrivateDates', sortedPrivateDates);
   return (
     <MDBContainer fluid className="py-5" style={{ backgroundColor: '#eee', height: '93vh' }}>
       <MDBRow>
@@ -200,7 +202,9 @@ export const Chat: React.FC<AppProps> = () => {
               <MDBCardHeader className="bg-white d-flex justify-content-between">
                 <p className="fw-bold mb-0">Chat</p>
               </MDBCardHeader>
-              <MDBCardBody style={{ height: '60vh', overflowY: 'scroll' }}>
+              <MDBCardBody ref={
+                chatContainerRef
+              } style={{ height: '60vh', overflowY: 'scroll' }}>
                 <MDBTypography listUnStyled className="mb-0">
                   {activeContact === 'public' ? sortedPublicDates.map((date, index) => (
                     <li key={index} className="mb-4">
