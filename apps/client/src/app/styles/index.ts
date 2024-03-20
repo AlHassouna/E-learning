@@ -136,8 +136,8 @@ export const SearchOptions = styled.div`
 
 export const CourseCard = styled.div`
   display: flex;
-  align-content: center;
-  justify-content: center;
+  align-items: center;
+  justify-content: start;
   width: 100%;
   padding: 10px;
   border: 1px solid #e8e8e8;
@@ -149,13 +149,13 @@ export const CourseCard = styled.div`
     background-color: #e8e8e8;
   }
 `;
-export const CoursesTitle = styled.h1`
+export const CoursesTitle = styled.h3`
   color: black;
 `;
 
 export const CoursesDescription = styled.p`
   color: black;
-  margin-top: 3px;
+  margin-top: 15px;
 `;
 
 export const NoCourses = styled.div`
@@ -353,8 +353,8 @@ export const SlideContainer = styled.div`
   justify-content: center;
   align-items: center;
   height: 400px;
-  background: rgb(71,157,114);
-  background: radial-gradient(circle, rgba(71,157,114,1) 0%, rgba(3,86,91,1) 100%);
+  background: rgb(71, 157, 114);
+  background: radial-gradient(circle, rgba(71, 157, 114, 1) 0%, rgba(3, 86, 91, 1) 100%);
   margin-top: 20px;
 
   @media (max-width: 768px) {
@@ -371,16 +371,16 @@ export const SlideContent = styled.div`
 `;
 
 export const SlideText = styled.div`
-    text-align: left;
-    margin: 100px;
-    font-family: initial;
+  text-align: left;
+  margin: 100px;
+  font-family: initial;
 
-    @media (max-width: 768px) {
-      margin: 50px;
-      font-size: 0.55rem;
-      width: 100%;
-    }
-  `;
+  @media (max-width: 768px) {
+    margin: 50px;
+    font-size: 0.55rem;
+    width: 100%;
+  }
+`;
 
 export const SlideParagraph = styled.p`
   font-size: 1.1rem;
@@ -442,9 +442,9 @@ export const CustomUserCoursesCards = styled(Card)`
 `;
 
 export const CustomCoursesCards = styled(Card)`
-display:flex;
-flex-direction: column;
-justify-content:space-between;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   width: 220px;
   height: 400px;
   @media (max-width: 768px) {
@@ -461,43 +461,43 @@ export const CourseImage = styled.img`
 `;
 
 export const JoinButton = styled(Button)`
-    &&& {
-      margin-right: 10px;
-      border-color: #786283;
-      
+  &&& {
+    margin-right: 10px;
+    border-color: #786283;
+
+    &:hover {
+      background-color: #9275a1;
+      border-color: #9275a1;
+      color: #fff
+    }
+
+    &.ant-btn-primary {
+      background-color: #03565B;
+      color: #fff;
+      width: 40%;
+      margin-top: 20px;
+      text-align: center;
+
+
       &:hover {
-        background-color: #9275a1;
-        border-color: #9275a1;
-        color: #fff
-      }
-
-      &.ant-btn-primary {
-        background-color: #03565B;
+        background-color: #0c939c;
+        border-color: #0c939c;
         color: #fff;
-        width: 40%;
-        margin-top: 20px;
-        text-align: center;
-
-
-        &:hover {
-          background-color: #0c939c;
-          border-color: #0c939c;
-          color: #fff;
-        }
       }
     }
-  `;
+  }
+`;
 
-  export const CustomFooter = styled(Footer)`
-    background-color: #03565B;
-    color: #EFDAC7;
-    text-align: center;
-  `;
+export const CustomFooter = styled(Footer)`
+  background-color: #03565B;
+  color: #EFDAC7;
+  text-align: center;
+`;
 
-  export const CustomDiv = styled.div`
-    border-top: 1px solid #fff;
-    padding-top: 16px;
-  `;
+export const CustomDiv = styled.div`
+  border-top: 1px solid #fff;
+  padding-top: 16px;
+`;
 
 export const Container = styled.div`
   height: 100vh;
