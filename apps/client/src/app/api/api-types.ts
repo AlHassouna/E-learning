@@ -28,3 +28,11 @@ export interface IReward {
   type: string;
   timestamp: Date;
 }
+
+
+export interface IMessage {
+  sender: string;
+  receiver: string;
+  msg: string;
+  date: Date;
+}

@@ -15,11 +15,11 @@ const App: React.FC = () => {
     <>
       <StoreProvider>
         {isAuthenticated && <Navbar />}
-        <Routes>
-          {routes.map((route) => (
-            <Route key={route.key} element={route.component} path={route.linksTo} />
-          ))}
-        </Routes>
+          <Routes>
+            {routes.map((route) => (
+              <Route key={route.key} element={route.component} path={route.linksTo} />
+            ))}
+          </Routes>
       </StoreProvider>
     </>
   );

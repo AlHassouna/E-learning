@@ -71,3 +71,15 @@ export interface ICourse {
   search(req: Request, res: Response): Promise<void>;
 
 }
+
+
+export interface IMsgs {
+  router: Router;
+  msgs: any;
+  user: any;
+
+  initializeRoutes(): void;
+
+  getAllPrivateMsgsByTwoUsers(req: Request, res: Response): Promise<void>;
+
+}
