@@ -7,8 +7,8 @@ export class QuizStore extends StoreBase {
   quizzes: QuizType[] = [];
   public isLoading = true;
   public currentQuiz: QuizType = {} as QuizType;
-  public allQuizzesByCourse:QuizType[]=[]
-  
+  allQuizzesByCourse: QuizType[] = [];
+
 
   constructor() {
     super();
@@ -19,9 +19,9 @@ export class QuizStore extends StoreBase {
       setIsLoading: action,
       currentQuiz: observable,
       setCurrentQuiz: action,
-      allQuizzesByCourse:observable,
-      setAllQuizzesByCourse:action,
-      deleteQuizByID:action
+      allQuizzesByCourse: observable,
+      deleteQuizByID: action,
+      getAllQuizzesByCourse: action
     });
   }
 
@@ -31,19 +31,16 @@ export class QuizStore extends StoreBase {
   setIsLoading = (value: boolean) => {
     this.isLoading = value;
   };
-  setAllQuizzesByCourse=(quizzes:QuizType[])=>{
-    this.allQuizzesByCourse=quizzes
-  }
-  deleteQuizByID = async (quizID:string)=>{
+
+  deleteQuizByID = async (quizID: string) => {
     try {
-      const {message }= await deleteQuiz(quizID)
+      const { message } = await deleteQuiz(quizID);
       this.setIsLoading(false);
     } catch (error) {
       console.error('Error fetching quizzes:', error);
       this.setIsLoading(false);
     }
-  }
-
+  };
 
 
   async fetchQuizzes(categoryId: string, difficultyId: string, courseId: string) {
@@ -56,16 +53,16 @@ export class QuizStore extends StoreBase {
       this.setIsLoading(false);
     }
   }
-  async getAllQuizzes(courseTitle: string) {
+
+  async getAllQuizzesByCourse(courseName: string) {
     try {
-      const  quizzes  = await getQuizzes(courseTitle);
-      // this.allQuizzesByCourse = quizzes;
-      console.log(quizzes)
+      const quizzes = await getQuizzes(courseName);
+      console.log('quizzes', quizzes);
+      this.allQuizzesByCourse = quizzes;
       this.setIsLoading(false);
     } catch (error) {
-      console.error('Error fetching quizzes:', error);
+      console.log('Error fetching quizzes:', error);
       this.setIsLoading(false);
     }
   }
 }
-

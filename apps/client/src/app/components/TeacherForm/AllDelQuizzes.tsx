@@ -1,49 +1,56 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 import { Row, Col, Card } from 'antd';
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams } from 'react-router-dom';
 import { Container, Heading, CustomCard, CustomImage } from '../../styles/adminStyle';
-import { observer } from "mobx-react";
-import { useStore } from "../../stores/setupContext";
-const AllDelQuizzes: React.FC = observer(()=> {
-  const { navbar, quiz } = useStore();
-  const { courses, setCourseId } = navbar;
-  const { getAllQuizzes, allQuizzesByCourse } = quiz;
-  const chosenCourse = useParams().courseTitle 
-    const deletepagelink="/deletequiz/"+chosenCourse+"/oo"
-    
-    useEffect(() => {
-      const fetchContent = async () => {
-        console.log(chosenCourse)
-        await getAllQuizzes(chosenCourse as string);
-      };
-      fetchContent();
-    }, [chosenCourse]);
+import { observer } from 'mobx-react';
+import { useStore } from '../../stores/setupContext';
+import { CenterContainer } from '../../styles';
+import { LoadingSpin } from '../../core';
 
-    return (
-        <Container>
-            <Card>
-      <div>
-        <Heading>Delete quiz:</Heading>
+const AllDelQuizzes: React.FC = observer(() => {
+  const { quiz } = useStore();
+  const { allQuizzesByCourse, isLoading, setIsLoading } = quiz;
+  const chosenCourse = useParams().courseTitle;
 
-        <Row justify="center" gutter={[16, 16]}>
-        {allQuizzesByCourse.map((q)=>
-          <Col >
-          <Link to={deletepagelink}>
-            <CustomCard hoverable >
-              <Card.Meta title="Quiz 1" description="Description of quiz" />
-            </CustomCard>
-            </Link>
-          </Col>
+  useEffect(() => {
+    const fetchContent = async () => {
+      setIsLoading(true);
+      await quiz.getAllQuizzesByCourse('Sports');
+    };
+    fetchContent();
+  }, [chosenCourse]);
 
-        )}
-          
-         
-        </Row>
-        
-      </div>
-      </Card>
+  return (
+    <Container>
+      {isLoading ? (
+          <CenterContainer>
+            <LoadingSpin />
+          </CenterContainer>
+        ) :
+        <Card>
+          <div>
+            <Heading>Delete quiz:</Heading>
+            <Row justify="center" gutter={[16, 16]}>
+              {allQuizzesByCourse.map((q, index) => {
+                return <Col>
+                  <Link state={
+                    {
+                      quiz: q
+                    }
+                  } to={`/deletequiz/'${chosenCourse}/${q._id}`}>
+                    <CustomCard hoverable>
+                      <Card.Meta title={`Quiz ${index}`} description={`${q.description}`} />
+                    </CustomCard>
+                  </Link>
+                </Col>;
+              })}
+            </Row>
+          </div>
+        </Card>
+      }
+
     </Container>
-      );
-})
+  );
+});
 
 export default AllDelQuizzes;

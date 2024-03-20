@@ -6,10 +6,16 @@ export const addQuiz = async (quiz: any) => {
   return response.data;
 };
 export const getQuizzes = async (courseTitle: string) => {
-  const response = await backendInstance.get('/teacher/quizzes/'+courseTitle);
-  return response.data;
+  try {
+
+    const response = await backendInstance.get('/teacher/quizzes/' + courseTitle);
+    return response.data;
+  } catch (e) {
+    console.log('e', e);
+
+  }
 };
 export const deleteQuiz = async (quizID: string) => {
-  const response = await backendInstance.delete('/teacher/quizzes/'+quizID);
+  const response = await backendInstance.delete('/teacher/quizzes/' + quizID);
   return response.data;
 };

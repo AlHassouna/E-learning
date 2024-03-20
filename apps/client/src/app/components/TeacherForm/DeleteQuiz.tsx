@@ -9,16 +9,17 @@ import {
   InputField,
   SelectField,
   OptionInput,
-  ButtonContainer,
+  ButtonContainer
 } from '../../styles/adminStyle';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { getItem } from '../../utils/localStorage';
 import DeleteQuestionForm from './DeleteQuestion';
+
 const { Option } = Select;
 
 interface DeleteQuizFormProps {
-    quiz:any;
-  handleDeleteQuiz:()=>void;
+  quiz: any;
+  handleDeleteQuiz: () => void;
 }
 
 export interface Question {
@@ -30,13 +31,12 @@ export interface Question {
 
 export const DeleteQuizForm: React.FC<DeleteQuizFormProps> = observer(({ quiz, handleDeleteQuiz }) => {
   const courseName = useParams().courseTitle;
-  
   // State for quiz
-  
+
 
   return (
     <QuestionFormContainer>
-      <Row justify='center' align='middle' gutter={[16, 16]}>
+      <Row justify="center" align="middle" gutter={[16, 16]}>
         <Col span={12}>
           <Card>
             <h1>Delete Quiz</h1>
@@ -64,7 +64,7 @@ export const DeleteQuizForm: React.FC<DeleteQuizFormProps> = observer(({ quiz, h
               <Col>
                 <Label>Duration (minutes):</Label>
                 <br />
-                <InputField 
+                <InputField
                   type="number"
                   value={quiz.duration}
                   disabled
@@ -84,7 +84,7 @@ export const DeleteQuizForm: React.FC<DeleteQuizFormProps> = observer(({ quiz, h
               </Col>
             </Row>
             <h2>Questions:</h2>
-            {quiz.questions.map((q:Question,i:number) => (
+            {quiz.questions.map((q: Question, i: number) => (
               <div key={i}>
                 <DeleteQuestionForm
                   newQuestion={q}
