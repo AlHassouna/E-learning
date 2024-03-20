@@ -37,11 +37,11 @@ mongoose.connect('mongodb+srv://hhasona:rtK3ZWCyNEZmifHG@cluster0.32yucli.mongod
 const db = mongoose.connection;
 db.once('open', async function() {
   console.log('Connected to MongoDB');
-  // await dropAllDb();
+  //await dropAllDb();
   // await populateContent();
-  // await populateCourses();
+  //await populateCourses();
   // await dropContent();
-  // await dropCourses();
+   //await dropCourses();
 });
 
 // Middleware setup
