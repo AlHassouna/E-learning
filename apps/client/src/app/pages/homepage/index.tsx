@@ -147,7 +147,7 @@ export const HomePage: React.FC = observer(() => {
                   {
                     breakpoint: 768,
                     settings: {
-                      slidesToShow: 2,
+                      slidesToShow: howManyReco,
                       slidesToScroll: 1
                     }
                   }
