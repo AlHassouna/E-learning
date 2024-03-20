@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Input } from 'antd';
 import { useStore } from '../../stores/setupContext';
 import { observer } from 'mobx-react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import {
   CenterContainer,
   CourseCard,
