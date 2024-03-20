@@ -70,6 +70,7 @@ export interface ICourse {
 
   search(req: Request, res: Response): Promise<void>;
 
+  addParticipant(req: Request, res: Response): Promise<void>;
 }
 
 

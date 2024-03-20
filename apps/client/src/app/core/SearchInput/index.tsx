@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Input } from 'antd';
 import { useStore } from '../../stores/setupContext';
 import { observer } from 'mobx-react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import {
   CenterContainer,
   CourseCard,
@@ -13,6 +13,8 @@ import {
   SearchOptions
 } from '../../styles';
 import { LoadingSpin } from '../Spin/LoadingSpin';
+import { addParticipant } from '../../api';
+import { getItem } from '../../utils/localStorage';
 
 const { Search } = Input;
 
@@ -22,10 +24,14 @@ export interface SearchProps {
 
 export const SearchInput: React.FC<SearchProps> = observer(({ search }) => {
   const { navbar } = useStore();
-  const { current, setCurrent, isLoading, coursesBySearch, setChosenCourse } = navbar;
-  const navigate = useNavigate();
+  const { current, setCurrent, loadingSearch, coursesBySearch, setChosenCourse, getAll } = navbar;
   const location = useLocation();
   const [inputValue, setInputValue] = useState('');
+  const token = getItem('token');
+
+
+  //@ts-ignore
+  const userId = JSON.parse(token)._id;
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     search(e.target.value);
@@ -46,14 +52,17 @@ export const SearchInput: React.FC<SearchProps> = observer(({ search }) => {
       {current === '' ? null :
         <SearchOptions>
           {
-            isLoading ? <CenterContainer><LoadingSpin /></CenterContainer> : coursesBySearch.length === 0 ?
+            loadingSearch ? <CenterContainer><LoadingSpin /></CenterContainer> : coursesBySearch.length === 0 ?
               <NoCourses>
                 <h1>No courses found</h1>
               </NoCourses>
               : coursesBySearch.map((course, index) => (
-                <CourseCard key={index} onClick={() => {
+                <CourseCard key={index} onClick={async () => {
                   setChosenCourse(course.courseName);
-                  navigate(`/courses/${course.courseName.toLowerCase()}`);
+                  await addParticipant(course._id, userId);
+                  await getAll();
+                  setCurrent('');
+                  setInputValue('');
                 }}>
                   <CoursesTitle>{course.courseName}:</CoursesTitle>
                   <CoursesDescription>{course.description}</CoursesDescription>

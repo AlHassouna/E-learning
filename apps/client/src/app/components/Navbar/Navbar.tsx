@@ -13,6 +13,7 @@ import { profile } from '../../constants';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../stores/setupContext';
 import { SearchBar } from '../../styles';
+import { getItem } from '../../utils/localStorage';
 
 const { Header } = Layout;
 const { SubMenu } = Menu;
@@ -23,7 +24,11 @@ export const Navbar: React.FC = observer(() => {
   const { search, courses: Courses, getAll, setChosenCourse, isLoading } = navbar;
   const [visible, setVisible] = useState(false);
   const navigate = useNavigate();
+  const token = getItem('token');
 
+
+  //@ts-ignore
+  const userId = JSON.parse(token)._id;
   React.useEffect(() => {
     const fetchCourses = async () => {
       await getAll();
@@ -41,9 +46,9 @@ export const Navbar: React.FC = observer(() => {
     <>
       {
         <Layout className="layout">
-          
+
           {/* @ts-ignore */}
-           <style jsx>{`.css-dev-only-do-not-override-1uweeqc.ant-btn-primary {
+          <style jsx>{`.css-dev-only-do-not-override-1uweeqc.ant-btn-primary {
             background-color: #ECBB65;
           }`}</style>
           {/* @ts-ignore */}
@@ -60,25 +65,27 @@ export const Navbar: React.FC = observer(() => {
           <Header style={{ padding: 0, backgroundColor: '#03565B' }}>
             <Row justify="space-between" align="middle">
               <Col xs={0} sm={0} md={24}>
-                <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['home']} style={{backgroundColor: '#03565B'}}>
+                <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['home']}
+                      style={{ backgroundColor: '#03565B' }}>
                   <Menu.Item onClick={() => {
                     navigate('/');
                   }} key="home">Home</Menu.Item>
 
                   <SearchBar>
-                    <SubMenu key="courses" icon={<BookOutlined />} title="Courses">
+                    <SubMenu key="courses" icon={<BookOutlined />} title="My Courses">
                       {
-                        Courses.map((course, index) => (
-                          <Menu.Item style={{color: '#ECBB65'}} onClick={() => {
-                            setChosenCourse(course.courseName);
-                            navigate(`/courses/${course.courseName.toLowerCase()}`);
-                          }} key={course._id}>{course.courseName}</Menu.Item>
-                        ))
+                        Courses.filter(course => course.participants.includes(userId))
+                          .map((course, index) => (
+                            <Menu.Item style={{ backgroundColor: '#ECBB65' }} onClick={() => {
+                              setChosenCourse(course.courseName);
+                              navigate(`/courses/${course.courseName.toLowerCase()}`);
+                            }} key={course._id}>{course.courseName}</Menu.Item>
+                          ))
                       }
                     </SubMenu>
                     <SearchInput search={search} />
                   </SearchBar>
-                  <SubMenu key="profile" icon={<UserOutlined /> } title="Profile">
+                  <SubMenu key="profile" icon={<UserOutlined />} title="Profile">
                     {
                       profile.map((profile, index) => (
                         profile.title === 'Sign Out' ?
@@ -104,7 +111,7 @@ export const Navbar: React.FC = observer(() => {
               }}>
                 <Col xs={2} sm={2} md={0}>
                   <Button type="primary" onClick={showDrawer}>
-                    <MenuOutlined/>
+                    <MenuOutlined />
                   </Button>
                 </Col>
               </div>
