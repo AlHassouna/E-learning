@@ -1,5 +1,5 @@
 import { Route } from '../types';
-import { ErrorPage, ProfilePage, Admin,QuizAdd, DeleteQuiz, AllDQuizzes, AllEQuizzes } from '../pages/';
+import { ErrorPage, ProfilePage, Admin, QuizAdd, DeleteQuiz, AllDQuizzes, AllEQuizzes } from '../pages/';
 import { AuthPage, HomePage, QuizPage, ContentPage, ChatPage, EditQuiz } from '../pages/';
 
 export const routes: Route[] = [
@@ -18,11 +18,11 @@ export const routes: Route[] = [
     linksTo: '/',
     showOnMenu: true,
     component: <HomePage />
-  },{
+  }, {
     key: 'profile',
     text: 'Profile',
     exact: true,
-    linksTo: 'profile/:username',
+    linksTo: 'profile',
     showOnMenu: true,
     component: <ProfilePage />
   },
@@ -64,7 +64,7 @@ export const routes: Route[] = [
     exact: true,
     linksTo: 'editquiz/:courseTitle/:quizId',
     showOnMenu: true,
-    component: < EditQuiz/>
+    component: < EditQuiz />
   },
   {
     key: 'editquizzes',
@@ -90,7 +90,7 @@ export const routes: Route[] = [
     showOnMenu: true,
     component: <QuizPage />
   },
-  
+
   {
 
     key: 'content',

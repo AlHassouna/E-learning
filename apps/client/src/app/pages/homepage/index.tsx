@@ -21,7 +21,6 @@ import { addParticipant } from '../../api';
 export const HomePage: React.FC = observer(() => {
   const { auth, navbar, main } = useStore();
   const { isAuthenticated } = auth;
-  // const { isLoading } = main;
   const { courses: Courses, getAll, isLoading } = navbar;
   const token = getItem('token');
 

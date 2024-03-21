@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
 import QuestionForm from './QuestionAdd';
-import { Select, Button, Col, Row, Card, message } from 'antd';
+import { Select, Button, Col, Row, Card, message, BackTop } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import {
   QuestionFormContainer,
@@ -20,6 +20,7 @@ import { CenterContainer } from '../../styles';
 import { LoadingSpin } from '../../core/Spin/LoadingSpin';
 import { useNavigate } from 'react-router-dom';
 import { getQuiz } from '../../api';
+
 const { Option } = Select;
 
 export interface Question {
@@ -30,132 +31,136 @@ export interface Question {
 }
 
 export const DeleteQuizForm: React.FC = observer(() => {
-  const [messageApi, contextHolder] = message.useMessage();
-  const [newQuiz, setQuiz] = useState({questions: [] as Question[]} as QuizType);
+    const [messageApi, contextHolder] = message.useMessage();
+    const [newQuiz, setQuiz] = useState({ questions: [] as Question[] } as QuizType);
 
-  const success = () => {
-    messageApi.open({
-      type: 'success',
-      content: 'The quiz was successfully deleted',
-    });
-  };
+    const success = () => {
+      messageApi.open({
+        type: 'success',
+        content: 'The quiz was successfully deleted'
+      });
+    };
 
-  const error = () => {
-    messageApi.open({
-      type: 'error',
-      content: 'Failed to delete the quiz',
-    });
-  };
-  // State for quiz
-  const navigate = useNavigate();
+    const error = () => {
+      messageApi.open({
+        type: 'error',
+        content: 'Failed to delete the quiz'
+      });
+    };
+    // State for quiz
+    const navigate = useNavigate();
 
-  const { quiz } = useStore();
-  const { allQuizzesByCourse, isLoading, setIsLoading, deleteQuizByID } = quiz;
-  const chosenCourse = useParams().courseTitle;
-  const quizID = useParams().quizId as string;
-  async function handleDeleteQuiz() {
-    console.log(quizID)
-    try{
-            await deleteQuizByID(quizID)
-            success()
-            navigate(`/deletequiz/${chosenCourse}`);
+    const { quiz } = useStore();
+    const { allQuizzesByCourse, isLoading, setIsLoading, deleteQuizByID } = quiz;
+    const chosenCourse = useParams().courseTitle;
+    const quizID = useParams().quizId as string;
+
+    async function handleDeleteQuiz() {
+      console.log(quizID);
+      try {
+        await deleteQuizByID(quizID);
+        success();
+        navigate(`/deletequiz/${chosenCourse}`);
+      } catch (err) {
+        error();
       }
-      catch(err){
-        error()
-        }
-}
-useEffect(() => {
-  const fetchContent = async () => {
-    setIsLoading(true);
-    const quiz1= await getQuiz(quizID);
-    setQuiz(quiz1)
-    setIsLoading(false);
-  };
-  fetchContent();
-}, [quizID]);
+    }
+
+    useEffect(() => {
+      const fetchContent = async () => {
+        setIsLoading(true);
+        const quiz1 = await getQuiz(quizID);
+        setQuiz(quiz1);
+        setIsLoading(false);
+      };
+      fetchContent();
+    }, [quizID]);
 
 
-
-
-  return (
-    <QuestionFormContainer>
-    {isLoading ? (
-      <CenterContainer>
-        <LoadingSpin />
-      </CenterContainer>
-    ) :(
-      <div>
-      <Row justify="center" align="middle" gutter={[16, 16]}>
-        <Col span={12}>
-          <Card>
-            <h1>Delete Quiz</h1>
-            <Row gutter={[16, 16]}>
-              <Col>
-                <Label>Quiz Title:</Label>
-                <br />
-                <InputField
-                  type="text"
-                  value={newQuiz.quizTitle}
-                  disabled
-                />
-              </Col>
-              <Col>
-                <Label>Category:</Label>
-                <br />
-                <InputField
-                  type="text"
-                  value={newQuiz.category}
-                  disabled
-                />
+    return (
+      <QuestionFormContainer>
+        {isLoading ? (
+          <CenterContainer>
+            <LoadingSpin />
+          </CenterContainer>
+        ) : (
+          <div>
+            <div>
+              <BackTop />
+              <strong style={{ color: 'rgba(64, 64, 64, 0.6)' }}> </strong>
+            </div>
+            <Row justify="center" align="middle" gutter={[16, 16]}>
+              <Col span={12}>
+                <Card>
+                  <h1>Delete Quiz</h1>
+                  <Row gutter={[16, 16]}>
+                    <Col>
+                      <Label>Quiz Title:</Label>
+                      <br />
+                      <InputField
+                        type="text"
+                        value={newQuiz.quizTitle}
+                        disabled
+                      />
+                    </Col>
+                    <Col>
+                      <Label>Category:</Label>
+                      <br />
+                      <InputField
+                        type="text"
+                        value={newQuiz.category}
+                        disabled
+                      />
+                    </Col>
+                  </Row>
+                  <Row gutter={[16, 16]}>
+                    <Col>
+                      <Label>Duration (minutes):</Label>
+                      <br />
+                      <InputField
+                        type="number"
+                        value={newQuiz.duration}
+                        disabled
+                      />
+                    </Col>
+                    <Col>
+                      <Label>Level:</Label>
+                      <br />
+                      <Select
+                        value={newQuiz.level}
+                        disabled
+                      >
+                        <OptionInput value="easy">Easy</OptionInput>
+                        <OptionInput value="medium">Medium</OptionInput>
+                        <OptionInput value="hard">Hard</OptionInput>
+                      </Select>
+                    </Col>
+                  </Row>
+                  <h2>Questions:</h2>
+                  {newQuiz.questions.map((q: Question, i: number) => (
+                    <div key={i}>
+                      <DeleteQuestionForm
+                        newQuestion={q}
+                      />
+                    </div>
+                  ))}
+                  <br />
+                  <ButtonContainer>
+                    <Row gutter={[16, 16]}>
+                      <Col>
+                        <Button type="primary" onClick={handleDeleteQuiz}>
+                          Delete Quiz
+                        </Button>
+                      </Col>
+                    </Row>
+                  </ButtonContainer>
+                </Card>
               </Col>
             </Row>
-            <Row gutter={[16, 16]}>
-              <Col>
-                <Label>Duration (minutes):</Label>
-                <br />
-                <InputField
-                  type="number"
-                  value={newQuiz.duration}
-                  disabled
-                />
-              </Col>
-              <Col>
-                <Label>Level:</Label>
-                <br />
-                <Select
-                  value={newQuiz.level}
-                  disabled
-                >
-                  <OptionInput value="easy">Easy</OptionInput>
-                  <OptionInput value="medium">Medium</OptionInput>
-                  <OptionInput value="hard">Hard</OptionInput>
-                </Select>
-              </Col>
-            </Row>
-            <h2>Questions:</h2>
-            {newQuiz.questions.map((q: Question, i: number) => (
-              <div key={i}>
-                <DeleteQuestionForm
-                  newQuestion={q}
-                />
-              </div>
-            ))}
-            <br />
-            <ButtonContainer>
-              <Row gutter={[16, 16]}>
-                <Col>
-                  <Button type="primary" onClick={handleDeleteQuiz}>
-                    Delete Quiz
-                  </Button>
-                </Col>
-              </Row>
-            </ButtonContainer>
-          </Card>
-        </Col>
-      </Row>
-      </div>
-      )}
-    </QuestionFormContainer>
-    )}
-)
+          </div>
+        )}
+      </QuestionFormContainer>
+    );
+  }
+);
 

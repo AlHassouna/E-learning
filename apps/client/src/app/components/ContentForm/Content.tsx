@@ -13,7 +13,7 @@ import {
 import img1 from '../../../assets/elearning.png';
 import img2 from '../../../assets/elearning (1).png';
 import { DModel, LoadingSpin } from '../../core';
-import { Button } from 'antd';
+import { BackTop, Button } from 'antd';
 import { QuizButton } from '../../styles/index';
 
 
@@ -45,17 +45,21 @@ export const Content: React.FC<ContentProps> = observer(({ courseTitle, onDiffic
             </CenterContainer>
           ) :
           <ContentDiv>
+            <div>
+              <BackTop />
+              <strong style={{ color: 'rgba(64, 64, 64, 0.6)' }}> </strong>
+            </div>
             <CourseTitle>{courseContent.courseTitle}</CourseTitle>
             <FirstIcon src={img1}></FirstIcon>
-            <div style={{display: 'flex', justifyContent: 'center'}}>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
 
-            <CourseContent>{courseContent.content}</CourseContent>
+              <CourseContent>{courseContent.content}</CourseContent>
             </div>
-            <div style={{display: 'flex', justifyContent: 'center', marginTop: '50px'}}>
+            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
               <DModel btnTitle={'Take A Quiz'} title={'Take A Quiz'} children={
                 <div style={{
                   display: 'flex',
-                  flexDirection: 'column',
+                  flexDirection: 'column'
                 }}>
                   <QuizButton onClick={() => handleDifficultySelection('easy')}>Easy</QuizButton>
                   <br></br>
@@ -63,7 +67,8 @@ export const Content: React.FC<ContentProps> = observer(({ courseTitle, onDiffic
                   <br></br>
                   <QuizButton onClick={() => handleDifficultySelection('hard')}>Hard</QuizButton>
                 </div>
-              }></DModel>
+              }>
+              </DModel>
             </div>
             <SecondIcon src={img2}></SecondIcon>
           </ContentDiv>

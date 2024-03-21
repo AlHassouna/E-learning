@@ -16,6 +16,7 @@ import {
 import { getAllMessages } from '../../api';
 
 interface AppProps {
+  privateReceiver?: string;
 }
 
 interface AuthResponse {
@@ -35,10 +36,10 @@ interface Contact {
   socketID: string;
 }
 
-export const Chat: React.FC<AppProps> = () => {
+export const Chat: React.FC<AppProps> = ({ privateReceiver }) => {
   const [value, setValue] = useState<string>('');
   const [sender, setSender] = useState<string>('');
-  const [receiver, setReceiver] = useState<string>('public');
+  const [receiver, setReceiver] = useState<string>('public' || privateReceiver);
   const [chatListPublic, setChatListPublic] = useState<Message[]>([]);
   const [chatListPrivate, setChatListPrivate] = useState<Message[]>([]);
   const [contactList, setContactList] = useState<Contact[]>([]);
