@@ -2,7 +2,8 @@ import React, { useState, ChangeEvent } from 'react';
 import { observer } from 'mobx-react';
 import QuestionForm from './QuestionAdd';
 import { Select, Button, Col, Row, Card, BackTop } from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
+import { DeleteOutlined, ArrowLeftOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
 import {
   QuestionFormContainer,
   Label,
@@ -27,8 +28,8 @@ export interface Question {
   correctOption: string;
 }
 
-export const AddQuizForm: React.FC<AddQuizFormProps> = observer(
-  ({ onSave }) => {
+export const AddQuizForm: React.FC<AddQuizFormProps> = observer(({ onSave }) => {
+    const navigate = useNavigate();
     const token = getItem('token');
     //@ts-ignore
     const username = JSON.parse(token).username;
@@ -37,7 +38,7 @@ export const AddQuizForm: React.FC<AddQuizFormProps> = observer(
     const [quiz, setQuiz] = useState({
       quizTitle: '',
       duration: 3,
-      category: '',
+      category: courseName,
       level: 'easy',
       questions: [
         {
@@ -51,10 +52,6 @@ export const AddQuizForm: React.FC<AddQuizFormProps> = observer(
 
     const handleQuizTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
       setQuiz({ ...quiz, quizTitle: event.target.value });
-    };
-
-    const handleCategoryChange = (event: ChangeEvent<HTMLInputElement>) => {
-      setQuiz({ ...quiz, category: event.target.value });
     };
 
     const handleLevelChange = (value: string) => {
@@ -96,6 +93,12 @@ export const AddQuizForm: React.FC<AddQuizFormProps> = observer(
 
     return (
       <QuestionFormContainer>
+        {/* @ts-ignore */}
+        <style jsx>{`:where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark.ant-menu-horizontal >.ant-menu-item-selected, :where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark>.ant-menu.ant-menu-horizontal >.ant-menu-item-selected, :where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark.ant-menu-horizontal >.ant-menu-submenu-selected, :where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark>.ant-menu.ant-menu-horizontal >.ant-menu-submenu-selected
+          {
+            background-color: #04787e !important
+          }`}</style>
+         
         <div>
           <BackTop />
           <strong style={{ color: 'rgba(64, 64, 64, 0.6)' }}> </strong>
@@ -103,7 +106,12 @@ export const AddQuizForm: React.FC<AddQuizFormProps> = observer(
         <Row justify="center" align="middle" gutter={[16, 16]}>
           <Col span={12}>
             <Card>
-              <h1>Add Quiz</h1>
+            
+              <h1> <Button
+          type="primary"
+          icon={<ArrowLeftOutlined />}
+          onClick={() => navigate('/quizzes/'+courseName)}
+        /> Add Quiz</h1>
               <Row gutter={[16, 16]}>
                 <Col>
                   <Label>Quiz Title:</Label>
@@ -120,8 +128,8 @@ export const AddQuizForm: React.FC<AddQuizFormProps> = observer(
                   <br></br>
                   <InputField
                     type="text"
-                    value={quiz.category}
-                    onChange={handleCategoryChange}
+                    value={courseName}
+                    disabled
                   />
                 </Col>
               </Row>

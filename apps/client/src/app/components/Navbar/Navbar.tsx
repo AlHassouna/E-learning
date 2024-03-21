@@ -78,7 +78,7 @@ export const Navbar: React.FC = observer(() => {
                           .map((course, index) => (
                             <Menu.Item style={{ backgroundColor: '#ECBB65' }} onClick={() => {
                               setChosenCourse(course.courseName);
-                              navigate(`/courses/${course.courseName.toLowerCase()}`);
+                              navigate(`/courses/${course.courseName}`);
                             }} key={course._id}>{course.courseName}</Menu.Item>
                           ))
                       }

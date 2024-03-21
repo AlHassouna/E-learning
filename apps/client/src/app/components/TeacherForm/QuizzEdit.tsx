@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import QuestionForm from './QuestionAdd';
 import { QuizType } from '../../types';
 import { Select, Button, Col, Row, Card, BackTop } from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
+import { DeleteOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import {
   QuestionFormContainer,
   Label,
@@ -12,7 +12,7 @@ import {
   OptionInput,
   ButtonContainer
 } from '../../styles/adminStyle';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getItem } from '../../utils/localStorage';
 import EditQuestionForm from './QuestionEdit';
 import { getQuiz } from '../../api';
@@ -36,6 +36,7 @@ export interface Question {
 
 export const EditQuizForm: React.FC<EditQuizFormProps> = observer(
   ({ onSave }) => {
+    const navigate = useNavigate();
     const token = getItem('token');
     //@ts-ignore
     const username = JSON.parse(token).username;
@@ -50,10 +51,6 @@ export const EditQuizForm: React.FC<EditQuizFormProps> = observer(
       setQuiz({ ...newQuiz, quizTitle: event.target.value });
     };
 
-    const handleCategoryChange = (event: ChangeEvent<HTMLInputElement>) => {
-      setQuiz({ ...newQuiz, category: event.target.value });
-    };
-
     const handleLevelChange = (value: string) => {
       setQuiz({ ...newQuiz, level: value });
     };
@@ -63,7 +60,7 @@ export const EditQuizForm: React.FC<EditQuizFormProps> = observer(
     };
 
     const handleSaveQuiz = () => {
-      const quizData = { newQuiz, username };
+      const quizData = { quiz:newQuiz, username };
       onSave(quizData);
     };
     const handleChangeQuestion = (i: number) => {
@@ -101,7 +98,13 @@ export const EditQuizForm: React.FC<EditQuizFormProps> = observer(
             <Row justify="center" align="middle" gutter={[16, 16]}>
               <Col span={12}>
                 <Card>
-                  <h1>Edit Quiz</h1>
+                  <h1>
+                  <Button
+          type="primary"
+          icon={<ArrowLeftOutlined />}
+          onClick={() => navigate('/editquiz/'+courseName)}
+        />
+                    Edit Quiz</h1>
                   <Row gutter={[16, 16]}>
                     <Col>
                       <Label>Quiz Title:</Label>
@@ -119,7 +122,7 @@ export const EditQuizForm: React.FC<EditQuizFormProps> = observer(
                       <InputField
                         type="text"
                         value={newQuiz.category}
-                        onChange={handleCategoryChange}
+                        disabled
                       />
                     </Col>
                   </Row>

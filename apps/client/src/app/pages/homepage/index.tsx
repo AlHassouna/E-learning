@@ -125,7 +125,7 @@ export const HomePage: React.FC = observer(() => {
                   <h2 style={{ fontWeight: 'bold' }}>Your Courses</h2>
                 </LeftContainer>
                 <HeaderLine />
-                <CustomUserCoursesCarousel dots infinite slidesToShow={howMany} slidesToScroll={1} responsive={[
+                <CustomUserCoursesCarousel dots infinite slidesToShow={howMany < 2 ? 1: 2} slidesToScroll={1} responsive={[
                   {
                     breakpoint: 768,
                     settings: {
@@ -142,7 +142,7 @@ export const HomePage: React.FC = observer(() => {
                   <h2 style={{ fontWeight: 'bold' }}>Recommended For You</h2>
                 </LeftContainer>
                 <HeaderLine />
-                <CustomCoursesCarousel dots infinite slidesToShow={howManyReco} slidesToScroll={3} responsive={[
+                <CustomCoursesCarousel dots infinite slidesToShow={howManyReco < 2 ? 1: 2} slidesToScroll={3} responsive={[
                   {
                     breakpoint: 768,
                     settings: {

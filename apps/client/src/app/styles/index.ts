@@ -428,7 +428,7 @@ export const CustomCarousel = styled(Carousel)`
 `;
 
 export const CustomUserCoursesCarousel = styled(Carousel)`
-  width: 100%;
+  width: 300px;
   max-width: 1200px;
   margin-top: 20px;
   height: 350px;

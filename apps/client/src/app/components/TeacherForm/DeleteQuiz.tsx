@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
 import QuestionForm from './QuestionAdd';
 import { Select, Button, Col, Row, Card, message, BackTop } from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
+import { DeleteOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import {
   QuestionFormContainer,
   Label,
@@ -31,6 +31,7 @@ export interface Question {
 }
 
 export const DeleteQuizForm: React.FC = observer(() => {
+  const courseName = useParams().courseTitle;
     const [messageApi, contextHolder] = message.useMessage();
     const [newQuiz, setQuiz] = useState({ questions: [] as Question[] } as QuizType);
 
@@ -92,7 +93,13 @@ export const DeleteQuizForm: React.FC = observer(() => {
             <Row justify="center" align="middle" gutter={[16, 16]}>
               <Col span={12}>
                 <Card>
-                  <h1>Delete Quiz</h1>
+                  <h1>
+                  <Button
+          type="primary"
+          icon={<ArrowLeftOutlined />}
+          onClick={() => navigate('/deletequiz/'+courseName)}
+        />
+                    Delete Quiz</h1>
                   <Row gutter={[16, 16]}>
                     <Col>
                       <Label>Quiz Title:</Label>
