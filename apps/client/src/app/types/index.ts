@@ -32,7 +32,7 @@ export interface QuizType {
   timestamp: Date;
   duration: number;
   category: string;
-  level: 'easy' | 'medium' | 'hard';
+  level: string;
   questions: QuestionType[];
 }
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useStore } from '../../stores/setupContext';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { LoadingSpin } from '../../core';
 import { CenterContainer } from '../../styles';
@@ -21,10 +21,9 @@ import { addParticipant } from '../../api';
 export const HomePage: React.FC = observer(() => {
   const { auth, navbar, main } = useStore();
   const { isAuthenticated } = auth;
-  // const { isLoading } = main;
   const { courses: Courses, getAll, isLoading } = navbar;
   const token = getItem('token');
-
+  const navigate = useNavigate();
 
   //@ts-ignore
   const userId = JSON.parse(token)._id;
@@ -62,14 +61,16 @@ export const HomePage: React.FC = observer(() => {
   const userPart = () => {
     const userCourses = Courses.filter(course => course.participants.includes(userId));
     return userCourses.map(course => (
-      <div key={course._id}>
-        <CustomUserCoursesCards
-          hoverable
-          cover={<CourseImage alt={course.courseName} src={course.courseImage} />}
-        >
-          <Card.Meta title={course.courseName} description={course.description} />
-        </CustomUserCoursesCards>
-      </div>
+      <CustomUserCoursesCards
+        key={course._id}
+        onClick={() => navigate(`/courses/${course.courseName}`)}
+        hoverable
+        cover={<CourseImage alt={course.courseName} src={course.courseImage} />}
+      >
+
+        <Card.Meta title={course.courseName} description={course.description} />
+      </CustomUserCoursesCards>
+
     ));
   };
   return (
@@ -126,53 +127,61 @@ export const HomePage: React.FC = observer(() => {
                   <h2 style={{ fontWeight: 'bold' }}>Your Courses</h2>
                 </LeftContainer>
                 <HeaderLine />
-                <CustomUserCoursesCarousel dots infinite slidesToShow={howMany} slidesToScroll={1} responsive={[
-                  {
-                    breakpoint: 768,
-                    settings: {
-                      slidesToShow: 2,
-                      slidesToScroll: 1
-                    }
-                  }
-                ]}>
+                {/* @ts-ignore */}
+                <style jsx>{`:where(.css-dev-only-do-not-override-1fm67j).ant-carousel .slick-dots-bottom {
+                  bottom: -15px;
+                }`}</style>
+                <CustomUserCoursesCarousel dots infinite slidesToShow={howMany < 2 ? 1 : 2} slidesToScroll={1}
+                                           responsive={[
+                                             {
+                                               breakpoint: 768,
+                                               settings: {
+                                                 slidesToShow: 2,
+                                                 slidesToScroll: 1
+                                               }
+                                             }
+                                           ]}>
                   {userPart()}
                 </CustomUserCoursesCarousel>
               </CardsContainer>
+
+              {/*Reco*/}
               <CardsContainer>
                 <LeftContainer>
                   <h2 style={{ fontWeight: 'bold' }}>Recommended For You</h2>
                 </LeftContainer>
                 <HeaderLine />
-                <CustomCoursesCarousel dots infinite slidesToShow={howManyReco} slidesToScroll={3} responsive={[
-                  {
-                    breakpoint: 768,
-                    settings: {
-                      slidesToShow: howManyReco,
-                      slidesToScroll: 1
-                    }
-                  }
-                ]}>
+                {/* @ts-ignore */}
+                <CustomCoursesCarousel dots infinite slidesToShow={howManyReco < 2 ? 1 : 2} slidesToScroll={1}
+                                       responsive={[
+                                         {
+                                           breakpoint: 768,
+                                           settings: {
+                                             slidesToShow: 2,
+                                             slidesToScroll: 1
+                                           }
+                                         }
+                                       ]}>
                   {Courses.filter(course => !course.participants.includes(userId)).map((course) => (
-                    <div key={course._id}>
-                      <CustomCoursesCards
+                    <CustomCoursesCards
+                      key={course._id}
+                      hoverable
+                      cover={<CourseImage alt={course.courseName} src={course.courseImage} />}
+                    >
+                      <Card.Meta title={course.courseName} description={course.description} />
 
-                        hoverable
-                        cover={<CourseImage alt={course.courseName} src={course.courseImage} />}
-                      >
-                        <Card.Meta title={course.courseName} description={course.description} />
-
-                        <div style={{ display: 'flex', justifyContent: 'center' }}>
-                          <JoinButton onClick={
-                            () => onJoinCourse(course._id, userId)
-                          } type="primary">Join</JoinButton>
-                        </div>
-                      </CustomCoursesCards>
-                    </div>
+                      <div style={{ display: 'flex', justifyContent: 'center' }}>
+                        <JoinButton onClick={
+                          () => onJoinCourse(course._id, userId)
+                        } type="primary">Join</JoinButton>
+                      </div>
+                    </CustomCoursesCards>
                   ))}
-
                 </CustomCoursesCarousel>
               </CardsContainer>
-              <div>
+              <div style={{
+                paddingTop: '30px'
+              }}>
                 <CustomFooter>
                   <Row gutter={[20, 20]}>
                     <Col xs={24} sm={24} md={8}>

@@ -36,3 +36,11 @@ export interface IMessage {
   msg: string;
   date: Date;
 }
+
+export interface IProfile{
+  username:string;
+  role:string;
+  numRewards: number,
+  numCourses:number,
+  ranking:number
+}
