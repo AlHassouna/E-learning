@@ -3,7 +3,6 @@ import { Footer } from 'antd/es/layout/layout';
 import styled from 'styled-components';
 
 
-
 export const FlexContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -125,18 +124,18 @@ export const ProfileCard = styled(Card)`
 `;
 
 export const ProfileBackground = styled.div`
-min-height: 100vh;
-background-color: #EFDAC7;
-display: flex;
-justify-content: center;
-align-items: center;`;
+  min-height: 100vh;
+  background-color: #EFDAC7;
+  display: flex;
+  justify-content: center;
+  align-items: center;`;
 
 export const ProfileContent = styled.div`
-display: flex;
-justify-content: space-between;
-text-align: center;
-margin-top: 5rem;
-margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  margin-top: 5rem;
+  margin-bottom: 2rem;
 `;
 export const NotFoundContainer = styled.div`
   position: relative;
@@ -375,7 +374,7 @@ interface TimerContainerProps {
 
 export const TimerContainer = styled.div<TimerContainerProps>`
   font-size: 1.2rem;
-  color: ${(props:any) => (props.isOneMinute ? 'red' : '#03565B')};
+  color: ${(props: any) => (props.isOneMinute ? 'red' : '#03565B')};
   display: flex;
   justify-content: center;
 `;
@@ -428,9 +427,11 @@ export const CustomCarousel = styled(Carousel)`
 `;
 
 export const CustomUserCoursesCarousel = styled(Carousel)`
-  width: 300px;
+
+  width: 50%;
   max-width: 1200px;
   margin-top: 20px;
+  margin: auto;
   height: 350px;
   @media (max-width: 768px) {
     max-width: 450px;
@@ -438,7 +439,7 @@ export const CustomUserCoursesCarousel = styled(Carousel)`
 `;
 
 export const CustomCoursesCarousel = styled(Carousel)`
-  width: 100%;
+  width: 500px;
   max-width: 1200px;
   margin-top: 20px;
   height: 420px;
@@ -533,7 +534,7 @@ export const CardsContainer = styled.div`
 `;
 
 export const CustomUserCoursesCards = styled(Card)`
-  width: 220px;
+  width: 220px !important;
   height: 350px;
   @media (max-width: 768px) {
     width: 180px;
@@ -542,10 +543,7 @@ export const CustomUserCoursesCards = styled(Card)`
 `;
 
 export const CustomCoursesCards = styled(Card)`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 220px;
+  width: 220px !important;
   height: 400px;
   @media (max-width: 768px) {
     width: 180px;
