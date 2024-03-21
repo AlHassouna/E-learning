@@ -10,26 +10,39 @@ import {
   StyledCard,
   StyledCardBody,
   StyledImageContainer,
-  StyledImage
+  StyledImage, CenterContainer
 } from '../../styles';
+import { LoadingSpin } from '../../core';
 
 export const AuthPage: React.FC = observer(() => {
-  const { auth } = useStore();
+  const { auth, main } = useStore();
+  const { isLoading } = main;
   const { login, isAuthenticated, signup, isLoadingResponse } = auth;
   return (
     <>
-      {isAuthenticated && <Navigate to="/" />}
-      <FlexContainer>
-        <StyledCard>
-          <StyledCardBody>
-            <StyledImageContainer>
-              <StyledImage src={Image} alt="garden" />
-            </StyledImageContainer>
-            <Auth isLoadingResponse={isLoadingResponse} signupF={(payload: UserSign) => signup(payload)}
-                  login={(payload: UserPass) => login(payload)} />
-          </StyledCardBody>
-        </StyledCard>
-      </FlexContainer>
+      {isLoading ? (
+        <CenterContainer>
+          <LoadingSpin />
+        </CenterContainer>
+      ) : (
+        <>
+          {isAuthenticated ? (
+            <Navigate to="/" />
+          ) : (
+            <FlexContainer>
+              <StyledCard>
+                <StyledCardBody>
+                  <StyledImageContainer>
+                    <StyledImage src={Image} alt="garden" />
+                  </StyledImageContainer>
+                  <Auth isLoadingResponse={isLoadingResponse} signupF={(payload: UserSign) => signup(payload)}
+                        login={(payload: UserPass) => login(payload)} />
+                </StyledCardBody>
+              </StyledCard>
+            </FlexContainer>
+          )}
+        </>
+      )}
     </>
   );
 });

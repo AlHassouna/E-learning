@@ -16,14 +16,14 @@ class AuthRouter implements IAuth {
 
   public register = async (req: Request, res: Response): Promise<void> => {
     const { email, password, role, username } = req.body;
-    const roleString = role ? 'teacher' : 'student';
+    const roleString = role ? 'Teacher' : 'Student';
     const bycryptPassword = await bcrypt.hash(password, 10);
     try {
       const user = await this.model.create({
         email,
         password: bycryptPassword,
         role: roleString,
-        username,
+        username
       });
       const token = jwt.sign({ user }, process.env.JWT_SECRET as string, {
         expiresIn: 60 * 60,
@@ -41,7 +41,8 @@ class AuthRouter implements IAuth {
 
   public login = async (req: Request, res: Response): Promise<void> => {
     try {
-      const user = await this.model.findOne({ email: req.body.email });
+      const user = await this.model.findOne
+      ({ email: req.body.email });
       if (!user) {
         throw new Error('Invalid credentials, please try again');
       }
@@ -49,9 +50,9 @@ class AuthRouter implements IAuth {
       if (!isMatch) {
         throw new Error('Invalid credentials, please try again');
       }
-      const token = jwt.sign({ user }, process.env.JWT_SECRET as string, {
-        expiresIn: 60 * 60,
-      });
+      const token = jwt.sign({ user },
+        process.env.JWT_SECRET as string,
+        { expiresIn: 60 * 60 });
       const { email, role, username, _id } = user;
       res.status(200).json({ email, role, username, _id, token });
     } catch (error) {
@@ -63,6 +64,8 @@ class AuthRouter implements IAuth {
     this.router.post('/register', this.register);
     this.router.post('/login', this.login);
   }
+
+
 }
 
 export default AuthRouter;

@@ -22,3 +22,26 @@ export interface Route {
   component: React.ReactNode;
   subItems?: Route[];
 }
+
+export interface QuizType {
+  _id: string;
+  course: string;
+  teacher: string;
+  quizTitle: string;
+  description: string;
+  timestamp: Date;
+  duration: number;
+  category: string;
+  level: string;
+  questions: QuestionType[];
+}
+
+export interface QuestionType {
+  _id: string;
+  questionText: string;
+  type: 'multiple' | 'boolean';
+  options: string[];
+  correctOption: string;
+  level: 'easy' | 'medium' | 'hard';
+}
+

@@ -6,6 +6,7 @@ export interface GetUserDetailsResponse {
   status: boolean;
 
 }
+export type userDetailResponse=Partial<GetUserDetailsResponse>
 
 export interface LoginAsUserResponse {
   username: string;
