@@ -16,8 +16,9 @@ export interface ICourse {
   courseName: string;
   description: string;
   teacher: IUser;
-  participants: IUser;
+  participants: IUser[];
   title: string;
+  courseImage: string;
 }
 
 

@@ -11,6 +11,7 @@ class NavbarStore extends StoreBase {
   public coursesBySearch: ICourse[] = [];
   public chosenCourse = '';
   public courseId = '';
+  public loadingSearch = false;
 
   constructor() {
     super();
@@ -22,6 +23,8 @@ class NavbarStore extends StoreBase {
       search: action,
       getAll: action,
       chosenCourse: observable,
+      setLoadingSearch: action,
+      loadingSearch: observable,
       setChosenCourse: action,
       coursesBySearch: observable,
       setCourses: action,
@@ -51,16 +54,20 @@ class NavbarStore extends StoreBase {
     this.courseId = id;
   };
 
+  public setLoadingSearch = (loadingSearch: boolean): void => {
+    this.loadingSearch = loadingSearch;
+  };
+
   public search = async (search: string): Promise<void> => {
     try {
-      this.setIsLoading(true);
+      this.setLoadingSearch(true);
       this.setCurrent(search);
       const courses = await getCoursesBySearch(search);
       this.coursesBySearch = courses;
-      this.setIsLoading(false);
+      this.setLoadingSearch(false);
     } catch (error) {
       console.error(error);
-      this.setIsLoading(false);
+      this.setLoadingSearch(false);
     }
   };
 

@@ -47,20 +47,25 @@ export const Content: React.FC<ContentProps> = observer(({ courseTitle, onDiffic
           <ContentDiv>
             <CourseTitle>{courseContent.courseTitle}</CourseTitle>
             <FirstIcon src={img1}></FirstIcon>
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+
             <CourseContent>{courseContent.content}</CourseContent>
+            </div>
+            <div style={{display: 'flex', justifyContent: 'center', marginTop: '50px'}}>
+              <DModel btnTitle={'Take A Quiz'} title={'Take A Quiz'} children={
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}>
+                  <QuizButton onClick={() => handleDifficultySelection('easy')}>Easy</QuizButton>
+                  <br></br>
+                  <QuizButton onClick={() => handleDifficultySelection('medium')}>Medium</QuizButton>
+                  <br></br>
+                  <QuizButton onClick={() => handleDifficultySelection('hard')}>Hard</QuizButton>
+                </div>
+              }></DModel>
+            </div>
             <SecondIcon src={img2}></SecondIcon>
-            <DModel btnTitle={'Take A Quiz'} title={'Take A Quiz'} children={
-              <div style={{
-                display: 'flex',
-                flexDirection: 'column'
-              }}>
-                <QuizButton onClick={() => handleDifficultySelection('easy')}>Easy</QuizButton>
-                <br></br>
-                <QuizButton onClick={() => handleDifficultySelection('medium')}>Medium</QuizButton>
-                <br></br>
-                <QuizButton onClick={() => handleDifficultySelection('hard')}>Hard</QuizButton>
-              </div>
-            }></DModel>
           </ContentDiv>
       }
     </>
