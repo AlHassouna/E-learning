@@ -3,7 +3,9 @@ import { IAuth } from '../types/types';
 import { Router } from 'express-serve-static-core';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+
 const sendEmail = require('../Notfications/Notfications');
+
 class AuthRouter implements IAuth {
   router: Router;
   model: any;
@@ -26,14 +28,14 @@ class AuthRouter implements IAuth {
         username
       });
       const token = jwt.sign({ user }, process.env.JWT_SECRET as string, {
-        expiresIn: 60 * 60,
+        expiresIn: 60 * 60
       });
       sendEmail(
         email,
         'Registered to our Website',
         'You have successfully registered on our website'
       );
-      res.status(201).json({ email, roleString, username, token });
+      res.status(201).json({ email, roleString, username, token, _id: user._id });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
