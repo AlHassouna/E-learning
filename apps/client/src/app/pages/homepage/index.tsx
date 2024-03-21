@@ -172,7 +172,10 @@ export const HomePage: React.FC = observer(() => {
 
                       <div style={{ display: 'flex', justifyContent: 'center' }}>
                         <JoinButton onClick={
-                          () => onJoinCourse(course._id, userId)
+                          () => {
+                            console.log('course._id', course._id, 'userId', userId);
+                            onJoinCourse(course._id, userId);
+                          }
                         } type="primary">Join</JoinButton>
                       </div>
                     </CustomCoursesCards>
