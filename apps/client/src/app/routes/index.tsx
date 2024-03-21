@@ -1,6 +1,6 @@
 import { Route } from '../types';
-import { ErrorPage, ProfilePage, Admin,QuizAdd, DeleteQuiz, AllDQuizzes } from '../pages/';
-import { AuthPage, HomePage, QuizPage, ContentPage, ChatPage } from '../pages/';
+import { ErrorPage, ProfilePage, Admin,QuizAdd, DeleteQuiz, AllDQuizzes, AllEQuizzes } from '../pages/';
+import { AuthPage, HomePage, QuizPage, ContentPage, ChatPage, EditQuiz } from '../pages/';
 
 export const routes: Route[] = [
   {
@@ -44,19 +44,35 @@ export const routes: Route[] = [
   },
   {
     key: 'deletequiz',
-    text: 'Add Quiz Page',
+    text: 'Delete Quiz Page',
     exact: true,
     linksTo: 'deletequiz/:courseTitle/:quizId',
     showOnMenu: true,
     component: <DeleteQuiz />
   },
   {
-    key: 'deletequiz',
-    text: 'Add Quiz Page',
+    key: 'deletequizzes',
+    text: 'Delete Quiz Page',
     exact: true,
     linksTo: 'deletequiz/:courseTitle',
     showOnMenu: true,
     component: <AllDQuizzes />
+  },
+  {
+    key: 'editquiz',
+    text: 'Edit Quiz Page',
+    exact: true,
+    linksTo: 'editquiz/:courseTitle/:quizId',
+    showOnMenu: true,
+    component: < EditQuiz/>
+  },
+  {
+    key: 'editquizzes',
+    text: 'Edit Quiz Page',
+    exact: true,
+    linksTo: 'editquiz/:courseTitle',
+    showOnMenu: true,
+    component: <AllEQuizzes />
   },
   {
     key: 'teacher',
@@ -74,6 +90,7 @@ export const routes: Route[] = [
     showOnMenu: true,
     component: <QuizPage />
   },
+  
   {
 
     key: 'content',

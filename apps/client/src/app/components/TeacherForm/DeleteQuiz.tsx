@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
 import QuestionForm from './QuestionAdd';
-import { Select, Button, Col, Row, Card } from 'antd';
+import { Select, Button, Col, Row, Card, message } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import {
   QuestionFormContainer,
@@ -14,13 +14,13 @@ import {
 import { useLocation, useParams } from 'react-router-dom';
 import { getItem } from '../../utils/localStorage';
 import DeleteQuestionForm from './DeleteQuestion';
-
+import { useStore } from '../../stores/setupContext';
+import { QuizType } from '../../types';
+import { CenterContainer } from '../../styles';
+import { LoadingSpin } from '../../core/Spin/LoadingSpin';
+import { useNavigate } from 'react-router-dom';
+import { getQuiz } from '../../api';
 const { Option } = Select;
-
-interface DeleteQuizFormProps {
-  quiz: any;
-  handleDeleteQuiz: () => void;
-}
 
 export interface Question {
   questionText: string;
@@ -29,13 +29,62 @@ export interface Question {
   correctOption: string;
 }
 
-export const DeleteQuizForm: React.FC<DeleteQuizFormProps> = observer(({ quiz, handleDeleteQuiz }) => {
-  const courseName = useParams().courseTitle;
+export const DeleteQuizForm: React.FC = observer(() => {
+  const [messageApi, contextHolder] = message.useMessage();
+  const [newQuiz, setQuiz] = useState({questions: [] as Question[]} as QuizType);
+
+  const success = () => {
+    messageApi.open({
+      type: 'success',
+      content: 'The quiz was successfully deleted',
+    });
+  };
+
+  const error = () => {
+    messageApi.open({
+      type: 'error',
+      content: 'Failed to delete the quiz',
+    });
+  };
   // State for quiz
+  const navigate = useNavigate();
+
+  const { quiz } = useStore();
+  const { allQuizzesByCourse, isLoading, setIsLoading, deleteQuizByID } = quiz;
+  const chosenCourse = useParams().courseTitle;
+  const quizID = useParams().quizId as string;
+  async function handleDeleteQuiz() {
+    console.log(quizID)
+    try{
+            await deleteQuizByID(quizID)
+            success()
+            navigate(`/deletequiz/${chosenCourse}`);
+      }
+      catch(err){
+        error()
+        }
+}
+useEffect(() => {
+  const fetchContent = async () => {
+    setIsLoading(true);
+    const quiz1= await getQuiz(quizID);
+    setQuiz(quiz1)
+    setIsLoading(false);
+  };
+  fetchContent();
+}, [quizID]);
+
+
 
 
   return (
     <QuestionFormContainer>
+    {isLoading ? (
+      <CenterContainer>
+        <LoadingSpin />
+      </CenterContainer>
+    ) :(
+      <div>
       <Row justify="center" align="middle" gutter={[16, 16]}>
         <Col span={12}>
           <Card>
@@ -46,7 +95,7 @@ export const DeleteQuizForm: React.FC<DeleteQuizFormProps> = observer(({ quiz, h
                 <br />
                 <InputField
                   type="text"
-                  value={quiz.quizTitle}
+                  value={newQuiz.quizTitle}
                   disabled
                 />
               </Col>
@@ -55,7 +104,7 @@ export const DeleteQuizForm: React.FC<DeleteQuizFormProps> = observer(({ quiz, h
                 <br />
                 <InputField
                   type="text"
-                  value={quiz.category}
+                  value={newQuiz.category}
                   disabled
                 />
               </Col>
@@ -66,7 +115,7 @@ export const DeleteQuizForm: React.FC<DeleteQuizFormProps> = observer(({ quiz, h
                 <br />
                 <InputField
                   type="number"
-                  value={quiz.duration}
+                  value={newQuiz.duration}
                   disabled
                 />
               </Col>
@@ -74,7 +123,7 @@ export const DeleteQuizForm: React.FC<DeleteQuizFormProps> = observer(({ quiz, h
                 <Label>Level:</Label>
                 <br />
                 <Select
-                  value={quiz.level}
+                  value={newQuiz.level}
                   disabled
                 >
                   <OptionInput value="easy">Easy</OptionInput>
@@ -84,7 +133,7 @@ export const DeleteQuizForm: React.FC<DeleteQuizFormProps> = observer(({ quiz, h
               </Col>
             </Row>
             <h2>Questions:</h2>
-            {quiz.questions.map((q: Question, i: number) => (
+            {newQuiz.questions.map((q: Question, i: number) => (
               <div key={i}>
                 <DeleteQuestionForm
                   newQuestion={q}
@@ -104,6 +153,9 @@ export const DeleteQuizForm: React.FC<DeleteQuizFormProps> = observer(({ quiz, h
           </Card>
         </Col>
       </Row>
+      </div>
+      )}
     </QuestionFormContainer>
-  );
-});
+    )}
+)
+

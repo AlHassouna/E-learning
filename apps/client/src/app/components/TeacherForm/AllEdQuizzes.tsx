@@ -7,7 +7,7 @@ import { useStore } from '../../stores/setupContext';
 import { CenterContainer } from '../../styles';
 import { LoadingSpin } from '../../core';
 
-const AllDelQuizzes: React.FC = observer(() => {
+const AllEdQuizzes: React.FC = observer(() => {
   const { quiz } = useStore();
   const { allQuizzesByCourse, isLoading, setIsLoading } = quiz;
   const chosenCourse = useParams().courseTitle as string;
@@ -29,11 +29,11 @@ const AllDelQuizzes: React.FC = observer(() => {
         ) :
         <Card>
           <div>
-            <Heading>Delete quiz:</Heading>
+            <Heading>Edit quiz:</Heading>
             <Row justify="center" gutter={[16, 16]}>
               {allQuizzesByCourse.map((q, index) => {
                 return <Col key={index}>
-                  <Link to={`/deletequiz/${chosenCourse}/${q._id}`}  key={index}>
+                  <Link to={`/editquiz/${chosenCourse}/${q._id}`}  key={index}>
                     <CustomCard hoverable>
                       <Card.Meta title={`Quiz ${index}`} description={`${q.description}`} />
                     </CustomCard>
@@ -49,4 +49,4 @@ const AllDelQuizzes: React.FC = observer(() => {
   );
 });
 
-export default AllDelQuizzes;
+export default AllEdQuizzes;

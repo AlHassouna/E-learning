@@ -37,14 +37,14 @@ class TeacherRouter implements Teacher {
         const questionIds = [];
         let category = '';
         const quizInfo = req.body.quiz;
-        for (const quizData of req.body.quiz.questions) {
+        for (const quiz of req.body.quiz.questions) {
           category = quizInfo.category;
           const question = await this.question.create({
-            questionText: quizData.questionText,
-            type: quizData.type,
-            options: quizData.options.concat(quizData.correctOption),
-            correctOption: quizData.correctOption,
-            level: quizInfo.difficulty
+            questionText: quiz.questionText,
+            type: quiz.type,
+            options: quiz.options.concat(quiz.correctOption),
+            correctOption: quiz.correctOption,
+            level: quizInfo.level
           });
           questionIds.push(question._id);
         }
@@ -55,7 +55,7 @@ class TeacherRouter implements Teacher {
           quizTitle: `Quiz for ${category}`,
           description: `Quiz for ${category}`,
           category: category,
-          level: req.body.quiz.difficulty,
+          level: req.body.quiz.level,
           questions: questionIds
         });
         console.log('after create quiz');
@@ -94,17 +94,84 @@ class TeacherRouter implements Teacher {
         return;
       }
 
-      const quizzes = await this.quiz.find({ course: course._id }).populate('questions');
+      const quizzes = await this.quiz.find({ course: course._id })
       res.send(quizzes);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
   };
+  public getQuiz = async (req: Request, res: Response): Promise<void> => {
+    const quizId = req.params.quizId;
+    try {
+      // Find the course document by course name
+
+      const quiz = await this.quiz.findById(quizId).populate("questions")
+      res.send(quiz);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
+public editQuiz = async (req: Request, res: Response): Promise<void> => {
+  const body = req.body;
+  try {
+    const user = await this.user.findOne({ username: body.username });
+    if (!user) {
+      throw new Error('No user Found');
+    }
+
+    const { role } = user.toObject();
+
+    if (role === 'Teacher') {
+      const { quiz } = req.body; // Assuming you send quizId and updated quiz
+      const existingQuiz = await this.quiz.findById(quiz._id);
+      if (!existingQuiz) {
+        throw new Error('Quiz not found');
+      }
+      existingQuiz.quizTitle = quiz.quizTitle;
+      existingQuiz.category = quiz.category;
+      existingQuiz.level = quiz.level;
+      await existingQuiz.save();
+      const questionIds = [];
+
+
+      for (const questionData of quiz.questions) {
+        let question;
+        if (questionData._id) {
+          // If question has an ID, update existing question
+          question = await this.question.findById(questionData._id);
+          if (!question) {
+            throw new Error(`Question with ID ${questionData._id} not found`);
+          }
+          question.questionText = questionData.questionText;
+          question.type = questionData.type;
+          question.options = questionData.options.concat(questionData.correctOption);
+          question.correctOption = questionData.correctOption;
+          question.level = quiz.level;
+          await question.save();
+        } 
+        questionIds.push(question._id);
+      }
+
+      // Update quiz with new set of questions
+      existingQuiz.questions = questionIds;
+      await existingQuiz.save();
+
+      res.status(200).json({ message: 'Quiz successfully updated' });
+    } else {
+      throw new Error('Not a teacher');
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 
   initializeRoutes(): void {
     this.router.post('/quizzes', this.addQuiz);
     this.router.get('/quizzes/:courseName', this.getQuizzes);
+    this.router.get('/quiz/:quizId', this.getQuiz);
     this.router.delete('/quizzes/:quizID', this.deleteQuiz);
+    this.router.put('/quizzes', this.editQuiz);
   }
 
 

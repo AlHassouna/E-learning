@@ -9,33 +9,11 @@ export const DeleteQuiz: React.FC = observer(() => {
   
   const { auth, addquiz } = useStore();
   const { isAuthenticated, logout } = auth;
-  const {addQuiz}= addquiz
-  const quiz =  {
-    "quizTitle": "sdds",
-    "duration": 3,
-    "category": "sddds",
-    "level": "easy",
-    "questions": [
-      {
-        "questionText": "dcsdsdc",
-        "type": "multiple",
-        "options": [
-          "sd",
-          "vdd",
-          "tew"
-        ],
-        "correctOption": "teweed"
-      }
-    ]
-  }
-  const handleDeleteQuiz = () => {
-    console.log("Quiz was Deleted")
-
-  };
+  
   return (
     <>   
       {!isAuthenticated && <Navigate to="/auth" />}
-      <DeleteQuizForm handleDeleteQuiz={handleDeleteQuiz} quiz={quiz} />
+      <DeleteQuizForm />
     </>
   );
 });

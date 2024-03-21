@@ -9,6 +9,7 @@ function QuizzesManage() {
     const param = useParams()
     const addpagelink="/addquiz/"+param.courseId
     const deletepagelink="/deletequiz/"+param.courseId
+    const editpagelink="/editquiz/"+param.courseId
   return (
     <Container>
       <div>
@@ -30,9 +31,11 @@ function QuizzesManage() {
             </Link>
           </Col>
           <Col >
+          <Link to={editpagelink}>
             <CustomCard hoverable cover={<CustomImage alt="Edit" src={editImage} />}>
               <Card.Meta title="Edit Quiz" description="Edit quizzes in the course" />
             </CustomCard>
+            </Link>
           </Col>
         </Row>
       </div>
