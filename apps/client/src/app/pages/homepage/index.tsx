@@ -4,24 +4,26 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { LoadingSpin } from '../../core';
 import { CenterContainer } from '../../styles';
-import { Card, Col, Row, BackTop } from 'antd';
+import { Card, Col, Row, BackTop, Button, Typography, Popconfirm } from 'antd';
 import {
   FlexHomePageContainer, CustomCarousel, SlideContainer, SlideContent,
   SlideText, SlideParagraph, SlideSecondHeader, SlideImg, CustomCoursesCarousel,
   CustomUserCoursesCarousel, HeaderLine, LeftContainer, CardsContainer, CustomUserCoursesCards,
   CustomCoursesCards, CourseImage, JoinButton, CustomFooter, CustomDiv
 } from '../../styles/index';
+import { EllipsisOutlined, DeleteOutlined, ArrowRightOutlined, PlusOutlined } from '@ant-design/icons';
+
 import image1 from '../../images/elearning.png';
 import image2 from '../../images/elearning-2.png';
 import image3 from '../../images/elearning-3.png';
 import { getItem } from '../../utils/localStorage';
-import { addParticipant } from '../../api';
+import { addParticipant, removeParticipant } from '../../api';
 
 
 export const HomePage: React.FC = observer(() => {
   const { auth, navbar, main } = useStore();
   const { isAuthenticated } = auth;
-  const { courses: Courses, getAll, isLoading } = navbar;
+  const { courses: Courses, getAll, isLoading, setChosenCourse } = navbar;
   const token = getItem('token');
   const navigate = useNavigate();
 
@@ -53,24 +55,51 @@ export const HomePage: React.FC = observer(() => {
   const howManyReco = calculateRecommendedCount();
 
   const onJoinCourse = async (courseId: string, userId: string) => {
+    console.log('courseId: ', courseId);
+    console.log('userId: ', userId);
+
     await addParticipant(courseId, userId);
     await getAll();
   };
 
+  const onRemoveCourse = async (courseId: string, userId: string) => {
+    await removeParticipant(courseId, userId);
+    await getAll();
+  };
 
   const userPart = () => {
     const userCourses = Courses.filter(course => course.participants.includes(userId));
     return userCourses.map(course => (
-      <CustomUserCoursesCards
-        key={course._id}
-        onClick={() => navigate(`/courses/${course.courseName}`)}
-        hoverable
-        cover={<CourseImage alt={course.courseName} src={course.courseImage} />}
-      >
-
-        <Card.Meta title={course.courseName} description={course.description} />
-      </CustomUserCoursesCards>
-
+      <div className='test' key={course._id} style={{ display: 'flex', justifyContent: 'center', width: '40%' }}>
+        <CustomCoursesCards
+          key={course._id}
+          style={{ ...(howMany === 1 ? { width: "50%", display: 'flex', flexDirection: 'column', margin: '1em' } : { display: 'flex', flexDirection: 'column', margin: '1em' }) }}
+          hoverable
+          cover={<CourseImage alt={course.courseName} src={course.courseImage} />}
+          actions={[
+            <Popconfirm
+              placement="bottom"
+              title={'Do You Want To UnJoin The Course?'}
+              okText="Yes"
+              cancelText="No"
+              onConfirm={
+                () => {
+                  onRemoveCourse(course._id, userId);
+                }}
+            >
+              <DeleteOutlined style={{ color: 'red', flex: '1' }} key="delete" >
+              </DeleteOutlined>
+            </Popconfirm>
+            ,
+            <ArrowRightOutlined style={{ color: '#03565B', flex: '1' }} key="ellipsis" onClick={() => {
+              setChosenCourse(course.courseName); navigate(`/courses/${course.courseName}`)
+            }} />
+          ]}
+        >
+          {/* @ts-ignore */}
+          <Card.Meta title={course.courseName} description={<Typography.Paragraph ellipsis={{ rows: 3, expandable: false }}>{course.description}</Typography.Paragraph>} style={{ height: '7em' }} />
+        </CustomCoursesCards>
+      </div>
     ));
   };
   return (
@@ -122,6 +151,7 @@ export const HomePage: React.FC = observer(() => {
                   </SlideContent>
                 </SlideContainer>
               </CustomCarousel>
+
               <CardsContainer>
                 <LeftContainer>
                   <h2 style={{ fontWeight: 'bold' }}>Your Courses</h2>
@@ -131,57 +161,66 @@ export const HomePage: React.FC = observer(() => {
                 <style jsx>{`:where(.css-dev-only-do-not-override-1fm67j).ant-carousel .slick-dots-bottom {
                   bottom: -15px;
                 }`}</style>
-                <CustomUserCoursesCarousel dots infinite slidesToShow={howMany < 2 ? 1 : 2} slidesToScroll={1}
-                                           responsive={[
-                                             {
-                                               breakpoint: 768,
-                                               settings: {
-                                                 slidesToShow: 2,
-                                                 slidesToScroll: 1
-                                               }
-                                             }
-                                           ]}>
-                  {userPart()}
-                </CustomUserCoursesCarousel>
+                {howMany === 0 ? <h4 style={{ color: '#786283' }}>You have no courses yet!</h4> :
+                  <CustomUserCoursesCarousel dots infinite slidesToShow={howMany < 2 ? 1 : 2} slidesToScroll={1}
+                    responsive={[
+                      {
+                        breakpoint: 768,
+                        settings: {
+                          slidesToShow: 1,
+                          slidesToScroll: 1
+                        }
+                      }
+                    ]}>
+                    {userPart()}
+
+
+                  </CustomUserCoursesCarousel>
+
+                }
               </CardsContainer>
+
 
               {/*Reco*/}
-              <CardsContainer>
-                <LeftContainer>
-                  <h2 style={{ fontWeight: 'bold' }}>Recommended For You</h2>
-                </LeftContainer>
-                <HeaderLine />
-                {/* @ts-ignore */}
-                <CustomCoursesCarousel dots infinite slidesToShow={howManyReco < 2 ? 1 : 2} slidesToScroll={1}
-                                       responsive={[
-                                         {
-                                           breakpoint: 768,
-                                           settings: {
-                                             slidesToShow: 2,
-                                             slidesToScroll: 1
-                                           }
-                                         }
-                                       ]}>
-                  {Courses.filter(course => !course.participants.includes(userId)).map((course) => (
-                    <CustomCoursesCards
-                      key={course._id}
-                      hoverable
-                      cover={<CourseImage alt={course.courseName} src={course.courseImage} />}
-                    >
-                      <Card.Meta title={course.courseName} description={course.description} />
-
-                      <div style={{ display: 'flex', justifyContent: 'center' }}>
-                        <JoinButton onClick={
-                          () => {
-                            console.log('course._id', course._id, 'userId', userId);
-                            onJoinCourse(course._id, userId);
-                          }
-                        } type="primary">Join</JoinButton>
+              {howManyReco === 0 ? <></> :
+                <CardsContainer>
+                  <LeftContainer>
+                    <h2 style={{ fontWeight: 'bold' }}>Recommended For You</h2>
+                  </LeftContainer>
+                  <HeaderLine />
+                  {/* @ts-ignore */}
+                  <CustomCoursesCarousel dots infinite slidesToShow={howManyReco < 2 ? 1 : 2} slidesToScroll={1}
+                    responsive={[
+                      {
+                        breakpoint: 768,
+                        settings: {
+                          slidesToShow: 1,
+                          slidesToScroll: 1
+                        }
+                      }
+                    ]}>
+                    {Courses.filter(course => !course.participants.includes(userId)).map((course) => (
+                      <div className='test' key={course._id} style={{ display: 'flex', justifyContent: 'center', width: '40%' }}>
+                        <CustomCoursesCards
+                          key={course._id}
+                          style={{ ...(howManyReco === 1 ? { width: "50%", display: 'flex', flexDirection: 'column', margin: '1em' } : { display: 'flex', flexDirection: 'column', margin: '1em' }) }}
+                          hoverable
+                          cover={<CourseImage alt={course.courseName} src={course.courseImage} />}
+                          actions={[
+                            <PlusOutlined key="join" style={{ color: '#03565B' }} onClick={
+                              () => {
+                                onJoinCourse(course._id, userId);
+                              }} />
+                          ]}
+                        >
+                          {/* @ts-ignore */}
+                          <Card.Meta title={course.courseName} description={<Typography.Paragraph ellipsis={{ rows: 3, expandable: false }}>{course.description}</Typography.Paragraph>} style={{ height: '7em' }} />
+                        </CustomCoursesCards>
                       </div>
-                    </CustomCoursesCards>
-                  ))}
-                </CustomCoursesCarousel>
-              </CardsContainer>
+                    ))}
+                  </CustomCoursesCarousel>
+                </CardsContainer>
+              }
               <div style={{
                 paddingTop: '30px'
               }}>
@@ -200,7 +239,7 @@ export const HomePage: React.FC = observer(() => {
                       <h2>Contact Us</h2>
                       <p>
                         Have questions or feedback? We're here to help! Reach out to our friendly support team at <a
-                        href="mailto:andalusmh2002@gmail.com">andalusmh2002@gmail.com</a>.
+                          href="mailto:andalusmh2002@gmail.com">andalusmh2002@gmail.com</a>.
                       </p>
                     </Col>
                   </Row>

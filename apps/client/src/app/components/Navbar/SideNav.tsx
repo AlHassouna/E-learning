@@ -5,6 +5,9 @@ import { Menu } from 'antd';
 import { profile } from '../../constants';
 import { useNavigate } from 'react-router-dom';
 import { ICourse } from '../../api/api-types';
+import { useStore } from '../../stores/setupContext';
+import { Chat } from '../Chat/Chat';
+
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -26,31 +29,44 @@ function getItem(
 
 
 export const SideNav: React.FC<{ courses: ICourse[] }> = ({ courses }) => {
+  const { navbar, auth } = useStore();
+  const { search, courses: Courses, getAll, setChosenCourse, isLoading } = navbar;
+  const { logout } = auth;
+
+
   const items: MenuProps['items'] = [
     getItem('Home', 'home', <HomeOutlined />),
     getItem('Courses', 'courses', <BookOutlined />,
       courses.map((course, index) => (
-        getItem(course.courseName, course.courseName.toLowerCase()
+        getItem(course.courseName, course.courseName
         ))
       )
     ),
     getItem('Profile', 'profile', <MailOutlined />,
       profile.map((profile, index) => (
-        getItem(profile.title, ''
+        getItem(profile.title, profile.linkTo
         ))
       )
-    )
-
+    ),
   ];
   const navigate = useNavigate();
   return (
     <Menu
       onClick={(e) => {
         if (e.keyPath[1] === 'courses') {
+          setChosenCourse(e.key);
           navigate(`/courses/${e.key}`);
         } else if (e.keyPath[1] === 'profile') {
-          navigate(`/profile/${e.key}`);
-        } else {
+          if(e.key === 'signout'){
+            logout();
+            navigate('/auth');
+          }else{
+
+            navigate(`/${e.key}`);
+          }
+        } else if (e.keyPath[1] === 'profile') {
+          navigate(`/chat`);
+        }  else {
           navigate('/');
 
         }

@@ -64,25 +64,25 @@ export const Content: React.FC<ContentProps> = observer(({ courseTitle, onDiffic
             <div style={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
             {role === "Teacher"?
             <Link to={"/quizzes/"+courseTitle}>
-<Button>
-Quizzes Management
-</Button>
-</Link>
+            <Button>
+                Quizzes Management
+            </Button>
+            </Link>
             :
-              <DModel btnTitle={'Take A Quiz'} title={'Take A Quiz'} children={
-                <div style={{
-                  display: 'flex',
-                  flexDirection: 'column'
-                }}>
-                  <QuizButton onClick={() => handleDifficultySelection('easy')}>Easy</QuizButton>
-                  <br></br>
-                  <QuizButton onClick={() => handleDifficultySelection('medium')}>Medium</QuizButton>
-                  <br></br>
-                  <QuizButton onClick={() => handleDifficultySelection('hard')}>Hard</QuizButton>
-                </div>
-              }>
-              </DModel>
-}
+            <DModel btnTitle={'Take A Quiz'} title={'Take A Quiz'} children={
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column'
+              }}>
+                <QuizButton onClick={() => handleDifficultySelection('easy')}>Easy</QuizButton>
+                <br></br>
+                <QuizButton onClick={() => handleDifficultySelection('medium')}>Medium</QuizButton>
+                <br></br>
+                <QuizButton onClick={() => handleDifficultySelection('hard')}>Hard</QuizButton>
+              </div>
+            }>
+            </DModel>
+            }
             </div>
             <SecondIcon src={img2}></SecondIcon>
           </ContentDiv>

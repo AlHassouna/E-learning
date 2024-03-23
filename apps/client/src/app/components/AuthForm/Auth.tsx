@@ -1,4 +1,4 @@
-import Logo from '../../../assets/image.png';
+import Logo from '../../images/cat.png';
 import {
   LockOutlined,
   UserOutlined,
@@ -14,7 +14,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../stores/setupContext';
 import { LoadingSpin } from '../../core/index';
-
+import {
+  AuthPage
+} from '../../styles/index';
 type LoginType = 'signup' | 'signin';
 
 
@@ -96,14 +98,23 @@ export const Auth: React.FunctionComponent<AuthProps> = ({ login, signupF, isLoa
     }
   };
   return (
-    <ProConfigProvider hashed={false}>
+    <AuthPage hashed={false}>
+      {/* @ts-ignore */}
+      <style jsx>{`.styles__StyledCard-o52hax-10.eXqbUD{
+
+          @media (max-width: 768px) {
+            width: 100%;
+          }
+          
+        }`}</style>
+
       <div style={{ backgroundColor: token.colorBgContainer }}>
         <LoginForm
           submitter={loginType === 'signin' ? submitter1 : submitter2}
           onFinish={handleFormSubmit}
           logo={Logo}
           title="Grow With Us!"
-          subTitle="Welcome to Braaeem, the best place to grow your skills!"
+          subTitle="Welcome to SKILCAT, the best place to grow your skills!"
         >
           <Tabs
             centered
@@ -263,6 +274,6 @@ export const Auth: React.FunctionComponent<AuthProps> = ({ login, signupF, isLoa
         </Space>
       </div>
 
-    </ProConfigProvider>
+    </AuthPage>
   );
 };

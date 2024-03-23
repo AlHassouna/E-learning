@@ -1,6 +1,6 @@
 import express from 'express';
 import AuthRouter from './AuthRouter';
-import { User, Reward,Content, Course, Quiz, Question,MsgPrivate } from '../models/auth';
+import { User, Reward,Content, Course, Quiz, Question,MsgPrivate, QuizAttempt } from '../models/auth';
 import ProfileRouter from './ProfileRouter';
 import Generator from './Generator';
 import TeacherRouter from './TeacherRouter';
@@ -14,7 +14,7 @@ const router = express.Router();
 const authRouter = new AuthRouter(User);
 const generator = new Generator();
 const teacher = new TeacherRouter(User,Quiz,Course,Question);
-const profRouter = new ProfileRouter(User, Reward, Course);
+const profRouter = new ProfileRouter(User, Reward, Course, QuizAttempt);
 const courseRouter = new CourseRouter(Course);
 const contentRouter = new ContentRouter(Content);
 const rewardRouter = new RewardRouter(Reward);

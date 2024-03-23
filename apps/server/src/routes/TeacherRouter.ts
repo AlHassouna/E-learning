@@ -1,4 +1,4 @@
-import { Question } from './../models/auth';
+import { Question, Quiz } from './../models/auth';
 import express, { Request, Response } from 'express';
 import { Teacher } from '../types/types';
 import { ParamsDictionary, Router } from 'express-serve-static-core';
@@ -54,6 +54,7 @@ class TeacherRouter implements Teacher {
           course: courseId,
           quizTitle: `Quiz for ${category}`,
           description: `Quiz for ${category}`,
+          duration: req.body.quiz.duration, 
           category: category,
           level: req.body.quiz.level,
           questions: questionIds
@@ -130,6 +131,7 @@ public editQuiz = async (req: Request, res: Response): Promise<void> => {
       existingQuiz.quizTitle = quiz.quizTitle;
       existingQuiz.category = quiz.category;
       existingQuiz.level = quiz.level;
+      existingQuiz.duration = quiz.duration;
       await existingQuiz.save();
       const questionIds = [];
 

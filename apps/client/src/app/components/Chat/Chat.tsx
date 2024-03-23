@@ -14,6 +14,7 @@ import {
   MDBCardHeader
 } from 'mdb-react-ui-kit';
 import { getAllMessages } from '../../api';
+import { HeaderLine } from '../../styles';
 
 interface AppProps {
   privateReceiver?: string;
@@ -153,7 +154,7 @@ export const Chat: React.FC<AppProps> = ({ privateReceiver }) => {
   console.log('groupedPrivateMessages', groupedPrivateMessages);
   console.log('sortedPrivateDates', sortedPrivateDates);
   return (
-    <MDBContainer fluid className="py-5" style={{ backgroundColor: '#eee', height: '93vh' }}>
+    <MDBContainer fluid className="py-5" style={{ backgroundColor: '#EFDAC7', height: '93vh' }}>
       <MDBRow>
         <MDBCol md="6" lg="5" xl="4" className="mb-4 mb-md-0">
           <MDBCard>
@@ -161,19 +162,25 @@ export const Chat: React.FC<AppProps> = ({ privateReceiver }) => {
               <MDBTypography listUnStyled className="mb-0">
                 <MDBCard style={{
                   border: 'none',
-                  backgroundColor: activeContact === 'public' ? '#f0f0f0' : '',
-                  transition: 'background-color 0.3s'
-                }} className="w-100">
-                  <li key="public" className="d-flex justify-content-between mb-4"
-                      onClick={() => handleContactClick('public')}>
-                    <MDBTypography>
-                      <p className="fw-bold mb-0">Public Chat</p>
-                    </MDBTypography>
+                  backgroundColor: activeContact === 'public' ? '#786283' : 'rgb(182 159 193)',
+                  color: 'white',
+                  transition: 'background-color 0.3s',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  textAlign: 'center',
+                  height: '100%',
+                  cursor: 'pointer'
+                }} className="w-100" onClick={() => handleContactClick('public')}>
+                  <li key="public" className="d-flex justify-content-between m-4">
+                    <h5 className="fw-bold mb-0">Public Chat</h5>
                   </li>
                 </MDBCard>
+                <HeaderLine></HeaderLine>
+                <h3>Online Users</h3>
                 {contactList.filter(contact => contact.username !== sender).map((contact, index) => (
-                  <li key={index} className={`d-flex justify-content-between mb-4 `}
-                      onClick={() => handleContactClick(contact.username)}>
+                  <li key={index} className={`d-flex justify-content-between mb-4 `} style={{ cursor: 'pointer' }}
+                    onClick={() => handleContactClick(contact.username)}>
                     <MDBCard style={{
                       border: 'none',
                       backgroundColor: activeContact === contact.username ? '#f0f0f0' : '',
@@ -181,8 +188,8 @@ export const Chat: React.FC<AppProps> = ({ privateReceiver }) => {
                     }} className="w-100">
                       <MDBCardBody style={{ display: 'flex' }}>
 
-                        <img src={`https://robohash.org/${sender}.png?set=set4`} alt="avatar"
-                             className="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60" />
+                        <img src={`https://robohash.org/${contact.username}.png?set=set4`} alt="avatar"
+                          className="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60" />
                         <div style={{ display: 'flex', flexDirection: 'column' }}>
                           <MDBTypography>
                             <p className="fw-bold mb-0">{contact.username}</p>
@@ -228,22 +235,26 @@ export const Chat: React.FC<AppProps> = ({ privateReceiver }) => {
                           justifyContent: chat.sender === sender ? 'flex-start' : 'flex-end',
                           alignItems: 'center'
                         }} key={index} className="d-flex mb-4">
-                          <MDBTypography>
+                          {chat.sender === sender ? (
                             <img src={`https://robohash.org/${chat.sender}.png?set=set4`} alt="avatar"
-                                 className="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60" />
-                          </MDBTypography>
+                              className="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60" />
+                          ) : null}
                           <MDBTypography style={{
-                            backgroundColor: chat.sender === sender ? '#86bb71' : '#f0f0f0',
+                            backgroundColor: chat.sender === sender ? '#f0f0f0' : '#C7DF84',
                             borderRadius: '20px',
                             padding: '10px'
                           }}>
                             <p className="fw-bold mb-0">{chat.sender}</p>
                             <p className="text-muted small mb-0">
                               <MDBIcon far
-                                       icon="clock" /> {new Date(chat.date).toLocaleTimeString()}
+                                icon="clock" /> {new Date(chat.date).toLocaleTimeString()}
                             </p>
                             <p className="mb-0">{chat.msg}</p>
                           </MDBTypography>
+                          {chat.sender !== sender ? (
+                            <img src={`https://robohash.org/${chat.sender}.png?set=set4`} alt="avatar"
+                              className="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60" />
+                          ) : null}
                         </li>
                       ))}
                     </li>
@@ -262,7 +273,7 @@ export const Chat: React.FC<AppProps> = ({ privateReceiver }) => {
                             margin: '10px 0',
                             width: 'fit-content'
                           }}
-                             className="fw-bold mb-0">{date}</p>
+                            className="fw-bold mb-0">{date}</p>
                         </MDBTypography>
                         {groupedPrivateMessages[date].map((chat: Message, index: number) => (
                           <li style={{
@@ -270,10 +281,10 @@ export const Chat: React.FC<AppProps> = ({ privateReceiver }) => {
                             justifyContent: chat.sender === sender ? 'flex-start' : 'flex-end',
                             alignItems: 'center'
                           }} key={index} className="d-flex  mb-4">
-                            <MDBTypography>
+                            {chat.sender === sender ? (
                               <img src={`https://robohash.org/${chat.sender}.png?set=set4`} alt="avatar"
-                                   className="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60" />
-                            </MDBTypography>
+                                className="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60" />
+                            ) : null}
                             <MDBTypography style={{
                               backgroundColor: chat.sender === sender ? '#86bb71' : '#f0f0f0',
                               borderRadius: '20px',
@@ -282,10 +293,15 @@ export const Chat: React.FC<AppProps> = ({ privateReceiver }) => {
                               <p className="fw-bold mb-0">{chat.sender}</p>
                               <p className="text-muted small mb-0">
                                 <MDBIcon far
-                                         icon="clock" /> {new Date(chat.date).toLocaleTimeString()}
+                                  icon="clock" /> {new Date(chat.date).toLocaleTimeString()}
                               </p>
                               <p className="mb-0">{chat.msg}</p>
                             </MDBTypography>
+
+                            {chat.sender !== sender ? (
+                              <img src={`https://robohash.org/${chat.sender}.png?set=set4`} alt="avatar"
+                                className="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60" />
+                            ) : null}
                           </li>
                         ))}
                       </li>
@@ -295,11 +311,23 @@ export const Chat: React.FC<AppProps> = ({ privateReceiver }) => {
               </MDBCardBody>
             </MDBCard>
             <form onSubmit={onSubmit}>
-              <MDBTextArea placeholder={receiver ? `Message to ${receiver}` : 'Message to public'} id="textAreaExample"
-                           rows={4} value={value} onChange={handleChange} />
-              <MDBBtn color="info" rounded className="float-end" type="submit">
-                Send
-              </MDBBtn>
+              <div style={{ display: 'grid', gridTemplateColumns: '5fr 1fr', alignItems: 'center' }}>
+                <MDBTextArea
+                  placeholder={receiver ? `Message to ${receiver}` : 'Message to public'}
+                  id="textAreaExample"
+                  rows={3}
+                  value={value}
+                  onChange={handleChange}
+                />
+                <MDBBtn
+                  style={{ backgroundColor: "#ECBB65", height: '100%', color: 'grey', fontWeight: 'bold', borderColor: '#ECBB65' }}
+                  rounded
+                  className="float-end"
+                  type="submit"
+                >
+                  Send
+                </MDBBtn>
+              </div>
             </form>
           </MDBTypography>
         </MDBCol>

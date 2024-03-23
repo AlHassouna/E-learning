@@ -17,22 +17,8 @@ const courseSchema = new Schema({
   courseImage: { type: String } 
 });
 
-
-courseSchema.pre('save', async function(next) {
-  try {
-    const participantCount = this.participants.length;
-    if (participantCount > 5) {
-      throw new Error(
-        'Maximum limit of 5 participants reached for this course.'
-      );
-    }
-    next();
-  } catch (error) {
-    next(error);
-  }
-});
-
 const contentSchema = new Schema({
+  contentType: {type:String, enum: ['text', 'video', 'image']},
   courseTitle: { type: String, required: true },
   content: { type: String },
   course: { type: Schema.Types.ObjectId, ref: 'Course', required: true }
@@ -85,6 +71,7 @@ const quizAttemptSchema = new Schema({
   timestamp: { type: Date, default: Date.now },
   score: { type: Number, default: 0 },
   isPerfect: { type: Boolean, default: false },
+  maxScore: { type: Number, default: 0 },
   rewardEarned: { type: Schema.Types.ObjectId, ref: 'Reward' },
   questionAttempts: [{
     question: { type: Schema.Types.ObjectId, ref: 'Question' },

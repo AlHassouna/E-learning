@@ -1,5 +1,8 @@
 const express = require('express');
 const nodemailer = require('nodemailer');
+const fs = require('fs');
+const { promisify } = require('util');
+const readFileAsync = promisify(fs.readFile)
 
 const app = express();
 
@@ -7,7 +10,10 @@ const app = express();
 app.use(express.json());
 
 // Function to send emails
-function sendEmail(to, subject, text) {
+async function sendEmail(to, subject, username) {
+  let htmlTemplate = await readFileAsync('apps/server/src/utils/index.html', 'utf-8');
+  htmlTemplate = htmlTemplate.replace('[Recipient]', username);
+    const imageAttachment = await readFileAsync('apps/server/src/utils/cat.png');
   // Creating a transporter using SMTP transport
   let transporter = nodemailer.createTransport({
     service: 'Gmail',
@@ -25,8 +31,13 @@ function sendEmail(to, subject, text) {
     from: 'andalusmh2002@gmail.com', // Sender address
     to: to, // List of recipients
     subject: subject, // Subject line
-    text: text, // Plain text body
-  };
+    html: htmlTemplate,
+    attachments: [{
+        filename: 'image.png',
+        content: imageAttachment,
+        encoding: 'base64',
+        cid: 'uniqueImageCID', // Referenced in the HTML template
+    }],  };
 
   // Sending the email
   transporter.sendMail(mailOptions, (error, info) => {

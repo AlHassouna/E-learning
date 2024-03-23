@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import express, { Request, Response } from 'express';
 import { ICourse } from '../types/types';
 import { Router } from 'express-serve-static-core';
@@ -31,7 +32,7 @@ class CourseRouter implements ICourse {
   };
 
 
-  public search = async (req: Request, res: Response): Promise<void> => {
+  public search = async (req: Request, res: Response): Promise<void> => {    
     try {
       const courses = await this.model.find({ courseName: { $regex: req.params.search, $options: 'i' } });
       res.status(200).json(courses);
@@ -46,6 +47,19 @@ class CourseRouter implements ICourse {
       course.participants.push(req.params.participantId);
       await course.save();
       res.status(200).json(course);
+    } catch (error) {      
+      res.status(500).json({ message: error.message });
+    }
+
+  };
+
+  public removeParticipant = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const course = await this.model.findById(req.params.courseId);
+      const participantIndex = course.participants.indexOf(req.params.participantId);
+      course.participants.splice(participantIndex, 1);
+      await course.save();
+      res.status(200).json(course);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -57,6 +71,7 @@ class CourseRouter implements ICourse {
     this.router.get('/:id', this.getOne);
     this.router.post('/search/:search', this.search);
     this.router.post('/:courseId/participants/:participantId', this.addParticipant);
+    this.router.delete('/:courseId/participants/:participantId', this.removeParticipant);
   }
 
 }

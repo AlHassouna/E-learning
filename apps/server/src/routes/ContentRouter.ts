@@ -29,10 +29,25 @@ class ContentRouter implements IContent {
   };
 
 
+  public addContent = async (req: Request, res: Response): Promise<void> =>  {
+    try {
+      const { courseId, courseTitle, content } = req.body;
+      const newContent = await this.model.create({
+        courseTitle: courseTitle,
+        content: content,
+        course: courseId
+      })
+      res.status(201).json(newContent);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
+
   initializeRoutes(): void {
     this.router.get('/:courseName', this.content);
+    this.router.post('/', this.addContent);
   }
-
 }
 
 

@@ -79,14 +79,15 @@ router.post('/submit', async (req: Request, res: Response) => {
   try {
     const { quizId, userId, questionAttempts } = req.body;
 
-    const { totalScore, isPerfect } = calculateScore(questionAttempts);
+    const { totalScore, isPerfect, maxScore } = calculateScore(questionAttempts);
 
     const quizAttempt = await QuizAttempt.create({
       quiz: quizId,
       user: userId,
       questionAttempts: questionAttempts,
       score: totalScore,
-      isPerfect: isPerfect
+      isPerfect: isPerfect,
+      maxScore: maxScore
     });
 
     res.status(200).json({ quizAttempt });
@@ -98,6 +99,7 @@ router.post('/submit', async (req: Request, res: Response) => {
 
 function calculateScore(questionAttempts) {
   let totalScore = 0;
+  let maxScore = 0;
   let isPerfect = true;
   for (const attempt of questionAttempts) {
     if (attempt.isCorrect) {
@@ -117,8 +119,30 @@ function calculateScore(questionAttempts) {
     } else {
       isPerfect = false;
     }
+ 
   }
-  return { totalScore, isPerfect };
+  console.log('level: ', questionAttempts[0].level);
+  
+  switch (questionAttempts[0].level) {
+    case 'easy':
+      maxScore = questionAttempts.length;
+      console.log('easy: ', maxScore);
+      
+      break;
+    case 'medium':
+      maxScore = questionAttempts.length*2;
+      console.log('medium: ', maxScore);
+
+      break;
+    case 'hard':
+      maxScore = questionAttempts.length*3;
+      console.log('hard: ', maxScore);
+
+      break;
+    default:
+      break;
+  }
+  return { totalScore, isPerfect, maxScore };
 }
 
 
