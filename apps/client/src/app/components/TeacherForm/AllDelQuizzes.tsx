@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
-import { Row, Col, Card, Button } from 'antd';
+import { Row, Col, Card, Button, BackTop } from 'antd';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import { Container, Heading, CustomCard, CustomImage } from '../../styles/adminStyle';
+import { Container, Heading, CustomCard, CustomImage, QuestionFormContainer } from '../../styles/adminStyle';
 import { observer } from 'mobx-react';
 import { DeleteOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import { useStore } from '../../stores/setupContext';
-import { CenterContainer } from '../../styles';
+import { CenterContainer, StyledCardQuiz } from '../../styles';
 import { LoadingSpin } from '../../core';
 
 
@@ -24,13 +24,14 @@ const AllDelQuizzes: React.FC = observer(() => {
   }, [chosenCourse]);
 
   return (
-    <Container>
+    <QuestionFormContainer>
       {isLoading ? (
           <CenterContainer>
             <LoadingSpin />
           </CenterContainer>
         ) :
-        <Card>
+        <StyledCardQuiz>
+          <BackTop />
           <div>
           <Button
           type="primary"
@@ -52,10 +53,10 @@ const AllDelQuizzes: React.FC = observer(() => {
               })}
             </Row>
           </div>
-        </Card>
+        </StyledCardQuiz>
       }
 
-    </Container>
+    </QuestionFormContainer>
   );
 });
 

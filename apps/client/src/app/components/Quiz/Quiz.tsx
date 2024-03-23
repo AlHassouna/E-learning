@@ -114,8 +114,8 @@ const Quiz: React.FC<{ quiz: QuizType, course: string }> = observer(({ quiz, cou
   const isLastQuestion: boolean = currentQuestionIndex === quiz.questions.length - 1;
   return (
     isLoading ? (
-        <div>Loading...</div>
-      ) :
+      <div>Loading...</div>
+    ) :
       <StyledContainerQuiz>
         {/* @ts-ignore */}
         <style jsx>{`.ant-card-meta-avatar {
@@ -128,20 +128,19 @@ const Quiz: React.FC<{ quiz: QuizType, course: string }> = observer(({ quiz, cou
               {isSubmitted ? (
                 <StyledCardQuiz>
                   <Meta style={{ flexDirection: 'column' }}
-                        avatar={<ResultsAvatarImage src={resultsImage} alt="avatar" />}
-                        title={<StyledScoreTitle>Your Score is:</StyledScoreTitle>}
-                        description={
-                          <StyledDescription>
-                            <p style={{ textAlign: 'center', fontSize: '2rem' }}>{score} / {maxScore}</p>
-                          </StyledDescription>
-
-                        }
+                    avatar={<ResultsAvatarImage src={resultsImage} alt="avatar" />}
+                    title={<StyledScoreTitle>Your Score is:</StyledScoreTitle>}
+                    description={
+                      <StyledDescription>
+                        <p style={{ textAlign: 'center', fontSize: '2rem' }}>{score} / {maxScore}</p>
+                      </StyledDescription>
+                    }
                   />
                   {receivedReward ?
                     (<RewardStyled>
                       <StyledParagraph>Congrats! You Received A Reward</StyledParagraph>
                       <img src={rewardGif} alt="Reward GIF"
-                           style={{ height: '100px', width: '100px', display: 'flex', alignItems: 'center' }} />
+                        style={{ height: '100px', width: '100px', display: 'flex', alignItems: 'center' }} />
                     </RewardStyled>)
                     :
                     (<p></p>)}

@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import { IContent } from '../types/types';
 import { Router } from 'express-serve-static-core';
+import { upload, uploadHandler } from '../upload/upload';
 
 
 class ContentRouter implements IContent {
@@ -16,7 +17,7 @@ class ContentRouter implements IContent {
   public content = async (req: Request, res: Response): Promise<void> => {
     const courseName = req.params.courseName;
     try {
-      const course = await this.model.findOne({ courseTitle: courseName });
+      const course = await this.model.find({ courseTitle: courseName });
       if (!course) {
         res.status(404).send('Course not found');
         return;
@@ -27,26 +28,53 @@ class ContentRouter implements IContent {
       res.status(500).send('Internal Server Error');
     }
   };
-
-
-  public addContent = async (req: Request, res: Response): Promise<void> =>  {
+  public addContent = async (req: Request, res: Response): Promise<void> => {
     try {
-      const { courseId, courseTitle, content } = req.body;
-      const newContent = await this.model.create({
-        courseTitle: courseTitle,
-        content: content,
-        course: courseId
-      })
-      res.status(201).json(newContent);
+      console.log(req, req.body);
+      //@ts-ignore
+      const file = req.file
+      const { courseId, courseTitle, content, contentType } = req.body;
+      if (contentType === "text") {
+        const newContent = await this.model.create({
+          courseTitle: courseTitle,
+          content: content,
+          course: courseId,
+          contentType: contentType
+        })
+        res.status(201).json(newContent);
+      }
+      else {
+        const up = await uploadHandler(file)
+        const newContent = await this.model.create({
+          courseTitle: courseTitle,
+          content: up.url,
+          course: courseId,
+          contentType: up.resource_type
+        })
+        res.status(201).json(newContent);
+      }
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Internal Server Error' });
     }
   };
 
+  public deleteContent = async (req: Request, res: Response): Promise<void> => {
+    const contentId = req.params.contentId;
+    try {
+      await this.model.findByIdAndDelete(contentId);
+      res.status(200).json({ message: 'Content successfully deleted' });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
+
+
   initializeRoutes(): void {
     this.router.get('/:courseName', this.content);
-    this.router.post('/', this.addContent);
+    this.router.post('/', upload.single("file"), this.addContent);
+    this.router.delete('/:contentId', this.deleteContent);
+
   }
 }
 

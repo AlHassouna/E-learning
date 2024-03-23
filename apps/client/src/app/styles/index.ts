@@ -42,10 +42,9 @@ export const CourseTitle = styled.h1`
   justify-content: center;
   align-items: center;
   color: #9A616D;
-  margin-top: 10px
-
+  padding: 20px;
   @media (max-width: 768px) {
-    margin-top: 0
+    padding: 10px;
   }
 `;
 
@@ -176,7 +175,7 @@ export const NotFound404 = styled.div`
   display: inline-block;
   width: 140px;
   height: 140px;
-  background-image: url('./delete.png');
+  background-image: url('https://res.cloudinary.com/dtuol9shx/image/upload/v1711199382/z9t95qqlunrzsqwcyc5w.png');
   background-size: cover;
 
   &:before {

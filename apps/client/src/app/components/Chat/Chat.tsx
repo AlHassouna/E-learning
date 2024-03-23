@@ -15,6 +15,7 @@ import {
 } from 'mdb-react-ui-kit';
 import { getAllMessages } from '../../api';
 import { HeaderLine } from '../../styles';
+import { Button } from 'antd';
 
 interface AppProps {
   privateReceiver?: string;
@@ -312,21 +313,20 @@ export const Chat: React.FC<AppProps> = ({ privateReceiver }) => {
             </MDBCard>
             <form onSubmit={onSubmit}>
               <div style={{ display: 'grid', gridTemplateColumns: '5fr 1fr', alignItems: 'center' }}>
-                <MDBTextArea
+                <MDBTextArea required
                   placeholder={receiver ? `Message to ${receiver}` : 'Message to public'}
                   id="textAreaExample"
                   rows={3}
                   value={value}
                   onChange={handleChange}
                 />
-                <MDBBtn
+                <Button
                   style={{ backgroundColor: "#ECBB65", height: '100%', color: 'grey', fontWeight: 'bold', borderColor: '#ECBB65' }}
-                  rounded
                   className="float-end"
-                  type="submit"
+                  htmlType="submit"
                 >
                   Send
-                </MDBBtn>
+                </Button>
               </div>
             </form>
           </MDBTypography>

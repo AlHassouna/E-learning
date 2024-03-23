@@ -10,7 +10,7 @@ import { IProfile } from '../api/api-types';
 
 class ProfileStore extends StoreBase {
   private userDetailsResponse: IProfile | null | Partial<IProfile> = null;
-  public username:string|null=null;
+  public username: string | null = null;
   constructor() {
     super();
     makeObservable(this, {
@@ -24,13 +24,13 @@ class ProfileStore extends StoreBase {
   }
 
 
-    public getUserDetails = async (username: string|undefined): Promise<IProfile | null | Partial<IProfile>> => {
+  public getUserDetails = async (username: string | undefined): Promise<IProfile | null | Partial<IProfile>> => {
     try {
-        this.rootStore.main.setLoading(true)
+      this.rootStore.main.setLoading(true)
       const user = await getUser(username);
       this.userDetailsResponse = user;
-        this.rootStore.main.setLoading(false);
-        return user;
+      this.rootStore.main.setLoading(false);
+      return user;
     } catch (err) {
       console.error(err);
       this.rootStore.main.setLoading(false);

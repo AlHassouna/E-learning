@@ -32,8 +32,11 @@ export const CustomImage = styled.img`
 `;
 
 export const QuestionFormContainer = styled.div`
+  display: flex;
+  justify-content: center;
   background-color: #EFDAC7;
   min-height: 100vh;
+  padding: 40px;
 `;
 
 export const Label = styled.label`
