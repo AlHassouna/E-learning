@@ -14,7 +14,7 @@ import {
   MDBCardHeader
 } from 'mdb-react-ui-kit';
 import { getAllMessages } from '../../api';
-import { HeaderLine } from '../../styles';
+import { HeaderLine, StyledContainerQuiz } from '../../styles';
 import { Button } from 'antd';
 
 interface AppProps {
@@ -155,7 +155,7 @@ export const Chat: React.FC<AppProps> = ({ privateReceiver }) => {
   console.log('groupedPrivateMessages', groupedPrivateMessages);
   console.log('sortedPrivateDates', sortedPrivateDates);
   return (
-    <MDBContainer fluid className="py-5" style={{ backgroundColor: '#EFDAC7', height: '93vh' }}>
+    <StyledContainerQuiz>
       <MDBRow>
         <MDBCol md="6" lg="5" xl="4" className="mb-4 mb-md-0">
           <MDBCard>
@@ -332,6 +332,6 @@ export const Chat: React.FC<AppProps> = ({ privateReceiver }) => {
           </MDBTypography>
         </MDBCol>
       </MDBRow>
-    </MDBContainer>
+    </StyledContainerQuiz>
   );
 };
