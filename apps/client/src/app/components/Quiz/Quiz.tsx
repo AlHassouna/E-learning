@@ -7,7 +7,7 @@ import avatarImage from '../../images/reading.png';
 import resultsImage from '../../images/checklist.png';
 import {
   StyledContainerQuiz, StyledCardContainer, StyledCardQuiz, StyledTitle, StyledDescription,
-  ButtonContainer, QuizButton, AvatarImage, ResultsAvatarImage, BackButtonContainer, StyledParagraph, RewardStyled
+  ButtonContainer, QuizButton, AvatarImage, ResultsAvatarImage, BackButtonContainer, StyledParagraph, RewardStyled, StyledScoreTitle
 } from '../../styles/index';
 import QuizTimer from './QuizTimer';
 import { submitQuiz } from '../../api/quiz/postUserAnswers';
@@ -24,6 +24,7 @@ const Quiz: React.FC<{ quiz: QuizType, course: string }> = observer(({ quiz, cou
   const [selectedAnswers, setSelectedAnswers] = useState<{ [questionId: string]: string }>({});
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [score, setScore] = useState<number>(0);
+  const [maxScore, setMaxScore] = useState<number>(0);
   const [isTimerActive, setIsTimerActive] = useState<boolean>(true);
   const { reward, navbar, quiz: Quiz } = useStore();
   const { isLoading } = Quiz;
@@ -97,6 +98,7 @@ const Quiz: React.FC<{ quiz: QuizType, course: string }> = observer(({ quiz, cou
       }
       setIsSubmitted(true);
       setScore(response.quizAttempt.score);
+      setMaxScore(response.quizAttempt.maxScore);
       message.success('Quiz submitted successfully');
     } catch (error) {
       console.error('Error submitting quiz:', error);
@@ -127,10 +129,10 @@ const Quiz: React.FC<{ quiz: QuizType, course: string }> = observer(({ quiz, cou
                 <StyledCardQuiz>
                   <Meta style={{ flexDirection: 'column' }}
                         avatar={<ResultsAvatarImage src={resultsImage} alt="avatar" />}
-                        title={<StyledTitle>Your Score is:</StyledTitle>}
+                        title={<StyledScoreTitle>Your Score is:</StyledScoreTitle>}
                         description={
                           <StyledDescription>
-                            <p style={{ textAlign: 'center', fontSize: '2rem' }}>{score}</p>
+                            <p style={{ textAlign: 'center', fontSize: '2rem' }}>{score} / {maxScore}</p>
                           </StyledDescription>
 
                         }

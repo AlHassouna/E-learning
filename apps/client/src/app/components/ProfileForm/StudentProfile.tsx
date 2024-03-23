@@ -50,8 +50,8 @@ export const StudentProfile: React.FunctionComponent<ProfileProps> = ({ user, da
           <Text type="secondary"> Rewards</Text>
         </div>
         <div>
-          <Text strong>{user.ranking}</Text>
-          <Text type="secondary"> Rank</Text>
+          <Text strong>{user.ranking}%</Text>
+          <Text type="secondary"> GPA</Text>
         </div>
       </ProfileContent>
       <div>

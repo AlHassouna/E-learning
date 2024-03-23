@@ -5,7 +5,7 @@ import {
   MenuOutlined,
   BookOutlined
 } from '@ant-design/icons';
-
+import Icon from '@ant-design/icons';
 import { observer } from 'mobx-react';
 import { SearchInput } from '../../core';
 import { SideNav } from './SideNav';
@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../stores/setupContext';
 import { SearchBar } from '../../styles';
 import { getItem } from '../../utils/localStorage';
-
+import logo from '../../images/cat.png'
 const { Header } = Layout;
 const { SubMenu } = Menu;
 
@@ -66,17 +66,22 @@ export const Navbar: React.FC = observer(() => {
             <Row justify="space-between" align="middle">
               <Col xs={0} sm={0} md={24}>
                 <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['home']}
-                      style={{ backgroundColor: '#03565B' }}>
-                  <Menu.Item onClick={() => {
+
+                  style={{ backgroundColor: '#03565B' }}>
+                  <Menu.Item style={{fontSize: '1.5em'}} onClick={() => {
                     navigate('/');
-                  }} key="home">Home</Menu.Item>
+                  }} key="home">
+                    <Icon component={() => (<img style={{ height: '2.5em', width: '2.5em', marginTop: '1em' }} src={logo} />)} />
+                    Home
+                  </Menu.Item>
+
 
                   <SearchBar>
                     <SubMenu key="courses" icon={<BookOutlined />} title="My Courses">
                       {
                         Courses.filter(course => course.participants.includes(userId))
                           .map((course, index) => (
-                            <Menu.Item style={{ backgroundColor: '#ECBB65' }} onClick={() => {
+                            <Menu.Item style={{ color: '#ECBB65' }} onClick={() => {
                               setChosenCourse(course.courseName);
                               navigate(`/courses/${course.courseName}`);
                             }} key={course._id}>{course.courseName}</Menu.Item>
@@ -94,7 +99,7 @@ export const Navbar: React.FC = observer(() => {
                             navigate('/auth');
                           }} key={profile.key}>{profile.title}</Menu.Item>
                           :
-                          <Menu.Item style={{color: '#ECBB65'}} onClick={() => {
+                          <Menu.Item style={{ color: '#ECBB65' }} onClick={() => {
                             navigate(`/${profile.linkTo}`);
                           }} key={profile.key}>{profile.title}</Menu.Item>
                       ))

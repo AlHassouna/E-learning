@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Input } from 'antd';
+import { Button, Input, Popconfirm } from 'antd';
 import { useStore } from '../../stores/setupContext';
 import { observer } from 'mobx-react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   CenterContainer,
   CourseCard,
@@ -32,7 +32,7 @@ export const SearchInput: React.FC<SearchProps> = observer(({ search }) => {
 
   //@ts-ignore
   const userId = JSON.parse(token)._id;
-
+  const navigate = useNavigate();
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     search(e.target.value);
     setInputValue(e.target.value);
@@ -57,16 +57,33 @@ export const SearchInput: React.FC<SearchProps> = observer(({ search }) => {
                 <h1>No courses found</h1>
               </NoCourses>
               : coursesBySearch.map((course, index) => (
-                <CourseCard key={index} onClick={async () => {
-                  setChosenCourse(course.courseName);
-                  await addParticipant(course._id, userId);
-                  await getAll();
-                  setCurrent('');
-                  setInputValue('');
-                }}>
-                  <CoursesTitle>{course.courseName}:</CoursesTitle>
-                  <CoursesDescription>{course.description}</CoursesDescription>
-                </CourseCard>
+                <div>
+                  <Popconfirm
+                    placement="right"
+                    title={'Do You Want To Join The Course?'}
+                    okText="Yes"
+                    cancelText="No"
+                    onConfirm={async () => {await addParticipant(course._id, userId);
+                      await getAll();
+                      setCurrent('');
+                      setInputValue('');
+                    }}
+                  >
+                    <CourseCard key={index}
+                      onClick={async () => {
+                        setChosenCourse(course.courseName);
+                        course.participants.includes(userId) ?
+                          navigate(`/courses/${course.courseName}`)
+                          :
+                       null
+                      }}>
+
+                      <CoursesTitle>{course.courseName}:</CoursesTitle>
+                      <CoursesDescription>{course.description}</CoursesDescription>
+
+                    </CourseCard>
+                  </Popconfirm>
+                </div>
               ))
           }
         </SearchOptions>

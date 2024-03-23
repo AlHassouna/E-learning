@@ -42,10 +42,6 @@ export const TeacherProfile: React.FunctionComponent<ProfileProps> = ({ user, da
           <Text strong>{user.courses.length}</Text>
           <Text type="secondary"> Courses</Text>
         </div>
-        <div>
-          <Text strong>{user.numRewards}</Text>
-          <Text type="secondary"> Rank</Text>
-        </div>
       </ProfileContent>
       <div>
         <Collapse items={data}></Collapse>

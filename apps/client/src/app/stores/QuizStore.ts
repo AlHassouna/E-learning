@@ -43,7 +43,7 @@ export class QuizStore extends StoreBase {
   };
 
 
-  async fetchQuizzes(categoryId: string, difficultyId: string, courseId: string) {
+  async fetchQuizzes(categoryId: string, difficultyId: string, courseId: string) {    
     try {
       const { quiz } = await postQuiz(categoryId, difficultyId, courseId);
       this.currentQuiz = quiz;

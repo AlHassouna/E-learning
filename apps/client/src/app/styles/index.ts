@@ -1,5 +1,7 @@
+import { ProConfigProvider } from '@ant-design/pro-components';
 import { Button, Card, Avatar, Carousel } from 'antd';
 import { Footer } from 'antd/es/layout/layout';
+import { MDBContainer } from 'mdb-react-ui-kit';
 import styled from 'styled-components';
 
 
@@ -11,6 +13,12 @@ export const FlexContainer = styled.div`
   width: 100%;
   background-color: #EFDAC7;
 `;
+
+export const AuthPage = styled(ProConfigProvider)`
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`
 
 export const CourseContent = styled.div`
   display: flex;
@@ -34,7 +42,11 @@ export const CourseTitle = styled.h1`
   justify-content: center;
   align-items: center;
   color: #9A616D;
-  margin: 0
+  margin-top: 10px
+
+  @media (max-width: 768px) {
+    margin-top: 0
+  }
 `;
 
 export const QuizzButton = styled.button`
@@ -121,6 +133,10 @@ export const ProfileCard = styled(Card)`
   min-width: 30vw;
   border-radius: 15px;
   text-align: center;
+  @media (max-width: 768px) {
+    min-width: 90vw;
+
+  }
 `;
 
 export const ProfileBackground = styled.div`
@@ -212,7 +228,7 @@ export const NotFoundLink = styled.a`
 export const StyledContainerQuiz = styled.div`
   background-color: #EFDAC7;
   min-height: 100vh;
-  padding: 20px;
+  padding: 40px;
 `;
 export const SearchContainer = styled.div`
   position: relative;
@@ -302,13 +318,26 @@ export const StyledTitle = styled.h2`
   @media (max-width: 768px) {
     display: flex;
     flex-wrap: wrap;
-    font-size: 1rem;
+    font-size: 0.8em;
+    over-flow: hidden;
     padding: 0;
-    text-align: left;
     width: 80%;
   }
 `;
 
+export const StyledScoreTitle = styled.h2`
+  color: #03565B;
+  font-size: 1.5rem;
+  text-align: center;
+  margin: 0;
+  padding: 0 10px;
+  max-width: 100%;
+  word-wrap: break-word;
+
+  @media (max-width: 768px) {
+    font-size: 1.5em;
+  }
+`;
 
 export const StyledDescription = styled.div`
   color: #ECBB65;
@@ -406,7 +435,7 @@ export const FlexHomePageContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;;
+  justify-content: flex-start;
   height: 100%;
   width: 100%;
   background-color: #EFDAC7;
@@ -428,6 +457,8 @@ export const CustomCarousel = styled(Carousel)`
 
 export const CustomUserCoursesCarousel = styled(Carousel)`
 
+  display: flex;
+  justify-items: center;
   width: 100%;
   max-width: 1200px;
   margin-top: 20px;
@@ -439,7 +470,7 @@ export const CustomUserCoursesCarousel = styled(Carousel)`
 `;
 
 export const CustomCoursesCarousel = styled(Carousel)`
-  width: 500px;
+  width: 100%;
   max-width: 1200px;
   margin-top: 20px;
   height: 420px;
@@ -456,7 +487,7 @@ export const SlideContainer = styled.div`
   height: 400px;
   background: rgb(71, 157, 114);
   background: radial-gradient(circle, rgba(71, 157, 114, 1) 0%, rgba(3, 86, 91, 1) 100%);
-  margin-top: 20px;
+  margin-top: 30px;
 
   @media (max-width: 768px) {
     height: 300px;
@@ -528,6 +559,7 @@ export const LeftContainer = styled.div`
 
 
 export const CardsContainer = styled.div`
+  width: 30%;
   @media (max-width: 768px) {
     width: 90%;
   }
@@ -535,7 +567,7 @@ export const CardsContainer = styled.div`
 
 export const CustomUserCoursesCards = styled(Card)`
   width: 220px !important;
-  height: 350px;
+  height: 400px;
   @media (max-width: 768px) {
     width: 180px;
     height: 240px;
@@ -543,11 +575,8 @@ export const CustomUserCoursesCards = styled(Card)`
 `;
 
 export const CustomCoursesCards = styled(Card)`
-  width: 220px !important;
-  height: 400px;
   @media (max-width: 768px) {
-    width: 180px;
-    height: 270px;
+    width: 60% !important;
   }
 `;
 

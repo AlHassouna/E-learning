@@ -33,7 +33,7 @@ class AuthRouter implements IAuth {
       sendEmail(
         email,
         'Registered to our Website',
-        'You have successfully registered on our website'
+        username
       );
       res.status(201).json({ email, roleString, username, token, _id: user._id });
     } catch (error) {
