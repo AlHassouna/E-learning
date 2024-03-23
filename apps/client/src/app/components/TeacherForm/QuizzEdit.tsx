@@ -12,6 +12,9 @@ import {
   OptionInput,
   ButtonContainer
 } from '../../styles/adminStyle';
+import {
+  StyledCardQuiz
+} from '../../styles/index';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getItem } from '../../utils/localStorage';
 import EditQuestionForm from './QuestionEdit';
@@ -60,7 +63,7 @@ export const EditQuizForm: React.FC<EditQuizFormProps> = observer(
     };
 
     const handleSaveQuiz = () => {
-      const quizData = { quiz:newQuiz, username };
+      const quizData = { quiz: newQuiz, username };
       onSave(quizData);
     };
     const handleChangeQuestion = (i: number) => {
@@ -90,20 +93,16 @@ export const EditQuizForm: React.FC<EditQuizFormProps> = observer(
             <LoadingSpin />
           </CenterContainer>
         ) : (
-          <div>
-            <div>
+
+                <StyledCardQuiz>
               <BackTop />
               <strong style={{ color: 'rgba(64, 64, 64, 0.6)' }}> </strong>
-            </div>
-            <Row justify="center" align="middle" gutter={[16, 16]}>
-              <Col span={12}>
-                <Card>
                   <h1>
-                  <Button
-          type="primary"
-          icon={<ArrowLeftOutlined />}
-          onClick={() => navigate('/editquiz/'+courseName)}
-        />
+                    <Button
+                      type="primary"
+                      icon={<ArrowLeftOutlined />}
+                      onClick={() => navigate('/editquiz/' + courseName)}
+                    />
                     Edit Quiz</h1>
                   <Row gutter={[16, 16]}>
                     <Col>
@@ -160,8 +159,8 @@ export const EditQuizForm: React.FC<EditQuizFormProps> = observer(
                           Question {i + 1}:
                         </h3>
                         <EditQuestionForm key={i}
-                                          newQuestion={q}
-                                          setNewQuestion={handleChangeQuestion(i)}
+                          newQuestion={q}
+                          setNewQuestion={handleChangeQuestion(i)}
                         />
                       </div>
                     ))}
@@ -177,10 +176,7 @@ export const EditQuizForm: React.FC<EditQuizFormProps> = observer(
                       </Col>
                     </Row>
                   </ButtonContainer>
-                </Card>
-              </Col>
-            </Row>
-          </div>
+                </StyledCardQuiz>
         )}
       </QuestionFormContainer>
     );

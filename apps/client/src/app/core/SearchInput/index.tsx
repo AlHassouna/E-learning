@@ -63,7 +63,8 @@ export const SearchInput: React.FC<SearchProps> = observer(({ search }) => {
                     title={'Do You Want To Join The Course?'}
                     okText="Yes"
                     cancelText="No"
-                    onConfirm={async () => {await addParticipant(course._id, userId);
+                    onConfirm={async () => {
+                      await addParticipant(course._id, userId);
                       await getAll();
                       setCurrent('');
                       setInputValue('');
@@ -75,7 +76,7 @@ export const SearchInput: React.FC<SearchProps> = observer(({ search }) => {
                         course.participants.includes(userId) ?
                           navigate(`/courses/${course.courseName}`)
                           :
-                       null
+                          null
                       }}>
 
                       <CoursesTitle>{course.courseName}:</CoursesTitle>

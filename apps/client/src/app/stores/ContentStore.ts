@@ -5,9 +5,11 @@ import { getContentByCourse } from '../api/index';
 
 
 export class ContentStore extends StoreBase {
-  content: IContent = {
+  content: IContent[] = [{
+    _id: '',
     courseTitle: '',
     content: '',
+    contentType: 'text',
     course: {
       _id: '',
       courseName: '',
@@ -33,7 +35,7 @@ export class ContentStore extends StoreBase {
       title: '',
       courseImage: ''
     }
-  };
+  }];
 
   constructor() {
     super();
@@ -45,7 +47,7 @@ export class ContentStore extends StoreBase {
     });
   }
 
-  public setContent = (content: IContent): void => {
+  public setContent = (content: IContent[]): void => {
     this.content = content;
   };
 

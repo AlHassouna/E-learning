@@ -14,14 +14,14 @@ const courseSchema = new Schema({
   description: { type: String, required: true },
   teacher: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   participants: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-  courseImage: { type: String } 
+  courseImage: { type: String }
 });
 
 const contentSchema = new Schema({
-  contentType: {type:String, enum: ['text', 'video', 'image']},
+  contentType: { type: String, enum: ['text', 'video', 'image'] },
   courseTitle: { type: String, required: true },
   content: { type: String },
-  course: { type: Schema.Types.ObjectId, ref: 'Course', required: true }
+  course: { type: Schema.Types.ObjectId, ref: 'Course', required: true },
 });
 
 const discussionForumSchema = new Schema({

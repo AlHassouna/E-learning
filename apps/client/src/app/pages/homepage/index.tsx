@@ -26,6 +26,25 @@ export const HomePage: React.FC = observer(() => {
   const { courses: Courses, getAll, isLoading, setChosenCourse } = navbar;
   const token = getItem('token');
   const navigate = useNavigate();
+  const responsive = {
+    superLargeDesktop: {
+      // the naming can be any, depends on you.
+      breakpoint: { max: 4000, min: 3000 },
+      items: 5
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 3
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 2
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1
+    }
+  };
 
   //@ts-ignore
   const userId = JSON.parse(token)._id;
@@ -69,6 +88,8 @@ export const HomePage: React.FC = observer(() => {
 
   const userPart = () => {
     const userCourses = Courses.filter(course => course.participants.includes(userId));
+    console.log(userCourses.length);
+
     return userCourses.map(course => (
       <div className='test' key={course._id} style={{ display: 'flex', justifyContent: 'center', width: '40%' }}>
         <CustomCoursesCards

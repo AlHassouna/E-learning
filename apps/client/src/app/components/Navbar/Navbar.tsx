@@ -68,7 +68,7 @@ export const Navbar: React.FC = observer(() => {
                 <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['home']}
 
                   style={{ backgroundColor: '#03565B' }}>
-                  <Menu.Item style={{fontSize: '1.5em'}} onClick={() => {
+                  <Menu.Item style={{ fontSize: '1.5em' }} onClick={() => {
                     navigate('/');
                   }} key="home">
                     <Icon component={() => (<img style={{ height: '2.5em', width: '2.5em', marginTop: '1em' }} src={logo} />)} />

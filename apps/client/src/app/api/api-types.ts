@@ -6,8 +6,10 @@ export interface IUser {
 
 
 export interface IContent {
+  _id: string
   courseTitle: string;
   content: string;
+  contentType: string;
   course: ICourse;
 }
 
@@ -37,10 +39,10 @@ export interface IMessage {
   date: Date;
 }
 
-export interface IProfile{
-  username:string;
-  role:string;
+export interface IProfile {
+  username: string;
+  role: string;
   numRewards: number,
-  numCourses:number,
-  ranking:number
+  numCourses: number,
+  ranking: number
 }

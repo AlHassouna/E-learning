@@ -44,7 +44,7 @@ class AuthRouter implements IAuth {
   public login = async (req: Request, res: Response): Promise<void> => {
     try {
       const user = await this.model.findOne
-      ({ email: req.body.email });
+        ({ email: req.body.email });
       if (!user) {
         throw new Error('Invalid credentials, please try again');
       }

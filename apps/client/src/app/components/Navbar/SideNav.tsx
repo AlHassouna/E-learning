@@ -57,16 +57,16 @@ export const SideNav: React.FC<{ courses: ICourse[] }> = ({ courses }) => {
           setChosenCourse(e.key);
           navigate(`/courses/${e.key}`);
         } else if (e.keyPath[1] === 'profile') {
-          if(e.key === 'signout'){
+          if (e.key === 'signout') {
             logout();
             navigate('/auth');
-          }else{
+          } else {
 
             navigate(`/${e.key}`);
           }
         } else if (e.keyPath[1] === 'profile') {
           navigate(`/chat`);
-        }  else {
+        } else {
           navigate('/');
 
         }
