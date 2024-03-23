@@ -7,11 +7,12 @@ import { useNavigate } from 'react-router-dom';
 import { ICourse } from '../../api/api-types';
 import { useStore } from '../../stores/setupContext';
 import { Chat } from '../Chat/Chat';
+import { getItem } from '../../utils/localStorage';
 
 
 type MenuItem = Required<MenuProps>['items'][number];
 
-function getItem(
+function getItems(
   label: React.ReactNode,
   key: React.Key,
   icon?: React.ReactNode,
@@ -32,19 +33,23 @@ export const SideNav: React.FC<{ courses: ICourse[] }> = ({ courses }) => {
   const { navbar, auth } = useStore();
   const { search, courses: Courses, getAll, setChosenCourse, isLoading } = navbar;
   const { logout } = auth;
+  const token = getItem('token');
+  //@ts-ignore
+  const userId = JSON.parse(token)._id;
 
 
   const items: MenuProps['items'] = [
-    getItem('Home', 'home', <HomeOutlined />),
-    getItem('Courses', 'courses', <BookOutlined />,
-      courses.map((course, index) => (
-        getItem(course.courseName, course.courseName
+    getItems('Home', 'home', <HomeOutlined />),
+    getItems('Courses', 'courses', <BookOutlined />,
+    Courses.filter(course => course.participants.includes(userId))
+      .map((course, index) => (
+        getItems(course.courseName, course.courseName
         ))
       )
     ),
-    getItem('Profile', 'profile', <MailOutlined />,
+    getItems('Profile', 'profile', <MailOutlined />,
       profile.map((profile, index) => (
-        getItem(profile.title, profile.linkTo
+        getItems(profile.title, profile.linkTo
         ))
       )
     ),
