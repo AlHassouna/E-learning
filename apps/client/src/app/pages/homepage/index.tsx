@@ -16,6 +16,8 @@ import image2 from '../../images/elearning-2.png';
 import image3 from '../../images/elearning-3.png';
 import { getItem } from '../../utils/localStorage';
 import { addParticipant } from '../../api';
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
 
 export const HomePage: React.FC = observer(() => {
@@ -24,6 +26,25 @@ export const HomePage: React.FC = observer(() => {
   const { courses: Courses, getAll, isLoading } = navbar;
   const token = getItem('token');
   const navigate = useNavigate();
+  const responsive = {
+    superLargeDesktop: {
+      // the naming can be any, depends on you.
+      breakpoint: { max: 4000, min: 3000 },
+      items: 5
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 3
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 2
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1
+    }
+  };
 
   //@ts-ignore
   const userId = JSON.parse(token)._id;
@@ -60,8 +81,10 @@ export const HomePage: React.FC = observer(() => {
 
   const userPart = () => {
     const userCourses = Courses.filter(course => course.participants.includes(userId));
+    console.log(userCourses.length);
+    
     return userCourses.map(course => (
-      <CustomUserCoursesCards
+      <Card
         key={course._id}
         onClick={() => navigate(`/courses/${course.courseName}`)}
         hoverable
@@ -69,7 +92,7 @@ export const HomePage: React.FC = observer(() => {
       >
 
         <Card.Meta title={course.courseName} description={course.description} />
-      </CustomUserCoursesCards>
+      </Card>
 
     ));
   };
@@ -131,18 +154,18 @@ export const HomePage: React.FC = observer(() => {
                 <style jsx>{`:where(.css-dev-only-do-not-override-1fm67j).ant-carousel .slick-dots-bottom {
                   bottom: -15px;
                 }`}</style>
-                <CustomUserCoursesCarousel dots infinite slidesToShow={howMany < 2 ? 1 : 2} slidesToScroll={1}
-                                           responsive={[
-                                             {
-                                               breakpoint: 768,
-                                               settings: {
-                                                 slidesToShow: 2,
-                                                 slidesToScroll: 1
-                                               }
-                                             }
-                                           ]}>
+                <CustomCoursesCarousel  dots infinite slidesToShow={howManyReco < 2 ? 1 : 2} slidesToScroll={1}
+                                       responsive={[
+                                         {
+                                           breakpoint: 768,
+                                           settings: {
+                                             slidesToShow: 2,
+                                             slidesToScroll: 1
+                                           }
+                                         }
+                                       ]}>
                   {userPart()}
-                </CustomUserCoursesCarousel>
+                </CustomCoursesCarousel>
               </CardsContainer>
 
               {/*Reco*/}

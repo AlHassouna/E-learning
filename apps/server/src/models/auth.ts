@@ -35,7 +35,8 @@ courseSchema.pre('save', async function(next) {
 const contentSchema = new Schema({
   courseTitle: { type: String, required: true },
   content: { type: String },
-  course: { type: Schema.Types.ObjectId, ref: 'Course', required: true }
+  course: { type: Schema.Types.ObjectId, ref: 'Course', required: true },
+  contentType : { type: String , enum:["image","video","text"]},
 });
 
 const discussionForumSchema = new Schema({
