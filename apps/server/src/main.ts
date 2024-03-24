@@ -31,7 +31,7 @@ const io = new Server(server, {
 const ioClient = new IoClient(io);
 ioClient.startClient();
 
-mongoose.connect('mongodb+srv://hhasona:rtK3ZWCyNEZmifHG@cluster0.32yucli.mongodb.net/Elearning', {} as ConnectOptions)
+mongoose.connect(`mongodb+srv://hhasona:${process.env.ATLAS_PASS}@cluster0.32yucli.mongodb.net/Elearning`, {} as ConnectOptions)
   .catch((err) => console.log(err));
 
 const db = mongoose.connection;
@@ -41,7 +41,7 @@ db.once('open', async function() {
   // await populateContent();
   //await populateCourses();
   // await dropContent();
-   //await dropCourses();
+  //await dropCourses();
 });
 
 // Middleware setup
