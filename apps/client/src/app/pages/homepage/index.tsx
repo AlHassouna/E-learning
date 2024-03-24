@@ -46,8 +46,7 @@ export const HomePage: React.FC = observer(() => {
     }
   };
 
-  //@ts-ignore
-  const userId = JSON.parse(token)._id;
+  const userId = JSON.parse(token as string)?._id;
 
   const calculateHowMany = () => {
     let counter = 0;
@@ -74,9 +73,6 @@ export const HomePage: React.FC = observer(() => {
   const howManyReco = calculateRecommendedCount();
 
   const onJoinCourse = async (courseId: string, userId: string) => {
-    console.log('courseId: ', courseId);
-    console.log('userId: ', userId);
-
     await addParticipant(courseId, userId);
     await getAll();
   };
@@ -88,7 +84,6 @@ export const HomePage: React.FC = observer(() => {
 
   const userPart = () => {
     const userCourses = Courses.filter(course => course.participants.includes(userId));
-    console.log(userCourses.length);
 
     return userCourses.map(course => (
       <div className="test" key={course._id} style={{

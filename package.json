@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "client": "nx serve client",
-    "client:build": "nx build client",
+    "client:build": "nx build client --outputPath=apps/client/dist",
     "server": "nx serve server",
     "server:build": "nx build server"
   },
