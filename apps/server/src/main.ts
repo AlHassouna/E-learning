@@ -22,7 +22,7 @@ const server = createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: 'http://localhost:4200', // Adjust CORS origin as per your frontend URL
+    origin: ['http://localhost:4200', 'https://e-learning-front.onrender.com/'], // Adjust CORS origin as per your frontend URL
     methods: ['GET', 'POST'],
     credentials: true
   }
