@@ -41,8 +41,8 @@ export const EditQuizForm: React.FC<EditQuizFormProps> = observer(
   ({ onSave }) => {
     const navigate = useNavigate();
     const token = getItem('token');
-    //@ts-ignore
-    const username = JSON.parse(token).username;
+
+    const username = JSON.parse(token as string)?.username;
     const { quiz } = useStore();
     const { allQuizzesByCourse, isLoading, setIsLoading, deleteQuizByID } = quiz;
     const courseName = useParams().courseTitle;
@@ -94,89 +94,89 @@ export const EditQuizForm: React.FC<EditQuizFormProps> = observer(
           </CenterContainer>
         ) : (
 
-                <StyledCardQuiz>
-              <BackTop />
-              <strong style={{ color: 'rgba(64, 64, 64, 0.6)' }}> </strong>
-                  <h1>
-                    <Button
-                      type="primary"
-                      icon={<ArrowLeftOutlined />}
-                      onClick={() => navigate('/editquiz/' + courseName)}
-                    />
-                    Edit Quiz</h1>
-                  <Row gutter={[16, 16]}>
-                    <Col>
-                      <Label>Quiz Title:</Label>
-                      <br></br>
-                      <InputField
-                        type="text"
-                        value={newQuiz.quizTitle}
-                        onChange={handleQuizTitleChange}
-                      />
-                    </Col>
-                    <Col>
+          <StyledCardQuiz>
+            <BackTop />
+            <strong style={{ color: 'rgba(64, 64, 64, 0.6)' }}> </strong>
+            <h1>
+              <Button
+                type="primary"
+                icon={<ArrowLeftOutlined />}
+                onClick={() => navigate('/editquiz/' + courseName)}
+              />
+              Edit Quiz</h1>
+            <Row gutter={[16, 16]}>
+              <Col>
+                <Label>Quiz Title:</Label>
+                <br></br>
+                <InputField
+                  type="text"
+                  value={newQuiz.quizTitle}
+                  onChange={handleQuizTitleChange}
+                />
+              </Col>
+              <Col>
 
-                      <Label>Category:</Label>
-                      <br></br>
-                      <InputField
-                        type="text"
-                        value={newQuiz.category}
-                        disabled
-                      />
-                    </Col>
-                  </Row>
-                  <Row gutter={[16, 16]}>
-                    <Col>
-                      <Label>Duration (minutes):</Label>
-                      <br></br>
-                      <InputField
-                        type="number"
-                        value={newQuiz.duration}
-                        onChange={handleDurationChange}
-                      />
-                    </Col>
-                    <Col>
-                      <Label>Level:</Label>
-                      <br></br>
-                      <Select
+                <Label>Category:</Label>
+                <br></br>
+                <InputField
+                  type="text"
+                  value={newQuiz.category}
+                  disabled
+                />
+              </Col>
+            </Row>
+            <Row gutter={[16, 16]}>
+              <Col>
+                <Label>Duration (minutes):</Label>
+                <br></br>
+                <InputField
+                  type="number"
+                  value={newQuiz.duration}
+                  onChange={handleDurationChange}
+                />
+              </Col>
+              <Col>
+                <Label>Level:</Label>
+                <br></br>
+                <Select
 
-                        value={newQuiz.level}
-                        onChange={handleLevelChange}
-                      >
-                        <OptionInput value="easy">Easy</OptionInput>
-                        <OptionInput value="medium">Medium</OptionInput>
-                        <OptionInput value="hard">Hard</OptionInput>
-                      </Select>
+                  value={newQuiz.level}
+                  onChange={handleLevelChange}
+                >
+                  <OptionInput value="easy">Easy</OptionInput>
+                  <OptionInput value="medium">Medium</OptionInput>
+                  <OptionInput value="hard">Hard</OptionInput>
+                </Select>
 
-                    </Col>
-                  </Row>
-                  <h2>Edit Question</h2>
+              </Col>
+            </Row>
+            <h2>Edit Question</h2>
 
-                  {
-                    newQuiz.questions.map((q, i) => (
-                      <div key={i}>
-                        <h3>
-                          Question {i + 1}:
-                        </h3>
-                        <EditQuestionForm key={i}
-                          newQuestion={q}
-                          setNewQuestion={handleChangeQuestion(i)}
-                        />
-                      </div>
-                    ))}
-                  <br></br>
+            {
+              newQuiz.questions.map((q, i) => (
+                <div key={i}>
+                  <h3>
+                    Question {i + 1}:
+                  </h3>
+                  <EditQuestionForm key={i}
+                                    newQuestion={q}
+                                    setNewQuestion={handleChangeQuestion(i)}
+                  />
+                </div>
+              ))}
+            <br></br>
 
 
-                  <ButtonContainer>
-                    <Row gutter={[16, 16]}>
-                      <Col>
-                        <Button type="primary" onClick={handleSaveQuiz}>
-                          Submit Changed Quiz
-                        </Button>
-                      </Col>
-                    </Row>
-                  </ButtonContainer>
-                </StyledCardQuiz>
+            <ButtonContainer>
+              <Row gutter={[16, 16]}>
+                <Col>
+                  <Button type="primary" onClick={handleSaveQuiz}>
+                    Submit Changed Quiz
+                  </Button>
+                </Col>
+              </Row>
+            </ButtonContainer>
+          </StyledCardQuiz>
         )}
       </QuestionFormContainer>
     );

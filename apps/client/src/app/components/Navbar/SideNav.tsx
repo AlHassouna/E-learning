@@ -34,25 +34,24 @@ export const SideNav: React.FC<{ courses: ICourse[] }> = ({ courses }) => {
   const { search, courses: Courses, getAll, setChosenCourse, isLoading } = navbar;
   const { logout } = auth;
   const token = getItem('token');
-  //@ts-ignore
-  const userId = JSON.parse(token)._id;
+  const userId = JSON.parse(token as string)?._id;
 
 
   const items: MenuProps['items'] = [
     getItems('Home', 'home', <HomeOutlined />),
     getItems('Courses', 'courses', <BookOutlined />,
-    Courses.filter(course => course.participants.includes(userId))
-      .map((course, index) => (
-        getItems(course.courseName, course.courseName
-        ))
-      )
+      Courses.filter(course => course.participants.includes(userId))
+        .map((course, index) => (
+          getItems(course.courseName, course.courseName
+          ))
+        )
     ),
     getItems('Profile', 'profile', <MailOutlined />,
       profile.map((profile, index) => (
         getItems(profile.title, profile.linkTo
         ))
       )
-    ),
+    )
   ];
   const navigate = useNavigate();
   return (

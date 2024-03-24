@@ -14,7 +14,8 @@ import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../stores/setupContext';
 import { SearchBar } from '../../styles';
 import { getItem } from '../../utils/localStorage';
-import logo from '../../images/cat.png'
+import logo from '../../images/cat.png';
+
 const { Header } = Layout;
 const { SubMenu } = Menu;
 
@@ -27,8 +28,7 @@ export const Navbar: React.FC = observer(() => {
   const token = getItem('token');
 
 
-  //@ts-ignore
-  const userId = JSON.parse(token)._id;
+  const userId = JSON.parse(token as string)?._id;
   React.useEffect(() => {
     const fetchCourses = async () => {
       await getAll();
@@ -52,14 +52,14 @@ export const Navbar: React.FC = observer(() => {
             background-color: #ECBB65;
           }`}</style>
           {/* @ts-ignore */}
-          <style jsx>{`.css-dev-only-do-not-override-1uweeqc.ant-menu-dark .ant-menu-item-selected, :where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark>.ant-menu .ant-menu-item-selected
-          {
+          <style
+            jsx>{`.css-dev-only-do-not-override-1uweeqc.ant-menu-dark .ant-menu-item-selected, :where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark > .ant-menu .ant-menu-item-selected {
             background-color: #03565B;
           }`}</style>
 
           {/* @ts-ignore */}
-          <style jsx>{`:where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark.ant-menu-horizontal >.ant-menu-item-selected, :where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark>.ant-menu.ant-menu-horizontal >.ant-menu-item-selected, :where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark.ant-menu-horizontal >.ant-menu-submenu-selected, :where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark>.ant-menu.ant-menu-horizontal >.ant-menu-submenu-selected
-          {
+          <style
+            jsx>{`:where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark.ant-menu-horizontal > .ant-menu-item-selected, :where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark > .ant-menu.ant-menu-horizontal > .ant-menu-item-selected, :where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark.ant-menu-horizontal > .ant-menu-submenu-selected, :where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark > .ant-menu.ant-menu-horizontal > .ant-menu-submenu-selected {
             background-color: #04787e !important
           }`}</style>
           <Header style={{ padding: 0, backgroundColor: '#03565B' }}>
@@ -67,11 +67,12 @@ export const Navbar: React.FC = observer(() => {
               <Col xs={0} sm={0} md={24}>
                 <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['home']}
 
-                  style={{ backgroundColor: '#03565B' }}>
+                      style={{ backgroundColor: '#03565B' }}>
                   <Menu.Item style={{ fontSize: '1.5em' }} onClick={() => {
                     navigate('/');
                   }} key="home">
-                    <Icon component={() => (<img style={{ height: '2.5em', width: '2.5em', marginTop: '1em' }} src={logo} />)} />
+                    <Icon component={() => (
+                      <img style={{ height: '2.5em', width: '2.5em', marginTop: '1em' }} src={logo} />)} />
                     Home
                   </Menu.Item>
 

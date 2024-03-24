@@ -30,8 +30,7 @@ export const SearchInput: React.FC<SearchProps> = observer(({ search }) => {
   const token = getItem('token');
 
 
-  //@ts-ignore
-  const userId = JSON.parse(token)._id;
+  const userId = JSON.parse(token as string)?._id;
   const navigate = useNavigate();
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     search(e.target.value);
@@ -71,13 +70,13 @@ export const SearchInput: React.FC<SearchProps> = observer(({ search }) => {
                     }}
                   >
                     <CourseCard key={index}
-                      onClick={async () => {
-                        setChosenCourse(course.courseName);
-                        course.participants.includes(userId) ?
-                          navigate(`/courses/${course.courseName}`)
-                          :
-                          null
-                      }}>
+                                onClick={async () => {
+                                  setChosenCourse(course.courseName);
+                                  course.participants.includes(userId) ?
+                                    navigate(`/courses/${course.courseName}`)
+                                    :
+                                    null;
+                                }}>
 
                       <CoursesTitle>{course.courseName}:</CoursesTitle>
                       <CoursesDescription>{course.description}</CoursesDescription>

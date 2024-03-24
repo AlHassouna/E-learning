@@ -8,7 +8,7 @@ import {
   FirstIcon,
   SecondIcon,
   ContentDiv,
-  CenterContainer,
+  CenterContainer
 } from '../../styles';
 import { DeleteOutlined } from '@ant-design/icons';
 import img1 from '../../../assets/elearning.png';
@@ -33,14 +33,14 @@ export const Content: React.FC<ContentProps> = observer(
     const success = () => {
       messageApi.open({
         type: 'success',
-        content: 'The content was successfully added',
+        content: 'The content was successfully added'
       });
     };
 
     const error = () => {
       messageApi.open({
         type: 'error',
-        content: 'Failed to add content',
+        content: 'Failed to add content'
       });
     };
     const { content, main } = useStore();
@@ -49,8 +49,7 @@ export const Content: React.FC<ContentProps> = observer(
     const { getContent, content: courseContent, setContent } = content;
     const token = getItem('token');
     const paramsTitle = useParams().courseTitle as string;
-    //@ts-ignore
-    const role = JSON.parse(token).role;
+    const role = JSON.parse(token as string)?.role;
     const fetchContent = async () => {
       await getContent(courseTitle || paramsTitle);
     };
@@ -68,16 +67,16 @@ export const Content: React.FC<ContentProps> = observer(
         courseTitle: courseContent[0].courseTitle,
         content: value.content,
         contentType: value.contentType,
-        file: value.file,
+        file: value.file
       };
 
       const data = new FormData();
       //@ts-ignore
-      data.append("courseId", courseId)
-      data.append("courseTitle", newContent.courseTitle)
-      data.append("content", newContent.content)
-      data.append("contentType", newContent.contentType)
-      data.append("file", newContent.file)
+      data.append('courseId', courseId);
+      data.append('courseTitle', newContent.courseTitle);
+      data.append('content', newContent.content);
+      data.append('contentType', newContent.contentType);
+      data.append('file', newContent.file);
       try {
         await addContent(data);
         success();
@@ -100,16 +99,16 @@ export const Content: React.FC<ContentProps> = observer(
     }
 
     const handleDragStart = (e: any, index: any) => {
-      e.dataTransfer.setData("text/plain", index);
+      e.dataTransfer.setData('text/plain', index);
     };
 
-    const handleDragOver = (e: any,) => {
+    const handleDragOver = (e: any) => {
       e.preventDefault();
     };
 
     const handleDrop = (e: any, newIndex: any) => {
       e.preventDefault();
-      const oldIndex = e.dataTransfer.getData("text/plain");
+      const oldIndex = e.dataTransfer.getData('text/plain');
       // Rearrange the courseContent array
       const updatedContent = [...courseContent];
       const itemToMove = updatedContent[oldIndex];
@@ -136,12 +135,12 @@ export const Content: React.FC<ContentProps> = observer(
             <FirstIcon src={img1}></FirstIcon>
             {courseContent.map((course, index) =>
               course.contentType !== 'video' &&
-                course.contentType !== 'image' ? (
+              course.contentType !== 'image' ? (
                 <div key={index} style={{ display: 'flex', justifyContent: 'center', marginBottom: '1em' }}
-                  draggable="true"
-                  onDragStart={(e) => handleDragStart(e, index)}
-                  onDragOver={handleDragOver}
-                  onDrop={(e) => handleDrop(e, index)}>
+                     draggable="true"
+                     onDragStart={(e) => handleDragStart(e, index)}
+                     onDragOver={handleDragOver}
+                     onDrop={(e) => handleDrop(e, index)}>
 
                   <CourseContent>
                     {role === 'Teacher' ? (
@@ -153,10 +152,10 @@ export const Content: React.FC<ContentProps> = observer(
                         onConfirm={() => handleDeleteContent(course._id)}
                       >
                         <Button danger
-                          type="text"
-                          shape="circle"
-                          icon={<DeleteOutlined />}
-                          title="Delete question"
+                                type="text"
+                                shape="circle"
+                                icon={<DeleteOutlined />}
+                                title="Delete question"
                         />{' '}
                       </Popconfirm>
                     ) : null}
@@ -164,61 +163,61 @@ export const Content: React.FC<ContentProps> = observer(
                 </div>
               ) : course.contentType === 'image' ? (
                 <div key={index} style={{ display: 'flex', justifyContent: 'center', marginBottom: '1em' }}
-                draggable="true"
-                onDragStart={(e) => handleDragStart(e, index)}
-                onDragOver={handleDragOver}
-                onDrop={(e) => handleDrop(e, index)}>
+                     draggable="true"
+                     onDragStart={(e) => handleDragStart(e, index)}
+                     onDragOver={handleDragOver}
+                     onDrop={(e) => handleDrop(e, index)}>
 
-                <CourseContent>
-                  {role === 'Teacher' ? (
-                    <Popconfirm
-                      placement="left"
-                      title={'Do You Want To Delete This Image?'}
-                      okText="Yes"
-                      cancelText="No"
-                      onConfirm={() => handleDeleteContent(course._id)}
-                    >
-                      <Button danger
-                        type="text"
-                        shape="circle"
-                        icon={<DeleteOutlined />}
-                        title="Delete question"
-                      />{' '}
-                    </Popconfirm>
-                  ) : null}
-                  <img width="90%" src={course.content}></img>
-                </CourseContent>
+                  <CourseContent>
+                    {role === 'Teacher' ? (
+                      <Popconfirm
+                        placement="left"
+                        title={'Do You Want To Delete This Image?'}
+                        okText="Yes"
+                        cancelText="No"
+                        onConfirm={() => handleDeleteContent(course._id)}
+                      >
+                        <Button danger
+                                type="text"
+                                shape="circle"
+                                icon={<DeleteOutlined />}
+                                title="Delete question"
+                        />{' '}
+                      </Popconfirm>
+                    ) : null}
+                    <img width="90%" src={course.content}></img>
+                  </CourseContent>
                 </div>
               ) : (
                 <div key={index} style={{ display: 'flex', justifyContent: 'center', marginBottom: '1em' }}
-                draggable="true"
-                onDragStart={(e) => handleDragStart(e, index)}
-                onDragOver={handleDragOver}
-                onDrop={(e) => handleDrop(e, index)}>
+                     draggable="true"
+                     onDragStart={(e) => handleDragStart(e, index)}
+                     onDragOver={handleDragOver}
+                     onDrop={(e) => handleDrop(e, index)}>
 
-                <CourseContent>
-                 
-                  {role === 'Teacher' ? (
-                    <Popconfirm
-                      placement="left"
-                      title={'Do You Want To Delete This Video?'}
-                      okText="Yes"
-                      cancelText="No"
-                      onConfirm={() => handleDeleteContent(course._id)}
-                    >
-                      <Button danger
-                        type="text"
-                        shape="circle"
-                        icon={<DeleteOutlined />}
-                        title="Delete question"
-                      />{' '}
-                    </Popconfirm>
-                  ) : null}
-                  <video width="80%" controls>
-                    <source src={course.content}></source>
-                    Your browser does not support HTML video.
-                  </video>
-                </CourseContent>
+                  <CourseContent>
+
+                    {role === 'Teacher' ? (
+                      <Popconfirm
+                        placement="left"
+                        title={'Do You Want To Delete This Video?'}
+                        okText="Yes"
+                        cancelText="No"
+                        onConfirm={() => handleDeleteContent(course._id)}
+                      >
+                        <Button danger
+                                type="text"
+                                shape="circle"
+                                icon={<DeleteOutlined />}
+                                title="Delete question"
+                        />{' '}
+                      </Popconfirm>
+                    ) : null}
+                    <video width="80%" controls>
+                      <source src={course.content}></source>
+                      Your browser does not support HTML video.
+                    </video>
+                  </CourseContent>
                 </div>
               )
             )}
@@ -228,13 +227,13 @@ export const Content: React.FC<ContentProps> = observer(
                 display: 'flex',
                 justifyContent: 'center',
                 gap: '10px',
-                marginTop: '50px',
+                marginTop: '50px'
               }}
             >
               {role === 'Teacher' ? (
                 <Link to={'/quizzes/' + courseTitle}>
                   <Button type="primary"
-                style={{ backgroundColor: '#786283' }}>Quizzes Management</Button>
+                          style={{ backgroundColor: '#786283' }}>Quizzes Management</Button>
                 </Link>
               ) : (
                 <DModel
@@ -244,7 +243,7 @@ export const Content: React.FC<ContentProps> = observer(
                     <div
                       style={{
                         display: 'flex',
-                        flexDirection: 'column',
+                        flexDirection: 'column'
                       }}
                     >
                       <QuizButton
@@ -279,9 +278,9 @@ export const Content: React.FC<ContentProps> = observer(
               <br></br>
               {role === 'Teacher' ? (
                 <Button type="primary"
-                  onClick={() => {
-                    setShowModal(!showModal);
-                  }}
+                        onClick={() => {
+                          setShowModal(!showModal);
+                        }}
                 >
                   Add Content
                 </Button>

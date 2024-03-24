@@ -22,14 +22,13 @@ interface Course {
 }
 
 export const Profile: React.FunctionComponent<ProfileProps> = ({
-  UserDetails,
-  isLoading
-}) => {
+                                                                 UserDetails,
+                                                                 isLoading
+                                                               }) => {
   const token = getItem('token');
 
 
-  //@ts-ignore
-  const username = JSON.parse(token).username;
+  const username = JSON.parse(token as string)?.username;
 
   const params = useParams();
   const navigate = useNavigate();
@@ -54,7 +53,7 @@ export const Profile: React.FunctionComponent<ProfileProps> = ({
           setUser(result);
           const courses: Course[] = result.courses;
           const link = courses.map((c: Course) => {
-            return <li> <a href={'/course/' + c._id}>{c.courseName}</a></li>;
+            return <li><a href={'/course/' + c._id}>{c.courseName}</a></li>;
           });
           const newData = [...data];
           newData[0].children = link;
