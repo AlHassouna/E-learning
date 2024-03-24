@@ -27,7 +27,7 @@ export const Navbar: React.FC = observer(() => {
   const navigate = useNavigate();
   const token = getItem('token');
 
-
+// @ts-ignore
   const userId = JSON.parse(token as string)?._id;
   React.useEffect(() => {
     const fetchCourses = async () => {
@@ -52,16 +52,16 @@ export const Navbar: React.FC = observer(() => {
             background-color: #ECBB65;
           }`}</style>
           {/* @ts-ignore */}
-          <style
-            jsx>{`.css-dev-only-do-not-override-1uweeqc.ant-menu-dark .ant-menu-item-selected, :where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark > .ant-menu .ant-menu-item-selected {
-            background-color: #03565B;
-          }`}</style>
+          <style jsx>
+            {`.css-dev-only-do-not-override-1uweeqc.ant-menu-dark .ant-menu-item-selected, :where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark > .ant-menu .ant-menu-item-selected {
+              background-color: #03565B;
+            }`}</style>
 
           {/* @ts-ignore */}
-          <style
-            jsx>{`:where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark.ant-menu-horizontal > .ant-menu-item-selected, :where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark > .ant-menu.ant-menu-horizontal > .ant-menu-item-selected, :where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark.ant-menu-horizontal > .ant-menu-submenu-selected, :where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark > .ant-menu.ant-menu-horizontal > .ant-menu-submenu-selected {
-            background-color: #04787e !important
-          }`}</style>
+          <style jsx>
+            {`:where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark.ant-menu-horizontal > .ant-menu-item-selected, :where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark > .ant-menu.ant-menu-horizontal > .ant-menu-item-selected, :where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark.ant-menu-horizontal > .ant-menu-submenu-selected, :where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark > .ant-menu.ant-menu-horizontal > .ant-menu-submenu-selected {
+              background-color: #04787e !important
+            }`}</style>
           <Header style={{ padding: 0, backgroundColor: '#03565B' }}>
             <Row justify="space-between" align="middle">
               <Col xs={0} sm={0} md={24}>
