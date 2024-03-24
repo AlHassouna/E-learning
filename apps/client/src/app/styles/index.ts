@@ -18,7 +18,7 @@ export const AuthPage = styled(ProConfigProvider)`
   @media (max-width: 768px) {
     width: 100%;
   }
-`
+`;
 
 export const CourseContent = styled.div`
   display: flex;
@@ -439,10 +439,6 @@ export const FlexHomePageContainer = styled.div`
   width: 100%;
   background-color: #EFDAC7;
 
-  @media (max-width: 768px) {
-    width: 100%
-    height: 50vh;
-  }
 `;
 
 export const CustomCarousel = styled(Carousel)`
@@ -576,6 +572,7 @@ export const CustomUserCoursesCards = styled(Card)`
 export const CustomCoursesCards = styled(Card)`
   @media (max-width: 768px) {
     width: 60% !important;
+    margin: auto !important;
   }
 `;
 

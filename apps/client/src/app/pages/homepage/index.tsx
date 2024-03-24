@@ -91,10 +91,21 @@ export const HomePage: React.FC = observer(() => {
     console.log(userCourses.length);
 
     return userCourses.map(course => (
-      <div className='test' key={course._id} style={{ display: 'flex', justifyContent: 'center', width: '40%' }}>
+      <div className="test" key={course._id} style={{
+        display: 'flex', justifyContent: 'center', width: '40%'
+
+
+      }}>
         <CustomCoursesCards
           key={course._id}
-          style={{ ...(howMany === 1 ? { width: "50%", display: 'flex', flexDirection: 'column', margin: '1em' } : { display: 'flex', flexDirection: 'column', margin: '1em' }) }}
+          style={{
+            ...(howMany === 1 ? {
+              width: '50%',
+              display: 'flex',
+              flexDirection: 'column',
+              margin: '1em'
+            } : { display: 'flex', flexDirection: 'column', margin: '1em' })
+          }}
           hoverable
           cover={<CourseImage alt={course.courseName} src={course.courseImage} />}
           actions={[
@@ -108,17 +119,20 @@ export const HomePage: React.FC = observer(() => {
                   onRemoveCourse(course._id, userId);
                 }}
             >
-              <DeleteOutlined style={{ color: 'red', flex: '1' }} key="delete" >
+              <DeleteOutlined style={{ color: 'red', flex: '1' }} key="delete">
               </DeleteOutlined>
             </Popconfirm>
             ,
             <ArrowRightOutlined style={{ color: '#03565B', flex: '1' }} key="ellipsis" onClick={() => {
-              setChosenCourse(course.courseName); navigate(`/courses/${course.courseName}`)
+              setChosenCourse(course.courseName);
+              navigate(`/courses/${course.courseName}`);
             }} />
           ]}
         >
           {/* @ts-ignore */}
-          <Card.Meta title={course.courseName} description={<Typography.Paragraph ellipsis={{ rows: 3, expandable: false }}>{course.description}</Typography.Paragraph>} style={{ height: '7em' }} />
+          <Card.Meta title={course.courseName} description={<Typography.Paragraph
+            ellipsis={{ rows: 3, expandable: false }}>{course.description}</Typography.Paragraph>}
+                     style={{ height: '7em' }} />
         </CustomCoursesCards>
       </div>
     ));
@@ -184,15 +198,15 @@ export const HomePage: React.FC = observer(() => {
                 }`}</style>
                 {howMany === 0 ? <h4 style={{ color: '#786283' }}>You have no courses yet!</h4> :
                   <CustomUserCoursesCarousel dots infinite slidesToShow={howMany < 2 ? 1 : 2} slidesToScroll={1}
-                    responsive={[
-                      {
-                        breakpoint: 768,
-                        settings: {
-                          slidesToShow: 1,
-                          slidesToScroll: 1
-                        }
-                      }
-                    ]}>
+                                             responsive={[
+                                               {
+                                                 breakpoint: 768,
+                                                 settings: {
+                                                   slidesToShow: 1,
+                                                   slidesToScroll: 1
+                                                 }
+                                               }
+                                             ]}>
                     {userPart()}
 
 
@@ -211,20 +225,28 @@ export const HomePage: React.FC = observer(() => {
                   <HeaderLine />
                   {/* @ts-ignore */}
                   <CustomCoursesCarousel dots infinite slidesToShow={howManyReco < 2 ? 1 : 2} slidesToScroll={1}
-                    responsive={[
-                      {
-                        breakpoint: 768,
-                        settings: {
-                          slidesToShow: 1,
-                          slidesToScroll: 1
-                        }
-                      }
-                    ]}>
+                                         responsive={[
+                                           {
+                                             breakpoint: 768,
+                                             settings: {
+                                               slidesToShow: 1,
+                                               slidesToScroll: 1
+                                             }
+                                           }
+                                         ]}>
                     {Courses.filter(course => !course.participants.includes(userId)).map((course) => (
-                      <div className='test' key={course._id} style={{ display: 'flex', justifyContent: 'center', width: '40%' }}>
+                      <div className="test" key={course._id}
+                           style={{ display: 'flex', justifyContent: 'center', width: '40%' }}>
                         <CustomCoursesCards
                           key={course._id}
-                          style={{ ...(howManyReco === 1 ? { width: "50%", display: 'flex', flexDirection: 'column', margin: '1em' } : { display: 'flex', flexDirection: 'column', margin: '1em' }) }}
+                          style={{
+                            ...(howManyReco === 1 ? {
+                              width: '50%',
+                              display: 'flex',
+                              flexDirection: 'column',
+                              margin: '1em'
+                            } : { display: 'flex', flexDirection: 'column', margin: '1em' })
+                          }}
                           hoverable
                           cover={<CourseImage alt={course.courseName} src={course.courseImage} />}
                           actions={[
@@ -235,7 +257,9 @@ export const HomePage: React.FC = observer(() => {
                           ]}
                         >
                           {/* @ts-ignore */}
-                          <Card.Meta title={course.courseName} description={<Typography.Paragraph ellipsis={{ rows: 3, expandable: false }}>{course.description}</Typography.Paragraph>} style={{ height: '7em' }} />
+                          <Card.Meta title={course.courseName} description={<Typography.Paragraph
+                            ellipsis={{ rows: 3, expandable: false }}>{course.description}</Typography.Paragraph>}
+                                     style={{ height: '7em' }} />
                         </CustomCoursesCards>
                       </div>
                     ))}
@@ -260,7 +284,7 @@ export const HomePage: React.FC = observer(() => {
                       <h2>Contact Us</h2>
                       <p>
                         Have questions or feedback? We're here to help! Reach out to our friendly support team at <a
-                          href="mailto:andalusmh2002@gmail.com">andalusmh2002@gmail.com</a>.
+                        href="mailto:andalusmh2002@gmail.com">andalusmh2002@gmail.com</a>.
                       </p>
                     </Col>
                   </Row>
