@@ -30,7 +30,7 @@ export const useSocket = (): SocketService => {
 
   useEffect(() => {
     if (authResponse) {
-      socketRef.current = io('http://localhost:8000');
+      socketRef.current = io('https://e-learning-back-ufeg.onrender.com/');
 
       socketRef.current.on('connect', () => {
         const id = socketRef.current?.id;
