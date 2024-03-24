@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Modal, Form, Input, Select, Button, Upload, message, UploadProps } from 'antd';
+import { Modal, Form, Input, Select, Button, Upload } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
+import yup from 'yup';
 
 const { Option } = Select;
 
@@ -18,46 +19,49 @@ interface AddContentModalProps {
 }
 
 export const AddContentModal: React.FC<AddContentModalProps> = ({ visible, onCreate, onCancel }) => {
-  const [form, setForm] = useState({contentType:"text"} as ContentFormValues);
+  const [form, setForm] = useState({ contentType: 'text' } as ContentFormValues);
   const [loading, setLoading] = useState(false);
- 
-  
+
+
   const handleAdd = () => {
-    setLoading(true)
+    setLoading(true);
     console.log(form);
-    
-      onCreate(form).then(() => {
 
-        setLoading(false);
-      }).catch(() => {
-        setLoading(false);
-  })}
+    onCreate(form).then(() => {
 
-  const handleContentTypeChange = (value: string) => {   
-     if(value === "text"){
-        const { file, ...newForm } = form;
-        setForm({...newForm, contentType:value });
-     }
-     else{
-        setForm({...form, contentType:value });
-     }
-    
+      setLoading(false);
+    }).catch(() => {
+      setLoading(false);
+    });
+  };
+
+  const handleContentTypeChange = (value: string) => {
+    if (value === 'text') {
+      const { file, ...newForm } = form;
+      setForm({ ...newForm, contentType: value });
+    } else {
+      setForm({ ...form, contentType: value });
+    }
+
   };
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setForm({...form,content: e.target.value });
+    setForm({ ...form, content: e.target.value });
   };
 
 
-    const handleFileChange = (info: any) => {
+  const handleFileChange = (info: any) => {
+    if (info.file.type === 'image/jpeg' || info.file.type === 'image/jpg' || info.file.type === 'image/png' || info.file.type === 'video/mp4') {
       const fileList = [...info.fileList];
       if (fileList.length > 1) {
         fileList.shift();
       }
       setForm({ ...form, file: fileList[0]?.originFileObj });
-      console.log(fileList[0]?.originFileObj);    
+    } else {
+      alert('Invalid file type');
+    }
   };
-  
+
 
   return (
     <Modal
@@ -72,11 +76,11 @@ export const AddContentModal: React.FC<AddContentModalProps> = ({ visible, onCre
         </Button>,
         <Button key="submit" type="primary" loading={loading} onClick={handleAdd}>
           Add
-        </Button>,
+        </Button>
       ]}
     >
       <Form layout="vertical">
-       
+
         <Form.Item label="Content Type">
           <Select defaultValue="text" onChange={handleContentTypeChange}>
             <Option value="text">Text</Option>
@@ -86,12 +90,13 @@ export const AddContentModal: React.FC<AddContentModalProps> = ({ visible, onCre
         </Form.Item>
         {form.contentType === 'text' && (
           <Form.Item label="Content">
-           <Input.TextArea onChange={handleContentChange} />
+            <Input.TextArea onChange={handleContentChange} />
           </Form.Item>)}
-        
+
         {form.contentType !== 'text' && (
           <Form.Item label="Content">
-             <Upload onChange={handleFileChange} beforeUpload={() => false} fileList={form.file ? [{ uid: '-1', name:form.file.name, status: 'done' }] : []}>
+            <Upload onChange={handleFileChange} beforeUpload={() => false}
+                    fileList={form.file ? [{ uid: '-1', name: form.file.name, status: 'done' }] : []}>
               <Button icon={<UploadOutlined />}>Upload</Button>
 
             </Upload>
