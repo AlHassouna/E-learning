@@ -94,10 +94,10 @@ export const AddQuizForm: React.FC<AddQuizFormProps> = observer(({ onSave }) => 
     return (
       <QuestionFormContainer>
         {/* @ts-ignore */}
-        <style
-          jsx>{`:where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark.ant-menu-horizontal > .ant-menu-item-selected, :where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark > .ant-menu.ant-menu-horizontal > .ant-menu-item-selected, :where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark.ant-menu-horizontal > .ant-menu-submenu-selected, :where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark > .ant-menu.ant-menu-horizontal > .ant-menu-submenu-selected {
-          background-color: #04787e !important
-        }`}</style>
+        <style jsx>
+          {`:where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark.ant-menu-horizontal > .ant-menu-item-selected, :where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark > .ant-menu.ant-menu-horizontal > .ant-menu-item-selected, :where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark.ant-menu-horizontal > .ant-menu-submenu-selected, :where(.css-dev-only-do-not-override-1uweeqc).ant-menu-dark > .ant-menu.ant-menu-horizontal > .ant-menu-submenu-selected {
+            background-color: #04787e !important
+          }`}</style>
 
         <StyledCardQuiz>
 
